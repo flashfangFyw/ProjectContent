@@ -34,16 +34,17 @@ struct Input {
 };
 bool Contains(float3 worldPos)
 {
+	bool result = false;
 	// 遍历
 	for (int i=0; i<_Points_Num; i++)
 	{
 		float4 p4 = _Points[i]; // 索引取值
 		// 自定义处理
-		if ( (((_Points[i + 1].z <= p.z) && (p.z < _Points[i].z))
+		if ( (((_Points[i + 1].z <= worldPos.z) && (worldPos.z < _Points[i].z))
                         ||
-                         ((_Points[i].z <= p.z) && (p.z < _Points[i + 1].z)))
+                         ((_Points[i].z <= worldPos.z) && (worldPos.z < _Points[i + 1].z)))
                           &&
-                        (p.x < (_Points[i].x - _Points[i + 1].x) * (p.z - _Points[i + 1].z) / (_Points[i].z - _Points[i + 1].z) + _Points[i + 1].x)
+                        (worldPos.x < (_Points[i].x - _Points[i + 1].x) * (worldPos.z - _Points[i + 1].z) / (_Points[i].z - _Points[i + 1].z) + _Points[i + 1].x)
                         )
                 {
                 result = !result;
@@ -65,7 +66,7 @@ void surf (Input IN, inout SurfaceOutput o)
 //&& IN.worldPos.z >= -_Z_Range
 		//	 ))
 			 if(Contains(IN.worldPos))
-    {
+		{
             fixed4 c = tex2D(_MainTex, IN.uv_MainTex) ;
             //if ((IN.worldPos.y >= _EffectTime && IN.worldPos.y <= _EffectTime + _TransitLineVal)||(IN.worldPos.y <= _BottomValue && IN.worldPos.y >= _BottomValue - _TransitLineVal))
             //{
