@@ -64,7 +64,7 @@ public class TouchHitTest : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
                 Debug.Log("deltaPos=" + touch.deltaPosition);
-                transform.Translate(Vector3.left * deltaPos.x, Space.World);
+                transform.Translate(Vector3.left * deltaPos.x*0.01f, Space.World);
                 //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
             }
 
@@ -243,6 +243,10 @@ public class TouchHitTest : MonoBehaviour
         //minValue -= disValue;
         cube.GetComponent<MeshRenderer>().materials[0].SetInt("_Points_Num", pointList.Count);
         cube.GetComponent<MeshRenderer>().materials[0].SetVectorArray("_Points", pList);
+        Debug.Log("=======xMax_Point==" + xMax_Point);
+        Debug.Log("=======xMin_Point==" + xMin_Point);
+        Debug.Log("=======zMax_Point==" + zMax_Point);
+        Debug.Log("=======zMin_Point==" + zMin_Point);
         //textureMaterial.SetFloat("EffectTime", maxValue);
         //textureMaterial.SetFloat("BottomValue", minValue);
         //Debug.Log("====================maxValue==" + maxValue + "     minValue==" + minValue + "     modelHeighth==" + modelHeighth);
