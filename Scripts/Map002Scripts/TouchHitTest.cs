@@ -131,12 +131,13 @@ public class TouchHitTest : MonoBehaviour
 
                         //ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
                         ray = Camera.main.ScreenPointToRay(screenPosition);// screenPosition);
-                        Debug.Log("screenPosition="+ screenPosition);
+                     
                         if (Physics.Raycast(ray, out hit, 100))
                         {
                             CheckAreaField(hit.transform);
                             putFlag = true;
                         }
+                        Debug.Log("screenPosition=" + screenPosition  + "  hit="+ hit);
                         return;
                     }
                 }
