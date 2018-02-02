@@ -18,6 +18,7 @@ public class TouchHitTest : MonoBehaviour
     #region public property
     public Transform m_HitTransform;
     public GameObject[] poinPerfabs;
+    public Material testMeterial;
     #endregion
     #region private property
     public float scaleAD = 100.0f;
@@ -131,12 +132,15 @@ public class TouchHitTest : MonoBehaviour
 
                         //ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
                         ray = Camera.main.ScreenPointToRay(screenPosition);// screenPosition);
-                     
-                        if (Physics.Raycast(ray, out hit, 100))
-                        {
-                            CheckAreaField(hit.transform);
-                            putFlag = true;
-                        }
+
+                        Debug.Log("Raycast=" + Physics.Raycast(ray, out hit, 100));
+                        //if (Physics.Raycast(ray, out hit, 100))
+                        //{
+                        //    CheckAreaField(hit.transform);
+                        //    putFlag = true;
+                        //}
+                        CheckAreaField(hit.transform);
+                        putFlag = true;
                         Debug.Log("screenPosition=" + screenPosition  + "  hit="+ hit);
                         return;
                     }
