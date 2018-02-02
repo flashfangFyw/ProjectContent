@@ -17,6 +17,7 @@ public class TouchHitTest : MonoBehaviour
 
     #region public property
     public Transform m_HitTransform;
+    public GameObject[] poinPerfabs;
     #endregion
     #region private property
     public float scaleAD = 100.0f;
@@ -128,7 +129,7 @@ public class TouchHitTest : MonoBehaviour
                     if (HitTestWithResultType(point, resultType))
                     {
 
-                        ray = Camera.main.ScreenPointToRay(screenPosition);
+                        ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
                         if (Physics.Raycast(ray, out hit, 100))
                         {
                             CheckAreaField(hit.transform);
@@ -160,6 +161,15 @@ public class TouchHitTest : MonoBehaviour
     {
         Debug.Log("CheckAreaField");
         GeetVerticesXZ_MaxMin(tf);
+        if(poinPerfabs!=null)
+        {
+            for(int i=0;i< poinPerfabs.Length;i++)
+            {
+                GameObject point = Instantiate(poinPerfabs[i]);
+                point.transform.position = pointList[i];
+                point.transform.SetParent(this.transform);
+            }
+        }
         SingletonMB<ARGeneratePlane>.Instance.GetPlaneEdge();
     }
     //获取顶点最大，最小值
@@ -172,6 +182,7 @@ public class TouchHitTest : MonoBehaviour
     private Vector3 xMin_Point;
     private Vector3 zMax_Point;
     private Vector3 zMin_Point;
+    private List<Vector3> pointList;
 
     protected  void GeetVerticesXZ_MaxMin(Transform tf)
     {
@@ -198,6 +209,12 @@ public class TouchHitTest : MonoBehaviour
                 i++;
             }
         }
+        pointList = new List<Vector3>();
+        pointList.Add(xMax_Point);
+        pointList.Add(xMin_Point);
+        pointList.Add(zMax_Point);
+        pointList.Add(zMin_Point);
+
         //modelHeighth = maxValue - minValue;
         //float disValue = (maxValue - minValue) / 50;
         //maxValue += disValue;
