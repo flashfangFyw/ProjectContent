@@ -3,7 +3,7 @@
 	 Properties {
     _MainTex ("Texture", 2D) = "white" {}
     [NoScaleOffset] _BumpMap ("Normalmap", 2D) = "bump" {}
-	_Points("points" , float3[]) 
+	//_Points("points" , float3[]) 
     _Z_Range("Z_Range" , Float) = 0.0
     _X_Range("X_Range" , Float) = 0.0
     _Color("Color", Color) = (1,1,1,1)
@@ -31,7 +31,7 @@ struct Input {
     float2 uv_MainTex;
     float3 worldPos;
 };
-void Contains
+//void Contains
 
 void surf (Input IN, inout SurfaceOutput o) 
 {
