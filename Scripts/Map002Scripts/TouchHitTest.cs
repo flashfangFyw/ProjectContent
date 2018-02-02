@@ -23,6 +23,8 @@ public class TouchHitTest : MonoBehaviour
     private bool putFlag = false;
     private Touch oldTouch1;  //上次触摸点1(手指1)  
     private Touch oldTouch2;  //上次触摸点2(手指2)  
+    private Ray ray;
+    RaycastHit hit;
     #endregion
 
     #region unity function
@@ -36,6 +38,7 @@ public class TouchHitTest : MonoBehaviour
     void Update()
     {
         PutHitTest();
+        TouchControl();
     }
     void OnDisable()
     {
@@ -124,8 +127,13 @@ public class TouchHitTest : MonoBehaviour
                 {
                     if (HitTestWithResultType(point, resultType))
                     {
-                        putFlag = true;
-                        CheckAreaField();
+
+                        ray = Camera.main.ScreenPointToRay(screenPosition);
+                        if (Physics.Raycast(ray, out hit, 100))
+                        {
+                            CheckAreaField(hit.transform);
+                            putFlag = true;
+                        }
                         return;
                     }
                 }
@@ -148,10 +156,56 @@ public class TouchHitTest : MonoBehaviour
         }
         return false;
     }
-    private void CheckAreaField()
+    private void CheckAreaField(Transform tf)
     {
         Debug.Log("CheckAreaField");
+        GeetVerticesXZ_MaxMin(tf);
         SingletonMB<ARGeneratePlane>.Instance.GetPlaneEdge();
+    }
+    //获取顶点最大，最小值
+    private float x_Max;
+    private float x_Min;
+    private float z_Max;
+    private float z_Min;
+    //==========================
+    private Vector3 xMax_Point;
+    private Vector3 xMin_Point;
+    private Vector3 zMax_Point;
+    private Vector3 zMin_Point;
+
+    protected  void GeetVerticesXZ_MaxMin(Transform tf)
+    {
+        x_Max = float.MaxValue;
+        x_Min = float.MinValue;
+        z_Max = float.MaxValue;
+        z_Min = float.MinValue;
+        xMax_Point = xMin_Point = zMax_Point = zMin_Point = transform.position;
+        MeshFilter[] filterList = tf.GetComponents<MeshFilter>();
+        foreach (MeshFilter filter in filterList)
+        {
+            Mesh mesh = filter.mesh;
+            Vector3[] vertices = mesh.vertices;
+            int i = 0;
+            Vector3 vertPos;
+            foreach (Vector3 vertice in vertices)
+            {
+                //Debug.Log("I==" + i);
+                vertPos = filter.transform.TransformPoint(vertice);
+                if (vertPos.x < x_Max) x_Max = vertPos.x; xMax_Point = vertPos;
+                if (vertPos.x > x_Min) x_Min = vertPos.x; xMin_Point = vertPos;
+                if (vertPos.z < z_Max) z_Max = vertPos.z; zMax_Point = vertPos;
+                if (vertPos.z > z_Min) z_Min = vertPos.z; zMin_Point = vertPos;
+                i++;
+            }
+        }
+        //modelHeighth = maxValue - minValue;
+        //float disValue = (maxValue - minValue) / 50;
+        //maxValue += disValue;
+        //minValue -= disValue;
+
+        //textureMaterial.SetFloat("EffectTime", maxValue);
+        //textureMaterial.SetFloat("BottomValue", minValue);
+        //Debug.Log("====================maxValue==" + maxValue + "     minValue==" + minValue + "     modelHeighth==" + modelHeighth);
     }
     #endregion
 
