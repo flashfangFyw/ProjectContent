@@ -19,6 +19,7 @@ public class TouchHitTest : MonoBehaviour
     public Transform m_HitTransform;
     public GameObject[] poinPerfabs;
     public Material testMeterial;
+    public GameObject cube;
     #endregion
     #region private property
     public float scaleAD = 100.0f;
@@ -58,47 +59,50 @@ public class TouchHitTest : MonoBehaviour
         if (putFlag == false) return;
         if (Input.touchCount > 0 )
         {
-            Touch touch = Input.GetTouch(0);
             if (1 == Input.touchCount)
             {
+                Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
                 transform.Translate(Vector3.left * deltaPos.x, Space.World);
                 //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
             }
-            if (2 == Input.touchCount)
+
+            //多点触摸, 放大缩小  
+            Touch newTouch1 = Input.GetTouch(0);
+            Touch newTouch2 = Input.GetTouch(1);
+
+            //第2点刚开始接触屏幕, 只记录，不做处理  
+            if (newTouch2.phase == TouchPhase.Began)
             {
-                Touch newTouch2 = Input.GetTouch(1);
-                //第2点刚开始接触屏幕, 只记录，不做处理  
-                if (newTouch2.phase == TouchPhase.Began)
-                {
-                    oldTouch2 = newTouch2;
-                    oldTouch1 = touch;
-                    return;
-                }
-                //计算老的两点距离和新的两点间距离，变大要放大模型，变小要缩放模型  
-                float oldDistance = Vector2.Distance(oldTouch1.position, oldTouch2.position);
-                float newDistance = Vector2.Distance(touch.position, newTouch2.position);
-
-                //两个距离之差，为正表示放大手势， 为负表示缩小手势  
-                float offset = newDistance - oldDistance;
-
-                //放大因子， 一个像素按 0.01倍来算(100可调整)  
-                float scaleFactor = offset / scaleAD;
-                Vector3 localScale = transform.localScale;
-                Vector3 scale = new Vector3(localScale.x + scaleFactor,
-                    localScale.y + scaleFactor,
-                    localScale.z + scaleFactor);
-
-                //最小缩放到 0.3 倍  
-                if (scale.x > 0.3f && scale.y > 0.3f && scale.z > 0.3f)
-                {
-                    transform.localScale = scale;
-                }
-
-                //记住最新的触摸点，下次使用  
-                oldTouch1 = touch;
                 oldTouch2 = newTouch2;
+                oldTouch1 = newTouch1;
+                return;
             }
+
+            //计算老的两点距离和新的两点间距离，变大要放大模型，变小要缩放模型  
+            float oldDistance = Vector2.Distance(oldTouch1.position, oldTouch2.position);
+            float newDistance = Vector2.Distance(newTouch1.position, newTouch2.position);
+
+            //两个距离之差，为正表示放大手势， 为负表示缩小手势  
+            float offset = newDistance - oldDistance;
+
+            //放大因子， 一个像素按 0.01倍来算(100可调整)  
+            float scaleFactor = offset / scaleAD;
+            Vector3 localScale = transform.localScale;
+            Vector3 scale = new Vector3(localScale.x + scaleFactor,
+                localScale.y + scaleFactor,
+                localScale.z + scaleFactor);
+
+            //最小缩放到 0.3 倍  
+            if (scale.x > 0.3f && scale.y > 0.3f && scale.z > 0.3f)
+            {
+                transform.localScale = scale;
+            }
+
+            //记住最新的触摸点，下次使用  
+            oldTouch1 = newTouch1;
+            oldTouch2 = newTouch2;
+
         }
     }
     private void PutHitTest()
@@ -134,12 +138,13 @@ public class TouchHitTest : MonoBehaviour
                         ray = Camera.main.ScreenPointToRay(screenPosition);// screenPosition);
 
                         Debug.Log("Raycast=" + Physics.Raycast(ray, out hit, 100));
-                        //if (Physics.Raycast(ray, out hit, 100))
-                        //{
-                        //    CheckAreaField(hit.transform);
-                        //    putFlag = true;
-                        //}
-                        CheckAreaField(hit.transform);
+                        if (Physics.Raycast(ray, out hit, 100))
+                        {
+                            Debug.DrawLine(ray.origin, hit.point, Color.green);
+                            //    CheckAreaField(hit.transform);
+                            //    putFlag = true;
+                        }
+                        CheckAreaField(cube.transform);
                         putFlag = true;
                         Debug.Log("screenPosition=" + screenPosition  + "  hit="+ hit);
                         return;
@@ -235,8 +240,8 @@ public class TouchHitTest : MonoBehaviour
         //float disValue = (maxValue - minValue) / 50;
         //maxValue += disValue;
         //minValue -= disValue;
-        testMeterial.SetInt("_Points_Num", pointList.Count);
-        testMeterial.SetVectorArray("_Points", pList);
+        cube.GetComponent<MeshRenderer>().materials[0].SetInt("_Points_Num", pointList.Count);
+        cube.GetComponent<MeshRenderer>().materials[0].SetVectorArray("_Points", pList);
         //textureMaterial.SetFloat("EffectTime", maxValue);
         //textureMaterial.SetFloat("BottomValue", minValue);
         //Debug.Log("====================maxValue==" + maxValue + "     minValue==" + minValue + "     modelHeighth==" + modelHeighth);

@@ -70,9 +70,9 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _X_Range: 5
+    - _X_Range: 100
     - _ZWrite: 1
-    - _Z_Range: 5
+    - _Z_Range: 98.81
     m_Colors:
     - _Color: {r: 0.9411765, g: 0.15224911, b: 0.15224911, a: 0.841}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
