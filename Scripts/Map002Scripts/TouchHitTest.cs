@@ -202,10 +202,10 @@ public class TouchHitTest : MonoBehaviour
 
     protected  void GeetVerticesXZ_MaxMin(Transform tf)
     {
-        x_Max = float.MaxValue;
-        x_Min = float.MinValue;
-        z_Max = float.MaxValue;
-        z_Min = float.MinValue;
+        x_Max = float.MinValue;
+        x_Min = float.MaxValue;
+        z_Max = float.MinValue;
+        z_Min = float.MaxValue;
         xMax_Point = xMin_Point = zMax_Point = zMin_Point = transform.position;
         MeshFilter[] filterList = tf.GetComponents<MeshFilter>();
         foreach (MeshFilter filter in filterList)
@@ -218,10 +218,10 @@ public class TouchHitTest : MonoBehaviour
             {
                 //Debug.Log("I==" + i);
                 vertPos = filter.transform.TransformPoint(vertice);
-                if (vertPos.x < x_Max) x_Max = vertPos.x; xMax_Point = vertPos;
-                if (vertPos.x > x_Min) x_Min = vertPos.x; xMin_Point = vertPos;
-                if (vertPos.z < z_Max) z_Max = vertPos.z; zMax_Point = vertPos;
-                if (vertPos.z > z_Min) z_Min = vertPos.z; zMin_Point = vertPos;
+                if (vertPos.x < x_Min) x_Min = vertPos.x; xMin_Point = vertPos;
+                if (vertPos.x > x_Max) x_Max = vertPos.x; xMax_Point = vertPos;
+                if (vertPos.z < z_Min) z_Min = vertPos.z; zMin_Point = vertPos;
+                if (vertPos.z > z_Max) z_Max = vertPos.z; zMax_Point = vertPos;
                 i++;
             }
         }
