@@ -22,6 +22,7 @@ CGPROGRAM
 sampler2D _MainTex;
 sampler2D _BumpMap;
 uniform float4 _Points[100];  // 数组变量
+uniform float _Points_Num;  // 数组长度变量
 float _Z_Range;
 float _X_Range;
 //half _TransitLineVal;
@@ -31,19 +32,39 @@ struct Input {
     float2 uv_MainTex;
     float3 worldPos;
 };
-//void Contains
+bool Contains(float3 worldPos)
+{
+	// 遍历
+	for (int i=0; i<_Points_Num; i++)
+	{
+		float4 p4 = _Points[i]; // 索引取值
+		// 自定义处理
+		if ( (((_Points[i + 1].z <= p.z) && (p.z < _Points[i].z))
+                        ||
+                         ((_Points[i].z <= p.z) && (p.z < _Points[i + 1].z)))
+                          &&
+                        (p.x < (_Points[i].x - _Points[i + 1].x) * (p.z - _Points[i + 1].z) / (_Points[i].z - _Points[i + 1].z) + _Points[i + 1].x)
+                        )
+                {
+                result = !result;
+            }
+	}
+	return result;
+}
 
 void surf (Input IN, inout SurfaceOutput o) 
 {
     // (IN.worldPos.y <= _EffectTime+ _TransitLineVal
      //&& IN.worldPos.y >= _BottomValue- _TransitLineVal )
-	   if ((IN.worldPos.x <= _X_Range
-			 && IN.worldPos.x >= -_X_Range )
-			 &&
-			 (
-			 IN.worldPos.z <= _Z_Range
-			 && IN.worldPos.z >= -_Z_Range
-			 ))
+	 //=======================================================
+	  // if ((IN.worldPos.x <= _X_Range
+		//	 && IN.worldPos.x >= -_X_Range )
+		//	 &&
+//(
+		//	 IN.worldPos.z <= _Z_Range
+//&& IN.worldPos.z >= -_Z_Range
+		//	 ))
+			 if(Contains(IN.worldPos))
     {
             fixed4 c = tex2D(_MainTex, IN.uv_MainTex) ;
             //if ((IN.worldPos.y >= _EffectTime && IN.worldPos.y <= _EffectTime + _TransitLineVal)||(IN.worldPos.y <= _BottomValue && IN.worldPos.y >= _BottomValue - _TransitLineVal))

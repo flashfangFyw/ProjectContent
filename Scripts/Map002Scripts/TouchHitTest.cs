@@ -191,6 +191,8 @@ public class TouchHitTest : MonoBehaviour
     private Vector3 zMax_Point;
     private Vector3 zMin_Point;
     private List<Vector3> pointList;
+    private List<Vector4> pList;
+
 
     protected  void GeetVerticesXZ_MaxMin(Transform tf)
     {
@@ -217,17 +219,24 @@ public class TouchHitTest : MonoBehaviour
                 i++;
             }
         }
+        //Vector4.op
         pointList = new List<Vector3>();
         pointList.Add(xMax_Point);
         pointList.Add(xMin_Point);
         pointList.Add(zMax_Point);
         pointList.Add(zMin_Point);
+        pList = new List<Vector4>();
+        pList.Add(new Vector4(xMax_Point.x, xMax_Point.y, xMax_Point.z,0));
+        pList.Add(new Vector4(xMin_Point.x, xMin_Point.y, xMin_Point.z, 0));
+        pList.Add(new Vector4(zMax_Point.x, zMax_Point.y, zMax_Point.z, 0));
+        pList.Add(new Vector4(zMin_Point.x, zMin_Point.y, zMin_Point.z, 0));
 
         //modelHeighth = maxValue - minValue;
         //float disValue = (maxValue - minValue) / 50;
         //maxValue += disValue;
         //minValue -= disValue;
-
+        testMeterial.SetInt("_Points_Num", pointList.Count);
+        testMeterial.SetVectorArray("_Points", pList);
         //textureMaterial.SetFloat("EffectTime", maxValue);
         //textureMaterial.SetFloat("BottomValue", minValue);
         //Debug.Log("====================maxValue==" + maxValue + "     minValue==" + minValue + "     modelHeighth==" + modelHeighth);
