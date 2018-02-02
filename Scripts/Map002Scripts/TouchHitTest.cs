@@ -129,7 +129,8 @@ public class TouchHitTest : MonoBehaviour
                     if (HitTestWithResultType(point, resultType))
                     {
 
-                        ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
+                        //ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
+                        ray = Camera.main.ScreenPointToRay(screenPosition);// screenPosition);
                         if (Physics.Raycast(ray, out hit, 100))
                         {
                             CheckAreaField(hit.transform);
@@ -224,6 +225,31 @@ public class TouchHitTest : MonoBehaviour
         //textureMaterial.SetFloat("BottomValue", minValue);
         //Debug.Log("====================maxValue==" + maxValue + "     minValue==" + minValue + "     modelHeighth==" + modelHeighth);
     }
+    //public static bool Contains(Vector3[] points, Vector3 p)
+    //{
+    //    bool result = false;
+    //    for (int i = 0; i < points.Length - 1; i++)
+    //    {
+    //        if (
+    //                    // (
+    //                    (
+    //                    (points[i + 1].z <= p.z) && (p.z < points[i].z)
+    //                    ||
+    //                     (points[i].z <= p.z) && (p.z < points[i + 1].z)
+    //                     //)
+    //                     )&&
+    //                   (
+    //                    (p.x < ((points[i].x - points[i + 1].x) * p.z - points[i + 1].z) / (points[i].z - points[i + 1].z + points[i + 1].x)
+    //                    )
+    //            )
+        
+    //            {
+    //            result = !result;
+    //        }
+                    
+    //    }
+    //    return result;
+    //}
     #endregion
 
     #region event function
