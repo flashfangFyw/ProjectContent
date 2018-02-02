@@ -271,7 +271,7 @@ public class MyDirectionsFactory : MonoBehaviour
         //hash.Add("time", travelTime);
         hash.Add("easetype", "linear");
         hash.Add("speed", speedList[index]);//speedList[index]
-        hash.Add("islocal", true);
+        hash.Add("islocal", false);
         //hash.Add("axis", "y");
         hash.Add("oncomplete", "MoveToWaypoint");
         hash.Add("oncompleteparams", index);
