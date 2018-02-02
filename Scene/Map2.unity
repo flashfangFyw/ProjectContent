@@ -847,9 +847,9 @@ MonoBehaviour:
   m_HitTransform: {fileID: 1286139108}
   poinPerfabs:
   - {fileID: 1306553354024346, guid: fd39e492cfca9fe43a311a7829c453ad, type: 2}
-  - {fileID: 1306553354024346, guid: fd39e492cfca9fe43a311a7829c453ad, type: 2}
-  - {fileID: 1306553354024346, guid: fd39e492cfca9fe43a311a7829c453ad, type: 2}
-  - {fileID: 1306553354024346, guid: fd39e492cfca9fe43a311a7829c453ad, type: 2}
+  - {fileID: 1306553354024346, guid: 590f11fdc33fe3d49b272b85ac1aa0b4, type: 2}
+  - {fileID: 1306553354024346, guid: 9651978d1fdf71047bc3120246e655a2, type: 2}
+  - {fileID: 1306553354024346, guid: d2e7fc8de764389479d1418f3bb653d4, type: 2}
   testMeterial: {fileID: 2100000, guid: 8360f6acd9abfe04c9b2024ad3ab0399, type: 2}
   cube: {fileID: 1788618010}
   scaleAD: 100
@@ -1152,13 +1152,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1788618010}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.29876184, z: -0, w: 0.9543277}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1286139108}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 34.767002, z: 0}
 --- !u!1001 &1802624186
 Prefab:
   m_ObjectHideFlags: 0

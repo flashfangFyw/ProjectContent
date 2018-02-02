@@ -36,6 +36,7 @@ public class TouchHitTest : MonoBehaviour
     }
     void Start () 
 	{
+        //CheckAreaField(cube.transform);
     }
     // Update is called once per frame
     void Update()
@@ -206,7 +207,10 @@ public class TouchHitTest : MonoBehaviour
         x_Min = float.MaxValue;
         z_Max = float.MinValue;
         z_Min = float.MaxValue;
-        xMax_Point = xMin_Point = zMax_Point = zMin_Point = transform.position;
+        xMax_Point =  transform.position;
+        xMin_Point= transform.position;
+        zMax_Point = transform.position;
+        zMin_Point = transform.position;
         MeshFilter[] filterList = tf.GetComponents<MeshFilter>();
         foreach (MeshFilter filter in filterList)
         {
@@ -218,10 +222,31 @@ public class TouchHitTest : MonoBehaviour
             {
                 //Debug.Log("I==" + i);
                 vertPos = filter.transform.TransformPoint(vertice);
-                if (vertPos.x < x_Min) x_Min = vertPos.x; xMin_Point = vertPos;
-                if (vertPos.x > x_Max) x_Max = vertPos.x; xMax_Point = vertPos;
-                if (vertPos.z < z_Min) z_Min = vertPos.z; zMin_Point = vertPos;
-                if (vertPos.z > z_Max) z_Max = vertPos.z; zMax_Point = vertPos;
+                if (vertPos.x < x_Min)
+                {
+                    x_Min = vertPos.x;
+                    xMin_Point = vertPos;
+                    Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
+                }
+                if (vertPos.x > x_Max)
+                {
+                    x_Max = vertPos.x;
+                    xMax_Point = vertPos;
+                    Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
+                }
+                if (vertPos.z < z_Min)
+                {
+                    z_Min = vertPos.z;
+                    zMin_Point = vertPos;
+                    Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
+                }
+                if (vertPos.z > z_Max)
+                {
+                    z_Max = vertPos.z;
+                    zMax_Point = vertPos;
+                    Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
+                }
+               
                 i++;
             }
         }
@@ -243,10 +268,10 @@ public class TouchHitTest : MonoBehaviour
         //minValue -= disValue;
         cube.GetComponent<MeshRenderer>().materials[0].SetInt("_Points_Num", pointList.Count);
         cube.GetComponent<MeshRenderer>().materials[0].SetVectorArray("_Points", pList);
-        Debug.Log("=======xMax_Point==" + xMax_Point);
-        Debug.Log("=======xMin_Point==" + xMin_Point);
-        Debug.Log("=======zMax_Point==" + zMax_Point);
-        Debug.Log("=======zMin_Point==" + zMin_Point);
+        //Debug.Log("=======xMax_Point==" + xMax_Point);
+        //Debug.Log("=======xMin_Point==" + xMin_Point);
+        //Debug.Log("=======zMax_Point==" + zMax_Point);
+        //Debug.Log("=======zMin_Point==" + zMin_Point);
         //textureMaterial.SetFloat("EffectTime", maxValue);
         //textureMaterial.SetFloat("BottomValue", minValue);
         //Debug.Log("====================maxValue==" + maxValue + "     minValue==" + minValue + "     modelHeighth==" + modelHeighth);
