@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.XR.iOS;
 using ffDevelopmentSpace;
+using System.Collections.Generic;
 
 
 /* 
@@ -42,10 +43,18 @@ public class ARGeneratePlane : SingletonMB<ARGeneratePlane>
     }
     #endregion
 
-	#region public function
+    #region public function
     public void GetPlaneEdge()
     {
         Debug.Log("GetPlaneEdge");
+    }
+    public void HidePlane()
+    {
+        List<ARPlaneAnchorGameObject> list = unityARAnchorManager.GetCurrentPlaneAnchors();
+        foreach(ARPlaneAnchorGameObject plane in list)
+        {
+            plane.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 	#endregion
 	#region private function
