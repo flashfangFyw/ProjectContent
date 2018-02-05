@@ -29,7 +29,7 @@ public class PointInPolygon : MonoBehaviour
     }
     void Start () 
 	{
-        mt = this.GetComponent<MeshRenderer>().materials[0];
+        //mt = this.GetComponent<MeshRenderer>().materials[0];
         //child = this.transform.GetChild(0);
     }   
 	void Update () 
