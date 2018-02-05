@@ -180,7 +180,7 @@ public class TouchHitTest : MonoBehaviour
                 m_HitTransform.position = targetPosition;
                 m_HitTransform.rotation = targetRotation;
                 FramePerfabs.transform.position = targetPosition;
-                FramePerfabs.transform.rotation = targetRotation;
+               // FramePerfabs.transform.rotation = targetRotation;
                 Debug.Log(string.Format("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
                 return true;
             }
@@ -193,7 +193,8 @@ public class TouchHitTest : MonoBehaviour
     {
         SetVerticeData();
         showPerfabs.transform.position = targetPosition;
-        showPerfabs.transform.rotation = targetRotation;
+        //showPerfabs.transform.rotation = targetRotation;
+        SingletonMB<ARGeneratePlane>.Instance.HidePlane();
     }
     public Vector3 GetOffsetPosition()
     {
