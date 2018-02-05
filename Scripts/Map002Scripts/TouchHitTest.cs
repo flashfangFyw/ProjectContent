@@ -19,7 +19,10 @@ public class TouchHitTest : MonoBehaviour
     public Transform m_HitTransform;
     public GameObject[] poinPerfabs;
     public Material testMeterial;
-    public GameObject cube;
+    public GameObject showPerfabs;
+    public GameObject FramePerfabs;
+    public GameObject showFrame;
+    public PointInPolygon pp;
     #endregion
     #region private property
     public float scaleAD = 100.0f;
@@ -36,7 +39,7 @@ public class TouchHitTest : MonoBehaviour
     }
     void Start () 
 	{
-        //CheckAreaField(cube.transform);
+        //CheckAreaField();
     }
     // Update is called once per frame
     void Update()
@@ -96,8 +99,8 @@ public class TouchHitTest : MonoBehaviour
                 localScale.y + scaleFactor,
                 localScale.z + scaleFactor);
 
-            //最小缩放到 0.3 倍  
-            if (scale.x > 0.3f && scale.y > 0.3f && scale.z > 0.3f)
+            //最小缩放到 0.1 倍  
+            if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
             {
                 transform.localScale = scale;
             }
@@ -147,7 +150,7 @@ public class TouchHitTest : MonoBehaviour
                             //    CheckAreaField(hit.transform);
                             //    putFlag = true;
                         }
-                        CheckAreaField(cube.transform);
+                        CheckAreaField();
                         putFlag = true;
                         Debug.Log("screenPosition=" + screenPosition  + "  hit="+ hit);
                         return;
@@ -166,27 +169,29 @@ public class TouchHitTest : MonoBehaviour
                 Debug.Log("Got hit!");
                 m_HitTransform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
                 m_HitTransform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
+                showFrame.transform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
+                showFrame.transform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
                 Debug.Log(string.Format("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
                 return true;
             }
         }
         return false;
     }
-    private void CheckAreaField(Transform tf)
+    private void CheckAreaField()
     {
         Debug.Log("CheckAreaField");
-        if (tf == null) return;
-        GeetVerticesXZ_MaxMin(tf);
+        //if (tf == null) return;
+        GeetVerticesXZ_MaxMin();
         if(poinPerfabs!=null)
         {
             for(int i=0;i< poinPerfabs.Length;i++)
             {
                 GameObject point = Instantiate(poinPerfabs[i]);
                 point.transform.position = pointList[i];
-                point.transform.SetParent(this.transform);
+               // point.transform.SetParent(this.transform);
             }
         }
-        SingletonMB<ARGeneratePlane>.Instance.GetPlaneEdge();
+        //SingletonMB<ARGeneratePlane>.Instance.GetPlaneEdge();
     }
     //获取顶点最大，最小值
     private float x_Max;
@@ -194,25 +199,25 @@ public class TouchHitTest : MonoBehaviour
     private float z_Max;
     private float z_Min;
     //==========================
-    private Vector3 xMax_Point;
-    private Vector3 xMin_Point;
-    private Vector3 zMax_Point;
-    private Vector3 zMin_Point;
+    private Vector3 xMaxzMin_Point;
+    private Vector3 xMinzMin_Point;
+    private Vector3 xMinzMax_Point;
+    private Vector3 xMaxzMax_Point;
     private List<Vector3> pointList;
     private List<Vector4> pList;
 
 
-    protected  void GeetVerticesXZ_MaxMin(Transform tf)
+    protected  void GeetVerticesXZ_MaxMin()
     {
         x_Max = float.MinValue;
         x_Min = float.MaxValue;
         z_Max = float.MinValue;
         z_Min = float.MaxValue;
-        xMax_Point =  transform.position;
-        xMin_Point= transform.position;
-        zMax_Point = transform.position;
-        zMin_Point = transform.position;
-        MeshFilter[] filterList = tf.GetComponents<MeshFilter>();
+        xMaxzMin_Point =  transform.position;
+        xMinzMin_Point = transform.position;
+        xMinzMax_Point = transform.position;
+        xMaxzMax_Point = transform.position;
+        MeshFilter[] filterList = FramePerfabs.GetComponents<MeshFilter>();
         foreach (MeshFilter filter in filterList)
         {
             Mesh mesh = filter.mesh;
@@ -221,31 +226,32 @@ public class TouchHitTest : MonoBehaviour
             Vector3 vertPos;
             foreach (Vector3 vertice in vertices)
             {
-                //Debug.Log("I==" + i);
+                //Debug.Log("I==" + vertices.Length);
                 vertPos = filter.transform.TransformPoint(vertice);
+                //if(vertPos.y!=transform.position.y) continue;
                 if (vertPos.x < x_Min)
                 {
                     x_Min = vertPos.x;
-                    xMin_Point = vertPos;
-                    Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
+                    //xMin_Point = vertPos;
+                    //Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
                 }
-                if (vertPos.x > x_Max)
+                 if (vertPos.x > x_Max)
                 {
                     x_Max = vertPos.x;
-                    xMax_Point = vertPos;
-                    Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
+                    //xMax_Point = vertPos;
+                    //Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
                 }
                 if (vertPos.z < z_Min)
                 {
                     z_Min = vertPos.z;
-                    zMin_Point = vertPos;
-                    Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
+                    //zMin_Point = vertPos;
+                    //Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
                 }
                 if (vertPos.z > z_Max)
                 {
                     z_Max = vertPos.z;
-                    zMax_Point = vertPos;
-                    Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
+                    //zMax_Point = vertPos;
+                    //Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
                 }
                
                 i++;
@@ -253,22 +259,34 @@ public class TouchHitTest : MonoBehaviour
         }
         //Vector4.op
         pointList = new List<Vector3>();
-        pointList.Add(xMax_Point);
-        pointList.Add(xMin_Point);
-        pointList.Add(zMax_Point);
-        pointList.Add(zMin_Point);
+
+        xMaxzMin_Point = new Vector3(x_Max, transform.position.y, z_Min);
+        xMinzMin_Point = new Vector3(x_Min, transform.position.y, z_Min);
+        xMinzMax_Point = new Vector3(x_Min, transform.position.y, z_Max);
+        xMaxzMax_Point = new Vector3(x_Max, transform.position.y, z_Max);
+        pointList.Add(xMaxzMin_Point);
+        pointList.Add(xMinzMin_Point);
+        pointList.Add(xMinzMax_Point);
+        pointList.Add(xMaxzMax_Point);
+        pp.SetPointList( pointList);
         pList = new List<Vector4>();
-        pList.Add(new Vector4(xMax_Point.x, xMax_Point.y, xMax_Point.z,0));
-        pList.Add(new Vector4(xMin_Point.x, xMin_Point.y, xMin_Point.z, 0));
-        pList.Add(new Vector4(zMax_Point.x, zMax_Point.y, zMax_Point.z, 0));
-        pList.Add(new Vector4(zMin_Point.x, zMin_Point.y, zMin_Point.z, 0));
+        pList.Add(new Vector4(x_Max, transform.position.y, z_Min, 0));
+        pList.Add(new Vector4(x_Min, transform.position.y, z_Min, 0));
+        pList.Add(new Vector4(x_Min, transform.position.y, z_Max, 0));
+        pList.Add(new Vector4(x_Max, transform.position.y, z_Max, 0));
 
         //modelHeighth = maxValue - minValue;
         //float disValue = (maxValue - minValue) / 50;
         //maxValue += disValue;
         //minValue -= disValue;
-        cube.GetComponent<MeshRenderer>().materials[0].SetInt("_Points_Num", pointList.Count);
-        cube.GetComponent<MeshRenderer>().materials[0].SetVectorArray("_Points", pList);
+        MeshRenderer[] mrs = showPerfabs.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer mr in mrs)
+        {
+            mr.materials[0].SetInt("_Points_Num", pointList.Count);
+            mr.materials[0].SetVectorArray("_Points", pList);
+        }
+            //showPerfabs.GetComponent<MeshRenderer>().materials[0].SetInt("_Points_Num", pointList.Count);
+            //showPerfabs.GetComponent<MeshRenderer>().materials[0].SetVectorArray("_Points", pList);
         //Debug.Log("=======xMax_Point==" + xMax_Point);
         //Debug.Log("=======xMin_Point==" + xMin_Point);
         //Debug.Log("=======zMax_Point==" + zMax_Point);
@@ -300,3 +318,70 @@ public class TouchHitTest : MonoBehaviour
     #region event function
     #endregion
 }
+//bool IsPointInPolygon(float3 worldPos)// Vector2 point, Vector2[] polygon)
+//{
+//    int i, j = _Points_Num - 1;
+//    bool oddNodes = false;
+
+//    for (i = 0; i < _Points_Num; i++)
+//    {
+//        if ((_Points[i].z < worldPos.z && _Points[j].z >= worldPos.z
+//        || _Points[j].z < worldPos.z && _Points[i].z >= worldPos.z)
+//        && (_Points[i].x <= worldPos.x || _Points[j].x <= worldPos.x))
+//        {
+//            oddNodes ^= (_Points[i].x + (worldPos.z - _Points[i].z) / (_Points[j].z - _Points[i].z) * (_Points[j].x - _Points[i].x) < worldPos.x);
+//        }
+//        j = i;
+//    }
+
+//    return oddNodes;
+//}
+
+/**
+* @description 射线法判断点是否在多边形内部
+* @param {Object} p 待判断的点，格式：{ x: X坐标, y: Y坐标 }
+* @param {Array} poly 多边形顶点，数组成员的格式同 p
+* @return {String} 点 p 和多边形 poly 的几何关系
+*/
+//function rayCasting(p, poly)
+//{
+//    var px = p.x,
+//        py = p.y,
+//        flag = false
+
+//    for (var i = 0, l = poly.length, j = l - 1; i < l; j = i, i++)
+//    {
+//        var sx = poly[i].x,
+//            sy = poly[i].y,
+//            tx = poly[j].x,
+//            ty = poly[j].y
+
+//      // 点与多边形顶点重合
+//        if ((sx === px && sy === py) || (tx === px && ty === py))
+//        {
+//            return 'on'
+//      }
+
+//        // 判断线段两端点是否在射线两侧
+//        if ((sy < py && ty >= py) || (sy >= py && ty < py))
+//        {
+//            // 线段上与射线 Y 坐标相同的点的 X 坐标
+//            var x = sx + (py - sy) * (tx - sx) / (ty - sy)
+  
+//        // 点在多边形的边上
+//            if (x === px)
+//            {
+//                return 'on'
+//        }
+
+//            // 射线穿过多边形的边界
+//            if (x > px)
+//            {
+//                flag = !flag
+//            }
+//        }
+//    }
+
+//    // 射线穿过多边形边界的次数为奇数时点在多边形内
+//    return flag ? 'in' : 'out'
+//  }

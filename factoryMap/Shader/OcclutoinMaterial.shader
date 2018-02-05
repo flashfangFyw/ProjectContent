@@ -52,6 +52,54 @@ bool Contains(float3 worldPos)
 	}
 	return result;
 }
+bool rayCasting(float3 worldPos)
+{
+	float3 p=worldPos;
+	float px = p.x;
+    float py = p.z;
+    bool  flag = false;
+	 for (int i = 0, l = 4, j = l - 1; i < l; j = i, i++)
+    {
+        float sx = _Points[i].x;
+        float sy = _Points[i].z;
+        float tx = _Points[j].x;
+        float ty = _Points[j].z;
+
+      // 点与多边形顶点重合
+        if ((sx == px && sy == py) || (tx == px && ty == py))
+        {
+            return false;
+		}
+        // 判断线段两端点是否在射线两侧
+        if ((sy < py && ty >= py) || (sy >= py && ty < py))
+        {
+            // 线段上与射线 Y 坐标相同的点的 X 坐标
+            float x = sx + (py - sy) * (tx - sx) / (ty - sy);
+			// 点在多边形的边上
+            if (x == px)  return false;
+            // 射线穿过多边形的边界
+            if (x > px)  flag = !flag;
+        }
+    }
+    // 射线穿过多边形边界的次数为奇数时点在多边形内
+    return flag;// ? 'in' : 'out'
+
+}
+int pnpoly(float3 worldPos)
+ //int nvert, float *vertx, float *verty, float testx, float testy)
+{
+	 bool inside = false;
+    for ( int i = 0, j =3 ; i < 4 ; j = i++ )
+    {
+        if ( ( _Points[ i ].z > worldPos.z ) != ( _Points[ j ].z > worldPos.z ) &&
+             worldPos.x < ( _Points[ j ].x - _Points[ i ].x ) * ( worldPos.z - _Points[ i ].z ) / ( _Points[ j ].z - _Points[ i ].z ) + _Points[ i ].x )
+        {
+            inside = !inside;
+        }
+    }
+
+    return inside;
+}
 
 void surf (Input IN, inout SurfaceOutput o) 
 {
@@ -65,7 +113,9 @@ void surf (Input IN, inout SurfaceOutput o)
 		//	 IN.worldPos.z <= _Z_Range
 //&& IN.worldPos.z >= -_Z_Range
 		//	 ))
-			 if(Contains(IN.worldPos))
+			//if(Contains(IN.worldPos))
+			//if(pnpoly(IN.worldPos))
+			if(rayCasting(IN.worldPos))
 		{
             fixed4 c = tex2D(_MainTex, IN.uv_MainTex) ;
             //if ((IN.worldPos.y >= _EffectTime && IN.worldPos.y <= _EffectTime + _TransitLineVal)||(IN.worldPos.y <= _BottomValue && IN.worldPos.y >= _BottomValue - _TransitLineVal))
