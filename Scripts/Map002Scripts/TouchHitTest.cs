@@ -68,7 +68,7 @@ public class TouchHitTest : MonoBehaviour
             {
                 Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
-                Debug.Log("deltaPos=" + touch.deltaPosition);
+                //Debug.Log("deltaPos=" + touch.deltaPosition);
                 showPerfabs.transform.Translate(Vector3.right * deltaPos.x*0.001f, Space.World);
                 showPerfabs.transform.Translate(Vector3.forward * deltaPos.y * 0.001f, Space.World);
                 //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
@@ -145,12 +145,12 @@ public class TouchHitTest : MonoBehaviour
                         ray = Camera.main.ScreenPointToRay(screenPosition);// screenPosition);
 
                         Debug.Log("Raycast=" + Physics.Raycast(ray, out hit, 100));
-                        if (Physics.Raycast(ray, out hit, 100))
-                        {
-                            Debug.DrawLine(ray.origin, hit.point, Color.green);
-                            //    CheckAreaField(hit.transform);
-                            //    putFlag = true;
-                        }
+                        //if (Physics.Raycast(ray, out hit, 100))
+                        //{
+                        //    Debug.DrawLine(ray.origin, hit.point, Color.green);
+                        //    //    CheckAreaField(hit.transform);
+                        //    //    putFlag = true;
+                        //}
                         CheckAreaField();
                         if (showPerfabs)
                         {
@@ -177,8 +177,10 @@ public class TouchHitTest : MonoBehaviour
                 //m_HitTransform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
                 targetPosition = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
                 targetRotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
-                FramePerfabs.transform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
-                FramePerfabs.transform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
+                m_HitTransform.position = targetPosition;
+                m_HitTransform.rotation = targetRotation;
+                FramePerfabs.transform.position = targetPosition;
+                FramePerfabs.transform.rotation = targetRotation;
                 Debug.Log(string.Format("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
                 return true;
             }
@@ -189,9 +191,9 @@ public class TouchHitTest : MonoBehaviour
     private Quaternion targetRotation;
     public void LoactionTheModel()
     {
-        //m_HitTransform.position = targetPosition;
-        //m_HitTransform.rotation = targetRotation;
         SetVerticeData();
+        showPerfabs.transform.position = targetPosition;
+        showPerfabs.transform.rotation = targetRotation;
     }
     public Vector3 GetOffsetPosition()
     {
@@ -323,16 +325,16 @@ public class TouchHitTest : MonoBehaviour
         {
             //if (mr.materials[0].HasProperty("_Points_Num"))
             //{
-                mr.materials[0].SetInt("_Points_Num", pointList.Count);
-            Debug.Log("====================_Points_Num Finished");
+            mr.materials[0].SetInt("_Points_Num", pointList.Count);
+            //Debug.Log("====================_Points_Num Finished");
             //}
             //if (mr.materials[0].HasProperty("_Points"))
             //{
             mr.materials[0].SetVectorArray("_Points", pList);
-                Debug.Log("====================SetVectorArray Finished");
+            //    Debug.Log("====================SetVectorArray Finished");
             //}
         }
-        Debug.Log("====================SetMaterial Finished");
+        //Debug.Log("====================SetMaterial Finished");
     }
     public void SetPointInPolygon()
     {
@@ -342,93 +344,9 @@ public class TouchHitTest : MonoBehaviour
             p.SetPointList(pointList);
         }
     }
-    public static bool Contains(Vector3[] points, Vector3 p)
-    {
-        bool result = false;
-        for (int i = 0; i < points.Length - 1; i++)
-        {
-            if ( (((points[i + 1].z <= p.z) && (p.z < points[i].z))
-                        ||
-                         ((points[i].z <= p.z) && (p.z < points[i + 1].z)))
-                          &&
-                        (p.x < (points[i].x - points[i + 1].x) * (p.z - points[i + 1].z) / (points[i].z - points[i + 1].z) + points[i + 1].x)
-                        )
-                {
-                result = !result;
-            }
 
-        }
-        return result;
-    }
     #endregion
 
     #region event function
     #endregion
 }
-//bool IsPointInPolygon(float3 worldPos)// Vector2 point, Vector2[] polygon)
-//{
-//    int i, j = _Points_Num - 1;
-//    bool oddNodes = false;
-
-//    for (i = 0; i < _Points_Num; i++)
-//    {
-//        if ((_Points[i].z < worldPos.z && _Points[j].z >= worldPos.z
-//        || _Points[j].z < worldPos.z && _Points[i].z >= worldPos.z)
-//        && (_Points[i].x <= worldPos.x || _Points[j].x <= worldPos.x))
-//        {
-//            oddNodes ^= (_Points[i].x + (worldPos.z - _Points[i].z) / (_Points[j].z - _Points[i].z) * (_Points[j].x - _Points[i].x) < worldPos.x);
-//        }
-//        j = i;
-//    }
-
-//    return oddNodes;
-//}
-
-/**
-* @description 射线法判断点是否在多边形内部
-* @param {Object} p 待判断的点，格式：{ x: X坐标, y: Y坐标 }
-* @param {Array} poly 多边形顶点，数组成员的格式同 p
-* @return {String} 点 p 和多边形 poly 的几何关系
-*/
-//function rayCasting(p, poly)
-//{
-//    var px = p.x,
-//        py = p.y,
-//        flag = false
-
-//    for (var i = 0, l = poly.length, j = l - 1; i < l; j = i, i++)
-//    {
-//        var sx = poly[i].x,
-//            sy = poly[i].y,
-//            tx = poly[j].x,
-//            ty = poly[j].y
-
-//      // 点与多边形顶点重合
-//        if ((sx === px && sy === py) || (tx === px && ty === py))
-//        {
-//            return 'on'
-//      }
-
-//        // 判断线段两端点是否在射线两侧
-//        if ((sy < py && ty >= py) || (sy >= py && ty < py))
-//        {
-//            // 线段上与射线 Y 坐标相同的点的 X 坐标
-//            var x = sx + (py - sy) * (tx - sx) / (ty - sy)
-  
-//        // 点在多边形的边上
-//            if (x === px)
-//            {
-//                return 'on'
-//        }
-
-//            // 射线穿过多边形的边界
-//            if (x > px)
-//            {
-//                flag = !flag
-//            }
-//        }
-//    }
-
-//    // 射线穿过多边形边界的次数为奇数时点在多边形内
-//    return flag ? 'in' : 'out'
-//  }
