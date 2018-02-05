@@ -51,9 +51,13 @@ public class ARGeneratePlane : SingletonMB<ARGeneratePlane>
     public void HidePlane()
     {
         List<ARPlaneAnchorGameObject> list = unityARAnchorManager.GetCurrentPlaneAnchors();
-        foreach(ARPlaneAnchorGameObject plane in list)
+        Debug.Log("list="+ list.Count);
+        foreach (ARPlaneAnchorGameObject plane in list)
+
         {
-            plane.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            //plane.gameObject.GetComponent<MeshRenderer>().sharedMaterials[0]
+            //plane.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            plane.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
         }
     }
 	#endregion
