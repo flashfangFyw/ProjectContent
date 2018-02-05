@@ -21,7 +21,7 @@ public class TouchHitTest : MonoBehaviour
     public Material testMeterial;
     public GameObject showPerfabs;
     public GameObject FramePerfabs;
-    public GameObject showFrame;
+    //public GameObject showFrame;
     //public PointInPolygon pp;
     #endregion
     #region private property
@@ -39,7 +39,7 @@ public class TouchHitTest : MonoBehaviour
     }
     void Start () 
 	{
-        //CheckAreaField();
+        CheckAreaField();
     }
     // Update is called once per frame
     void Update()
@@ -169,8 +169,8 @@ public class TouchHitTest : MonoBehaviour
                 Debug.Log("Got hit!");
                 m_HitTransform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
                 m_HitTransform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
-                showFrame.transform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
-                showFrame.transform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
+                FramePerfabs.transform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
+                FramePerfabs.transform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
                 Debug.Log(string.Format("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
                 return true;
             }
