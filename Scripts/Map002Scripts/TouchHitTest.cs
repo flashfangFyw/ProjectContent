@@ -22,7 +22,7 @@ public class TouchHitTest : MonoBehaviour
     public GameObject showPerfabs;
     public GameObject FramePerfabs;
     public GameObject showFrame;
-    public PointInPolygon pp;
+    //public PointInPolygon pp;
     #endregion
     #region private property
     public float scaleAD = 100.0f;
@@ -268,7 +268,7 @@ public class TouchHitTest : MonoBehaviour
         pointList.Add(xMinzMin_Point);
         pointList.Add(xMinzMax_Point);
         pointList.Add(xMaxzMax_Point);
-        pp.SetPointList( pointList);
+        //pp.SetPointList( pointList);
         pList = new List<Vector4>();
         pList.Add(new Vector4(x_Max, transform.position.y, z_Min, 0));
         pList.Add(new Vector4(x_Min, transform.position.y, z_Min, 0));
