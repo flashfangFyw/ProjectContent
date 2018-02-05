@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Mapbox.Unity.MeshGeneration.Interfaces;
 using System;
 using UnityEngine.UI;
+using ffDevelopmentSpace;
 
 
 /* 
@@ -50,7 +51,14 @@ public class BuildingLabelTextSetter : MonoBehaviour ,IFeaturePropertySettable
                 {
                     _directionsFactory = crt.GetDirectionsFactory();
                 }
-                
+            }
+            if (_directionsFactory == null)
+            {
+                MyDirectionsFactory crt = FindObjectOfType<MyDirectionsFactory>();
+                if (crt)
+                {
+                    _directionsFactory = crt;
+                }
             }
             return _directionsFactory;
         }
@@ -106,7 +114,8 @@ public class BuildingLabelTextSetter : MonoBehaviour ,IFeaturePropertySettable
             //string n = props["routeIndex"].ToString();
             int m = Convert.ToInt32(props["routeIndex"]);
             //string n = props["routeIndex"].ToString();
-            directionsFactory.AddPoint(m, this.transform);
+            //Debug.Log("======= directionsFactory.AddPoint");
+           directionsFactory.AddPoint(m, this.transform);
             //if (props["routetype"].ToString() == "startpoint")
             //{
             //    directionsFactory.addStartPoint(this.transform);

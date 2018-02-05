@@ -16,6 +16,7 @@ public class TouchHitTest : MonoBehaviour
 {
 
     #region public property
+    public bool ifTest = false;
     public Transform m_HitTransform;
     public GameObject[] poinPerfabs;
     public Material testMeterial;
@@ -39,7 +40,7 @@ public class TouchHitTest : MonoBehaviour
     }
     void Start () 
 	{
-        CheckAreaField();
+        if(ifTest) CheckAreaField();
     }
     // Update is called once per frame
     void Update()
@@ -68,8 +69,8 @@ public class TouchHitTest : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
                 Debug.Log("deltaPos=" + touch.deltaPosition);
-                transform.Translate(Vector3.right * deltaPos.x*0.001f, Space.World);
-                transform.Translate(Vector3.forward * deltaPos.y * 0.001f, Space.World);
+                showPerfabs.transform.Translate(Vector3.right * deltaPos.x*0.001f, Space.World);
+                showPerfabs.transform.Translate(Vector3.forward * deltaPos.y * 0.001f, Space.World);
                 //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
             }
 
@@ -94,7 +95,7 @@ public class TouchHitTest : MonoBehaviour
 
             //放大因子， 一个像素按 0.01倍来算(100可调整)  
             float scaleFactor = offset / scaleAD;
-            Vector3 localScale = transform.localScale;
+            Vector3 localScale = showPerfabs.transform.localScale;
             Vector3 scale = new Vector3(localScale.x + scaleFactor,
                 localScale.y + scaleFactor,
                 localScale.z + scaleFactor);
@@ -102,7 +103,7 @@ public class TouchHitTest : MonoBehaviour
             //最小缩放到 0.1 倍  
             if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
             {
-                transform.localScale = scale;
+                showPerfabs.transform.localScale = scale;
             }
 
             //记住最新的触摸点，下次使用  
@@ -151,6 +152,11 @@ public class TouchHitTest : MonoBehaviour
                             //    putFlag = true;
                         }
                         CheckAreaField();
+                        if (showPerfabs)
+                        {
+                            showPerfabs.SetActive(true);
+                            showPerfabs.BroadcastMessage("InitMap",SendMessageOptions.DontRequireReceiver);
+                        }
                         putFlag = true;
                         Debug.Log("screenPosition=" + screenPosition  + "  hit="+ hit);
                         return;
@@ -167,8 +173,10 @@ public class TouchHitTest : MonoBehaviour
             foreach (var hitResult in hitResults)
             {
                 Debug.Log("Got hit!");
-                m_HitTransform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
-                m_HitTransform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
+                //m_HitTransform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
+                //m_HitTransform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
+                targetPosition = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
+                targetRotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
                 FramePerfabs.transform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
                 FramePerfabs.transform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
                 Debug.Log(string.Format("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
@@ -176,6 +184,18 @@ public class TouchHitTest : MonoBehaviour
             }
         }
         return false;
+    }
+    private Vector3 targetPosition;
+    private Quaternion targetRotation;
+    public void LoactionTheModel()
+    {
+        //m_HitTransform.position = targetPosition;
+        //m_HitTransform.rotation = targetRotation;
+        SetVerticeData();
+    }
+    public Vector3 GetOffsetPosition()
+    {
+        return targetPosition;
     }
     private void CheckAreaField()
     {
@@ -274,19 +294,15 @@ public class TouchHitTest : MonoBehaviour
         pList.Add(new Vector4(x_Min, transform.position.y, z_Min, 0));
         pList.Add(new Vector4(x_Min, transform.position.y, z_Max, 0));
         pList.Add(new Vector4(x_Max, transform.position.y, z_Max, 0));
+        Debug.Log("====================VerticesXZ_MaxMin init Finished");
 
         //modelHeighth = maxValue - minValue;
         //float disValue = (maxValue - minValue) / 50;
         //maxValue += disValue;
         //minValue -= disValue;
-        MeshRenderer[] mrs = showPerfabs.GetComponentsInChildren<MeshRenderer>();
-        foreach (MeshRenderer mr in mrs)
-        {
-            mr.materials[0].SetInt("_Points_Num", pointList.Count);
-            mr.materials[0].SetVectorArray("_Points", pList);
-        }
-            //showPerfabs.GetComponent<MeshRenderer>().materials[0].SetInt("_Points_Num", pointList.Count);
-            //showPerfabs.GetComponent<MeshRenderer>().materials[0].SetVectorArray("_Points", pList);
+        //SetMaterial();
+        //showPerfabs.GetComponent<MeshRenderer>().materials[0].SetInt("_Points_Num", pointList.Count);
+        //showPerfabs.GetComponent<MeshRenderer>().materials[0].SetVectorArray("_Points", pList);
         //Debug.Log("=======xMax_Point==" + xMax_Point);
         //Debug.Log("=======xMin_Point==" + xMin_Point);
         //Debug.Log("=======zMax_Point==" + zMax_Point);
@@ -294,6 +310,37 @@ public class TouchHitTest : MonoBehaviour
         //textureMaterial.SetFloat("EffectTime", maxValue);
         //textureMaterial.SetFloat("BottomValue", minValue);
         //Debug.Log("====================maxValue==" + maxValue + "     minValue==" + minValue + "     modelHeighth==" + modelHeighth);
+    }
+    private void SetVerticeData()
+    {
+        SetMaterial();
+        SetPointInPolygon();
+    }
+    private  void SetMaterial()
+    {
+        MeshRenderer[] mrs = showPerfabs.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer mr in mrs)
+        {
+            //if (mr.materials[0].HasProperty("_Points_Num"))
+            //{
+                mr.materials[0].SetInt("_Points_Num", pointList.Count);
+            Debug.Log("====================_Points_Num Finished");
+            //}
+            //if (mr.materials[0].HasProperty("_Points"))
+            //{
+            mr.materials[0].SetVectorArray("_Points", pList);
+                Debug.Log("====================SetVectorArray Finished");
+            //}
+        }
+        Debug.Log("====================SetMaterial Finished");
+    }
+    public void SetPointInPolygon()
+    {
+        PointInPolygon[] pIps = showPerfabs.GetComponentsInChildren<PointInPolygon>();
+        foreach (PointInPolygon p in pIps)
+        {
+            p.SetPointList(pointList);
+        }
     }
     public static bool Contains(Vector3[] points, Vector3 p)
     {

@@ -198,7 +198,7 @@ namespace ffDevelopmentSpace
             GameObject go = GameObject.Instantiate(prefab) as GameObject;
             if (go == null)
             {
-                Debuger.Log("=====================================================go is null ");
+                Debug.Log("=====================================================go is null ");
                 return null;
                 //           print("prefab is null");
             }
@@ -232,7 +232,7 @@ namespace ffDevelopmentSpace
             GameObject go = GameObject.Instantiate(prefab) as GameObject;
             if (go == null)
             {
-                Debuger.Log("=====================================================go is null ");
+                Debug.Log("=====================================================go is null ");
                 return null;
                 //           print("prefab is null");
             }
@@ -498,7 +498,7 @@ namespace ffDevelopmentSpace
         {
             //		long test = (DateTime.UtcNow.ToFileTimeUtc () - time) / 1000;
             float test = (Time.realtimeSinceStartup - time) * 1000;
-            Debuger.Log("测试经过时间(毫秒)：" + test + " [" + str + "]");
+            Debug.Log("测试经过时间(毫秒)：" + test + " [" + str + "]");
         }
 
         public static Color parseHexString(string strHexColor)

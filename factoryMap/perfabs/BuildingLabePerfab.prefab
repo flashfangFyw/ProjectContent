@@ -225,6 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4950700450614016}
   - component: {fileID: 114538116453598020}
+  - component: {fileID: 114545231136379840}
   m_Layer: 0
   m_Name: BuildingLabePerfab
   m_TagString: Untagged
@@ -1879,6 +1880,17 @@ MonoBehaviour:
   _b3: {fileID: 1433435055772526}
   _b3Txt: {fileID: 114946120487256484}
   _b4Txt: {fileID: 114362138191938288}
+--- !u!114 &114545231136379840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272037282128680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa9004e442713442b95433705d1eb4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114616564526292060
 MonoBehaviour:
   m_ObjectHideFlags: 1

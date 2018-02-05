@@ -28,7 +28,8 @@ public class MyDirectionsFactory : MonoBehaviour
 {
 
     #region public property
-    public CameraRayTest ct;
+    //public CameraRayTest ct;
+    public TouchHitTest tht;
     [SerializeField]
     AbstractMap _map;
 
@@ -65,6 +66,7 @@ public class MyDirectionsFactory : MonoBehaviour
     //private GameObject car;
     private Dictionary<int, Transform> pointDic;//
     private bool countFinish = false;
+    private bool visualizerFinish = false;
     private int pointCount = 0;
     private int routeCount = 0;
     private Dictionary<int, GameObject> _directionsDic;//显示路线管理
@@ -82,6 +84,21 @@ public class MyDirectionsFactory : MonoBehaviour
         }
         _directions = MapboxAccess.Instance.Directions;
         _map.OnInitialized += Query;
+
+        var map = FindObjectOfType<AbstractMap>();
+        var visualizer = map.MapVisualizer;
+        visualizer.OnMapVisualizerStateChanged += (s) =>
+        {
+            if (this == null)
+                return;
+
+            if (s == ModuleState.Finished)
+            {
+                Debug.Log("=======visualizerFinish");
+                visualizerFinish = true;
+                CheckIfCreatRoute();
+            }
+        };
     }
     void OnEnable()
     {
@@ -112,6 +129,8 @@ public class MyDirectionsFactory : MonoBehaviour
         {
             //CreatRoute();
             countFinish = true;
+            Debug.Log("=======countFinish");
+          
             CheckIfCreatRoute();
         }
         //================================
@@ -132,9 +151,11 @@ public class MyDirectionsFactory : MonoBehaviour
     }
     private void CheckIfCreatRoute()
     {
-        if(countFinish&& initFinish)
+        //if(countFinish&& initFinish && visualizerFinish)
+        if ( initFinish && visualizerFinish)
         {
-            StartCoroutine(CreatRoute());
+            if (tht) tht.LoactionTheModel();
+            //StartCoroutine(CreatRoute());
         }
     }
     private  IEnumerator  CreatRoute()
@@ -151,7 +172,7 @@ public class MyDirectionsFactory : MonoBehaviour
             if (routeCount <= i) yield return null;
         }
         Debug.Log("CreatRoute is Finished");
-        if (ct) ct.LoactionTheModel();
+        if (tht) tht.LoactionTheModel();
     }
     
    
@@ -214,7 +235,7 @@ public class MyDirectionsFactory : MonoBehaviour
         GameObject car =  GameObject.Instantiate(pb) as GameObject;
         if (car == null)
         {
-            Debuger.Log("=====================================================go is null ");
+            Debug.Log("=====================================================go is null ");
             return;
         }
         car.name = pb.name;
@@ -305,6 +326,7 @@ public class MyDirectionsFactory : MonoBehaviour
     #region event function
     void Query()
     {
+        Debug.Log("=======initFinish Finish");
         initFinish = true;
         CheckIfCreatRoute();
     }
@@ -321,7 +343,7 @@ public class MyDirectionsFactory : MonoBehaviour
         foreach (var point in response.Routes[0].Geometry)
         {
             Vector3 p = Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz();
-            Debug.Log(p);
+            //Debug.Log(p);
             //p = Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz()
             //      + Vector3.right * ct.getOffsetPosition().x
             //      + Vector3.up * ct.getOffsetPosition().y
@@ -330,7 +352,7 @@ public class MyDirectionsFactory : MonoBehaviour
             //p = Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz()
             //   + ct.getOffsetPosition() + _map.transform.position;
             p = Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz()
-                  +ct.getOffsetPosition();
+                  + tht.GetOffsetPosition();
             //Debug.Log(ct.getOffsetPosition());
             //Debug.Log(_map.transform.position);
             //Debug.Log("==============================" + p);
