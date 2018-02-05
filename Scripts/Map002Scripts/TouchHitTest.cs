@@ -65,7 +65,8 @@ public class TouchHitTest : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
                 Debug.Log("deltaPos=" + touch.deltaPosition);
-                transform.Translate(Vector3.forward * deltaPos.x*0.001f, Space.World);
+                transform.Translate(Vector3.right * deltaPos.x*0.001f, Space.World);
+                transform.Translate(Vector3.forward * deltaPos.y * 0.001f, Space.World);
                 //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
             }
 
