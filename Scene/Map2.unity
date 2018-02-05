@@ -1909,7 +1909,6 @@ MonoBehaviour:
   testMeterial: {fileID: 2100000, guid: 8360f6acd9abfe04c9b2024ad3ab0399, type: 2}
   showPerfabs: {fileID: 1217067368}
   FramePerfabs: {fileID: 312106011}
-  showFrame: {fileID: 312106011}
   scaleAD: 100
 --- !u!1 &1308259102
 GameObject:
@@ -2342,6 +2341,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1644993692610268, guid: 00538dbc53988e34d9f2aaf6d4ab47ff, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114284605212438902, guid: 00538dbc53988e34d9f2aaf6d4ab47ff,
+        type: 2}
+      propertyPath: _initializeOnStart
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
