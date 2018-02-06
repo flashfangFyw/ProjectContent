@@ -50,6 +50,7 @@ public class TouchHitTest : MonoBehaviour
     void Update()
     {
         PutHitTest();
+        ControlCheck();
         TouchControl();
     }
     void OnDisable()
