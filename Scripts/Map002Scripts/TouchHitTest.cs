@@ -68,17 +68,17 @@ public class TouchHitTest : MonoBehaviour
     {
         Debug.Log("================================Camera.main.transform.rotation=============" + Camera.main.transform.rotation.eulerAngles);
        
-        Vector3 pt = showPerfabs.transform.position;
-        if (Util.PointInPolygon(pt, pointList))
-        {
-            moveFlag = true;
-            scaleFlag = true;
-        }
-        else
-        {
-            moveFlag = false;
-            scaleFlag = false;
-        }
+        //Vector3 pt = showPerfabs.transform.position;
+        //if (Util.PointInPolygon(pt, pointList))
+        //{
+        //    moveFlag = true;
+        //    scaleFlag = true;
+        //}
+        //else
+        //{
+        //    moveFlag = false;
+        //    scaleFlag = false;
+        //}
     }
     private void TouchControl()
     {
