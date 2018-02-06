@@ -1457,7 +1457,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 804544024}
-  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.00051343, y: 0, z: 0.0010351}
   m_LocalScale: {x: 0.10134417, y: 0.05, z: 0.1535105}
   m_Children:
@@ -1468,7 +1468,7 @@ Transform:
   - {fileID: 1548224841}
   m_Father: {fileID: 0}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &831534878
 GameObject:
   m_ObjectHideFlags: 0
@@ -2538,7 +2538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a9e657041661945918d5416e380978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ifTest: 1
+  ifTest: 0
   m_HitTransform: {fileID: 1286139108}
   poinPerfabs:
   - {fileID: 1306553354024346, guid: fd39e492cfca9fe43a311a7829c453ad, type: 2}
@@ -2891,7 +2891,7 @@ Prefab:
     - target: {fileID: 114284605212438902, guid: 00538dbc53988e34d9f2aaf6d4ab47ff,
         type: 2}
       propertyPath: _initializeOnStart
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114284605212438902, guid: 00538dbc53988e34d9f2aaf6d4ab47ff,
         type: 2}
