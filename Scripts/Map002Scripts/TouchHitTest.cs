@@ -66,7 +66,8 @@ public class TouchHitTest : MonoBehaviour
     #region private function
     private void ControlCheck()
     {
-        Debug.Log("================================Camera.main.transform.rotation=============" + Camera.main.transform.rotation);
+        Debug.Log("================================Camera.main.transform.rotation=============" + Camera.main.transform.rotation.eulerAngles);
+       
         Vector3 pt = showPerfabs.transform.position;
         if (Util.PointInPolygon(pt, pointList))
         {
@@ -82,6 +83,7 @@ public class TouchHitTest : MonoBehaviour
     private void TouchControl()
     {
         if (putFlag == false) return;
+        Vector3 pt = showPerfabs.transform.position;
         if (Input.touchCount > 0 )
         {
             if (1 == Input.touchCount && moveFlag)
@@ -89,12 +91,18 @@ public class TouchHitTest : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
                 //Debug.Log("deltaPos=" + touch.deltaPosition);
-                showPerfabs.transform.Translate(
-                                            (Vector3.right*Mathf.Sin(Camera.main.transform.rotation.y)+ Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
-                                            * deltaPos.x*0.001f, Space.World);
-                showPerfabs.transform.Translate(
-                                            (Vector3.forward * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.right * Mathf.Cos(Camera.main.transform.rotation.y))
-                                            * deltaPos.y * 0.001f, Space.World);
+                pt = showPerfabs.transform.position + (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.eulerAngles.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.eulerAngles.y))
+                                            * deltaPos.x * 0.001f;
+                if (Util.PointInPolygon(pt, pointList))
+                {
+                    showPerfabs.transform.Translate(
+                                          (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
+                                          * deltaPos.x * 0.001f, Space.World);
+                }
+              
+                //showPerfabs.transform.Translate(
+                //                            (Vector3.forward * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.right * Mathf.Cos(Camera.main.transform.rotation.y))
+                //                            * deltaPos.y * 0.001f, Space.World);
                 //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
             }
 
@@ -228,9 +236,8 @@ public class TouchHitTest : MonoBehaviour
 
         Hashtable hash = new Hashtable();
         hash.Add("position", targetPosition);
-        //hash.Add("time", travelTime);
         hash.Add("time", 1);
-        hash.Add("delay",1);
+        hash.Add("delay",0.5f);
         iTween.MoveTo(showPerfabs, hash);
         SingletonMB<ARGeneratePlane>.Instance.HidePlane();
     }
