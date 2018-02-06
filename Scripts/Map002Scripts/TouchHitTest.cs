@@ -150,7 +150,8 @@ public class TouchHitTest : MonoBehaviour
                         if (Physics.Raycast(ray, out hit, 100))
                         {
                             Debug.DrawLine(ray.origin, hit.point, Color.green);
-                         
+                            Debug.Log(" hit.collider.gameObject.name=" + hit.collider.gameObject.name);
+                            Debug.Log("  hit.collider.gameObject.transform.localScale=" + hit.collider.gameObject.transform.localScale);
                             FramePerfabs.transform.localScale = hit.collider.gameObject.transform.localScale;
                             //    CheckAreaField(hit.transform);
                             //    putFlag = true;
