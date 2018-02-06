@@ -2550,7 +2550,9 @@ MonoBehaviour:
   FramePerfabs: {fileID: 804544024}
   moveFlag: 1
   scaleFlag: 1
-  scaleAD: 100
+  map: {fileID: 0}
+  upHeight: 1
+  scaleAD: 1000
 --- !u!1 &1308259102
 GameObject:
   m_ObjectHideFlags: 0

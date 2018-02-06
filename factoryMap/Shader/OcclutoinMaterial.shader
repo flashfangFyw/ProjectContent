@@ -4,6 +4,7 @@
     _MainTex ("Texture", 2D) = "white" {}
     [NoScaleOffset] _BumpMap ("Normalmap", 2D) = "bump" {}
 	//_Points("points" , float3[]) 
+	 _Points_Bottom("y_Range" , Float) = 10.0
     //_Z_Range("Z_Range" , Float) = 0.0
     //_X_Range("X_Range" , Float) = 0.0
     _Color("Color", Color) = (1,1,1,1)
@@ -24,6 +25,7 @@ sampler2D _MainTex;
 sampler2D _BumpMap;
 uniform float4 _Points[100];  // 数组变量
 uniform float _Points_Num;  // 数组长度变量
+uniform float _Points_Bottom;  // 底面
 //float _Z_Range;
 //float _X_Range;
 //half _TransitLineVal;
@@ -86,8 +88,11 @@ bool rayCasting(float3 worldPos)
     return flag;// ? 'in' : 'out'
 
 }
-int pnpoly(float3 worldPos)
- //int nvert, float *vertx, float *verty, float testx, float testy)
+bool CheckBottom(float py)
+{
+	return py>_Points_Bottom;
+}
+int pnpoly(float3 worldPos)//int nvert, float *vertx, float *verty, float testx, float testy)
 {
 	 bool inside = false;
     for ( int i = 0, j =3 ; i < 4 ; j = i++ )
@@ -116,7 +121,7 @@ void surf (Input IN, inout SurfaceOutput o)
 		//	 ))
 			//if(Contains(IN.worldPos)){
 			//if(pnpoly(IN.worldPos))
-			if(rayCasting(IN.worldPos)){
+			if(rayCasting(IN.worldPos)&&CheckBottom(IN.worldPos.y)){
             fixed4 c = tex2D(_MainTex, IN.uv_MainTex) ;
             o.Albedo = c.rgb*_Color;
 			 //o.Albedo = _Color;

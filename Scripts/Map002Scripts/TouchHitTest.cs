@@ -26,6 +26,8 @@ public class TouchHitTest : MonoBehaviour
     //public PointInPolygon pp;
     public bool moveFlag = true;
     public bool scaleFlag = true;
+    public GameObject map;
+    public int upHeight = 2;
     #endregion
     #region private property
     public float scaleAD = 1000.0f;
@@ -201,8 +203,15 @@ public class TouchHitTest : MonoBehaviour
     public void LoactionTheModel()
     {
         SetVerticeData();
-        showPerfabs.transform.position = targetPosition;
+        showPerfabs.transform.position = targetPosition+Vector3.down* upHeight;
         //showPerfabs.transform.rotation = targetRotation;
+
+        Hashtable hash = new Hashtable();
+        hash.Add("position", targetPosition);
+        //hash.Add("time", travelTime);
+        hash.Add("time", 1);
+        hash.Add("delay",1);
+        iTween.MoveTo(showPerfabs, hash);
         SingletonMB<ARGeneratePlane>.Instance.HidePlane();
     }
     public Vector3 GetOffsetPosition()
@@ -375,6 +384,7 @@ public class TouchHitTest : MonoBehaviour
             //if (mr.materials[0].HasProperty("_Points"))
             //{
             mr.materials[0].SetVectorArray("_Points", pList);
+            mr.materials[0].SetFloat("_Points_Bottom", targetPosition.y-0.01f);
             //    Debug.Log("====================SetVectorArray Finished");
             //}
         }
@@ -385,6 +395,7 @@ public class TouchHitTest : MonoBehaviour
         PointInPolygon[] pIps = showPerfabs.GetComponentsInChildren<PointInPolygon>();
         foreach (PointInPolygon p in pIps)
         {
+            p.SetBottom(targetPosition.y - 0.01f);
             p.SetPointList(pointList);
         }
     }

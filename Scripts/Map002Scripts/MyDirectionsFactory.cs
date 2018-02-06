@@ -394,6 +394,7 @@ public class MyDirectionsFactory : MonoBehaviour
         {
             mt.SetInt("_Points_Num", tht.GetPointList().Count);
             mt.SetVectorArray("_Points", tht.GetPList());
+            mt.SetFloat("_Points_Bottom", tht.GetOffsetPosition().y - 0.01f);
         }
     }
     #endregion

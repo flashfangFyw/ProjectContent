@@ -36,7 +36,7 @@ public class PointInPolygon : MonoBehaviour
 	{
         if(pFlag)
         {
-            if (pnpoly())
+            if (pnpoly()&& CheckBottom())
             {
                 this.transform.GetChild(0).gameObject.SetActive(true);
                 //if (mt) mt.SetColor("_Color", Color.white);
@@ -59,6 +59,11 @@ public class PointInPolygon : MonoBehaviour
     #region public function
     #endregion
     #region private function
+    private float bottomValue = 0;
+    public void SetBottom(float v)
+    {
+        bottomValue = v;
+    }
     public void SetPointList(List<Vector3> list)
     {
         pointList = list;
@@ -120,6 +125,10 @@ public class PointInPolygon : MonoBehaviour
                 c = !c;
         }
         return c;
+    }
+    bool CheckBottom()
+    {
+        return this.transform.position.y > bottomValue;
     }
     #endregion
 
