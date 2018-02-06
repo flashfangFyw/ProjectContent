@@ -91,20 +91,28 @@ public class TouchHitTest : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
                 //Debug.Log("deltaPos=" + touch.deltaPosition);
-                pt = showPerfabs.transform.position + (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.eulerAngles.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.eulerAngles.y))
+                //pt = showPerfabs.transform.position + (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.eulerAngles.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.eulerAngles.y))
+                //                            * deltaPos.x * 0.001f;
+                //if (Util.PointInPolygon(pt, pointList))
+                //{
+                //    showPerfabs.transform.Translate(
+                //                          (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
+                //                          * deltaPos.x * 0.001f, Space.World);
+                //}
+
+                pt = showPerfabs.transform.position + Vector3.right
                                             * deltaPos.x * 0.001f;
                 if (Util.PointInPolygon(pt, pointList))
                 {
-                    showPerfabs.transform.Translate(
-                                          (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
-                                          * deltaPos.x * 0.001f, Space.World);
+                    showPerfabs.transform.Translate(Vector3.right * deltaPos.x * 0.001f, Space.World);
                 }
-              
-                //showPerfabs.transform.Translate(
-                //                            (Vector3.forward * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.right * Mathf.Cos(Camera.main.transform.rotation.y))
-                //                            * deltaPos.y * 0.001f, Space.World);
-                //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
-            }
+            //================
+
+            //showPerfabs.transform.Translate(
+            //                            (Vector3.forward * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.right * Mathf.Cos(Camera.main.transform.rotation.y))
+            //                            * deltaPos.y * 0.001f, Space.World);
+            //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
+        }
 
             if (scaleFlag == false) return;
             //多点触摸, 放大缩小  
