@@ -24,9 +24,11 @@ public class TouchHitTest : MonoBehaviour
     public GameObject FramePerfabs;
     //public GameObject showFrame;
     //public PointInPolygon pp;
+    public bool moveFlag = true;
+    public bool scaleFlag = true;
     #endregion
     #region private property
-    public float scaleAD = 100.0f;
+    public float scaleAD = 1000.0f;
     private bool putFlag = false;
     private Touch oldTouch1;  //上次触摸点1(手指1)  
     private Touch oldTouch2;  //上次触摸点2(手指2)  
@@ -64,7 +66,7 @@ public class TouchHitTest : MonoBehaviour
         if (putFlag == false) return;
         if (Input.touchCount > 0 )
         {
-            if (1 == Input.touchCount)
+            if (1 == Input.touchCount && moveFlag)
             {
                 Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
@@ -74,6 +76,7 @@ public class TouchHitTest : MonoBehaviour
                 //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
             }
 
+            if (scaleFlag == false) return;
             //多点触摸, 放大缩小  
             Touch newTouch1 = Input.GetTouch(0);
             Touch newTouch2 = Input.GetTouch(1);
@@ -120,7 +123,7 @@ public class TouchHitTest : MonoBehaviour
             var touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began) // || touch.phase == TouchPhase.Moved)
             {
-                var screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
+                Vector3 screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
                 ARPoint point = new ARPoint
                 {
                     x = screenPosition.x,
@@ -143,7 +146,6 @@ public class TouchHitTest : MonoBehaviour
 
                         //ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
                         ray = Camera.main.ScreenPointToRay(screenPosition);// screenPosition);
-
                         Debug.Log("Raycast=" + Physics.Raycast(ray, out hit, 100));
                         //if (Physics.Raycast(ray, out hit, 100))
                         //{

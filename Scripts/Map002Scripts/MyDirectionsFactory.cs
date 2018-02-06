@@ -389,6 +389,7 @@ public class MyDirectionsFactory : MonoBehaviour
     }
     private void SetMaterialParam()
     {
+        return;
         foreach(var mt in  _material)
         {
             mt.SetInt("_Points_Num", tht.GetPointList().Count);
