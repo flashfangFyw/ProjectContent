@@ -152,7 +152,9 @@ public class TouchHitTest : MonoBehaviour
                             Debug.DrawLine(ray.origin, hit.point, Color.green);
                             Debug.Log(" hit.collider.gameObject.name=" + hit.collider.gameObject.name);
                             Debug.Log("  hit.collider.gameObject.transform.localScale=" + hit.collider.gameObject.transform.localScale);
+                            targetPosition = hit.collider.gameObject.transform.position;
                             FramePerfabs.transform.localScale = hit.collider.gameObject.transform.localScale;
+                            FramePerfabs.transform.position = targetPosition;
                             //    CheckAreaField(hit.transform);
                             //    putFlag = true;
                         }
@@ -178,13 +180,13 @@ public class TouchHitTest : MonoBehaviour
             foreach (var hitResult in hitResults)
             {
                 Debug.Log("Got hit!");
-                //m_HitTransform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
-                //m_HitTransform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
-                targetPosition = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
-                targetRotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
-                m_HitTransform.position = targetPosition;
-                m_HitTransform.rotation = targetRotation;
-                FramePerfabs.transform.position = targetPosition;
+                m_HitTransform.position = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
+                m_HitTransform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
+                //targetPosition = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
+                //targetRotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
+                //m_HitTransform.position = targetPosition;
+                //m_HitTransform.rotation = targetRotation;
+                //FramePerfabs.transform.position = targetPosition;
                // FramePerfabs.transform.rotation = targetRotation;
                 Debug.Log(string.Format("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
                 return true;
