@@ -151,10 +151,12 @@ public class TouchHitTest : MonoBehaviour
                         {
                             Debug.DrawLine(ray.origin, hit.point, Color.green);
                             Debug.Log(" hit.collider.gameObject.name=" + hit.collider.gameObject.name);
-                            Debug.Log("  hit.collider.gameObject.transform.localScale=" + hit.collider.gameObject.transform.localScale);
+                            Debug.Log(" hit.collider.gameObject.transform.localScale=" + hit.collider.gameObject.transform.localScale);
                             targetPosition = hit.collider.gameObject.transform.position;
+                            targetRotation = hit.collider.gameObject.transform.rotation;
                             FramePerfabs.transform.localScale = hit.collider.gameObject.transform.localScale;
                             FramePerfabs.transform.position = targetPosition;
+                            FramePerfabs.transform.rotation = targetRotation;
                             //    CheckAreaField(hit.transform);
                             //    putFlag = true;
                         }
