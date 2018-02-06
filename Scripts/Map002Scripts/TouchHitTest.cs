@@ -147,12 +147,14 @@ public class TouchHitTest : MonoBehaviour
                         //ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
                         ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
                         Debug.Log("Raycast=" + Physics.Raycast(ray, out hit, 100));
-                        //if (Physics.Raycast(ray, out hit, 100))
-                        //{
-                        //    Debug.DrawLine(ray.origin, hit.point, Color.green);
-                        //    //    CheckAreaField(hit.transform);
-                        //    //    putFlag = true;
-                        //}
+                        if (Physics.Raycast(ray, out hit, 100))
+                        {
+                            Debug.DrawLine(ray.origin, hit.point, Color.green);
+                         
+                            FramePerfabs.transform.localScale = hit.collider.gameObject.transform.localScale;
+                            //    CheckAreaField(hit.transform);
+                            //    putFlag = true;
+                        }
                         CheckAreaField();
                         if (showPerfabs)
                         {

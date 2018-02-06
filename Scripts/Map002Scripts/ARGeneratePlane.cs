@@ -60,6 +60,10 @@ public class ARGeneratePlane : SingletonMB<ARGeneratePlane>
             plane.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
         }
     }
+    public void GetFocusPlane()
+    {
+
+    }
 	#endregion
 	#region private function
 	#endregion
