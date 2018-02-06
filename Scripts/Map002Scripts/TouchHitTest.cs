@@ -63,6 +63,10 @@ public class TouchHitTest : MonoBehaviour
     #region public function
     #endregion
     #region private function
+    private void ControlCheck()
+    {
+
+    }
     private void TouchControl()
     {
         if (putFlag == false) return;
@@ -204,7 +208,7 @@ public class TouchHitTest : MonoBehaviour
     {
         SetVerticeData();
         showPerfabs.transform.position = targetPosition+Vector3.down* upHeight;
-        //showPerfabs.transform.rotation = targetRotation;
+        showPerfabs.transform.rotation = targetRotation;
 
         Hashtable hash = new Hashtable();
         hash.Add("position", targetPosition);
