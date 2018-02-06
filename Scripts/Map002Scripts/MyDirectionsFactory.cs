@@ -204,7 +204,7 @@ public class MyDirectionsFactory : MonoBehaviour
         //    Destroy(_directionsGO);
         //}
         GameObject _directionsGO = new GameObject("direction waypoint " + " entity"+routeCount);
-        _directionsGO.transform.SetParent(this.transform, false);
+        _directionsGO.transform.SetParent(this.transform, true);
         var mesh = _directionsGO.AddComponent<MeshFilter>().mesh;
         mesh.subMeshCount = data.Triangles.Count;
 
@@ -248,8 +248,14 @@ public class MyDirectionsFactory : MonoBehaviour
         car.transform.localPosition = Vector3.zero;
         car.transform.localRotation = Quaternion.identity;
         car.transform.position = data[0];
+        MeshRenderer[] mrs = car.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer mr in mrs)
+        {
+            mr.materials[0].SetInt("_Points_Num", tht.GetPointList().Count);
+            mr.materials[0].SetVectorArray("_Points", tht.GetPList());
+        }
         //car.transform.SetParent(this.transform, false);
-       
+
 
 
         //car.transform.position = data[0];
@@ -297,7 +303,7 @@ public class MyDirectionsFactory : MonoBehaviour
         //hash.Add("time", travelTime);
         hash.Add("easetype", "linear");
         hash.Add("speed", speedList[index]);//speedList[index]
-        hash.Add("islocal", false);
+        hash.Add("islocal", true);
         //hash.Add("axis", "y");
         hash.Add("oncomplete", "MoveToWaypoint");
         hash.Add("oncompleteparams", index);
@@ -363,7 +369,6 @@ public class MyDirectionsFactory : MonoBehaviour
             //Debug.Log("==============================" + p);
             //dat.Add(Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz());
             dat.Add(p);
-            
         }
 
         var feat = new VectorFeatureUnity();
