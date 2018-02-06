@@ -145,7 +145,7 @@ public class TouchHitTest : MonoBehaviour
                     {
 
                         //ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
-                        ray = Camera.main.ScreenPointToRay(screenPosition);// screenPosition);
+                        ray = Camera.main.ScreenPointToRay(touch.position);// screenPosition);
                         Debug.Log("Raycast=" + Physics.Raycast(ray, out hit, 100));
                         //if (Physics.Raycast(ray, out hit, 100))
                         //{

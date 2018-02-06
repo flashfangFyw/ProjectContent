@@ -154,8 +154,8 @@ public class MyDirectionsFactory : MonoBehaviour
         //if(countFinish&& initFinish && visualizerFinish)
         if ( initFinish && visualizerFinish)
         {
-            //if (tht) tht.LoactionTheModel();
-            StartCoroutine(CreatRoute());
+            if (tht) tht.LoactionTheModel();
+            //StartCoroutine(CreatRoute());
         }
     }
     private  IEnumerator  CreatRoute()
