@@ -235,6 +235,10 @@ public class TouchHitTest : MonoBehaviour
     private Vector3 xMinzMin_Point;
     private Vector3 xMinzMax_Point;
     private Vector3 xMaxzMax_Point;
+    private Vector3 xMax_Point ;
+    private Vector3 xMin_Point ;
+    private Vector3 zMax_Point ;
+    private Vector3 zMin_Point ;
     private List<Vector3> pointList;
     private List<Vector4> pList;
 
@@ -249,6 +253,11 @@ public class TouchHitTest : MonoBehaviour
         xMinzMin_Point = transform.position;
         xMinzMax_Point = transform.position;
         xMaxzMax_Point = transform.position;
+
+        xMax_Point = transform.position;
+        xMin_Point = transform.position;
+        zMax_Point = transform.position;
+        zMin_Point = transform.position;
         MeshFilter[] filterList = FramePerfabs.GetComponents<MeshFilter>();
         foreach (MeshFilter filter in filterList)
         {
@@ -260,29 +269,37 @@ public class TouchHitTest : MonoBehaviour
             {
                 //Debug.Log("I==" + vertices.Length);
                 vertPos = filter.transform.TransformPoint(vertice);
-                //if(vertPos.y!=transform.position.y) continue;
+                //vertPos = vertice;
                 if (vertPos.x < x_Min)
                 {
                     x_Min = vertPos.x;
-                    //xMin_Point = vertPos;
+                    if (vertPos.z > xMinzMax_Point.z) xMinzMax_Point = vertPos;
+                    if (vertPos.z < xMinzMin_Point.z) xMinzMin_Point = vertPos;
+                    xMin_Point = vertPos;
                     //Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
                 }
                  if (vertPos.x > x_Max)
                 {
                     x_Max = vertPos.x;
-                    //xMax_Point = vertPos;
+                    if (vertPos.z > xMaxzMax_Point.z) xMaxzMax_Point = vertPos;
+                    if (vertPos.z < xMaxzMin_Point.z) xMaxzMin_Point = vertPos;
+                    xMax_Point = vertPos;
                     //Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
                 }
                 if (vertPos.z < z_Min)
                 {
                     z_Min = vertPos.z;
-                    //zMin_Point = vertPos;
+                    if (vertPos.x > xMaxzMin_Point.x) xMaxzMin_Point = vertPos;
+                    if (vertPos.x < xMinzMin_Point.x) xMinzMin_Point = vertPos;
+                    zMin_Point = vertPos;
                     //Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
                 }
                 if (vertPos.z > z_Max)
                 {
                     z_Max = vertPos.z;
-                    //zMax_Point = vertPos;
+                    if (vertPos.x > xMaxzMax_Point.x) xMaxzMax_Point = vertPos;
+                    if (vertPos.x < xMinzMax_Point.x) xMinzMax_Point = vertPos;
+                    zMax_Point = vertPos;
                     //Debug.Log("=======xMax_Point==" + xMax_Point + "=======xMin_Point==" + xMin_Point + "=======zMax_Point==" + zMax_Point + "=======zMin_Point==" + zMin_Point);
                 }
                
@@ -292,20 +309,37 @@ public class TouchHitTest : MonoBehaviour
         //Vector4.op
         pointList = new List<Vector3>();
 
-        xMaxzMin_Point = new Vector3(x_Max, transform.position.y, z_Min);
-        xMinzMin_Point = new Vector3(x_Min, transform.position.y, z_Min);
-        xMinzMax_Point = new Vector3(x_Min, transform.position.y, z_Max);
-        xMaxzMax_Point = new Vector3(x_Max, transform.position.y, z_Max);
-        pointList.Add(xMaxzMin_Point);
-        pointList.Add(xMinzMin_Point);
-        pointList.Add(xMinzMax_Point);
-        pointList.Add(xMaxzMax_Point);
+    
+        //if(Mathf.Abs(Mathf.))
+        if (FramePerfabs.transform.rotation.y % 90 ==0)
+        {
+            xMaxzMin_Point = new Vector3(x_Max, transform.position.y, z_Min);
+            xMinzMin_Point = new Vector3(x_Min, transform.position.y, z_Min);
+            xMinzMax_Point = new Vector3(x_Min, transform.position.y, z_Max);
+            xMaxzMax_Point = new Vector3(x_Max, transform.position.y, z_Max);
+            pointList.Add(xMaxzMin_Point);
+            pointList.Add(xMinzMin_Point);
+            pointList.Add(xMinzMax_Point);
+            pointList.Add(xMaxzMax_Point);
+        }
+        else
+        {
+            pointList.Add(xMax_Point);
+            pointList.Add(zMin_Point);
+            pointList.Add(xMin_Point);
+            pointList.Add(zMax_Point);
+        }
+
         //pp.SetPointList( pointList);
         pList = new List<Vector4>();
-        pList.Add(new Vector4(x_Max, transform.position.y, z_Min, 0));
-        pList.Add(new Vector4(x_Min, transform.position.y, z_Min, 0));
-        pList.Add(new Vector4(x_Min, transform.position.y, z_Max, 0));
-        pList.Add(new Vector4(x_Max, transform.position.y, z_Max, 0));
+        //pList.Add(new Vector4(x_Max, transform.position.y, z_Min, 0));
+        //pList.Add(new Vector4(x_Min, transform.position.y, z_Min, 0));
+        //pList.Add(new Vector4(x_Min, transform.position.y, z_Max, 0));
+        //pList.Add(new Vector4(x_Max, transform.position.y, z_Max, 0));
+        pList.Add(new Vector4(pointList[0].x, pointList[0].y, pointList[0].z, 0));
+        pList.Add(new Vector4(pointList[1].x, pointList[1].y, pointList[1].z, 0));
+        pList.Add(new Vector4(pointList[2].x, pointList[2].y, pointList[2].z, 0));
+        pList.Add(new Vector4(pointList[3].x, pointList[3].y, pointList[3].z, 0));
         Debug.Log("====================VerticesXZ_MaxMin init Finished");
 
         //modelHeighth = maxValue - minValue;
