@@ -365,7 +365,20 @@ namespace ffDevelopmentSpace
             }
             return true;
         }
-
+        public static bool PointInPolygon(Vector3 position, List<Vector3> pointList)
+        {
+            int i, j = 0;
+            bool c = false;
+            float testx = position.x;
+            float testy = position.z;
+            for (i = 0, j = 4 - 1; i < 4; j = i++)
+            {
+                if (((pointList[i].z > testy) != (pointList[j].z > testy)) &&
+                 (testx < (pointList[j].x - pointList[i].x) * (testy - pointList[i].z) / (pointList[j].z - pointList[i].z) + pointList[i].x))
+                    c = !c;
+            }
+            return c;
+        }
         /// <summary>
         /// 清除所有子节点
         /// </summary>

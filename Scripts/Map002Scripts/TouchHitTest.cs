@@ -27,7 +27,7 @@ public class TouchHitTest : MonoBehaviour
     public bool moveFlag = true;
     public bool scaleFlag = true;
     public GameObject map;
-    public int upHeight = 2;
+    public int upHeight = 1;
     #endregion
     #region private property
     public float scaleAD = 1000.0f;
@@ -65,7 +65,18 @@ public class TouchHitTest : MonoBehaviour
     #region private function
     private void ControlCheck()
     {
-
+        Debug.Log("================================Camera.main.transform.rotation=============" + Camera.main.transform.rotation);
+        Vector3 pt = showPerfabs.transform.position;
+        if (Util.PointInPolygon(pt, pointList))
+        {
+            moveFlag = true;
+            scaleFlag = true;
+        }
+        else
+        {
+            moveFlag = false;
+            scaleFlag = false;
+        }
     }
     private void TouchControl()
     {
@@ -77,8 +88,12 @@ public class TouchHitTest : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
                 //Debug.Log("deltaPos=" + touch.deltaPosition);
-                showPerfabs.transform.Translate(Vector3.right * deltaPos.x*0.001f, Space.World);
-                showPerfabs.transform.Translate(Vector3.forward * deltaPos.y * 0.001f, Space.World);
+                showPerfabs.transform.Translate(
+                                            (Vector3.right*Mathf.Sin(Camera.main.transform.rotation.y)+ Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
+                                            * deltaPos.x*0.001f, Space.World);
+                showPerfabs.transform.Translate(
+                                            (Vector3.forward * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.right * Mathf.Cos(Camera.main.transform.rotation.y))
+                                            * deltaPos.y * 0.001f, Space.World);
                 //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
             }
 
