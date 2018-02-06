@@ -345,7 +345,14 @@ public class TouchHitTest : MonoBehaviour
             p.SetPointList(pointList);
         }
     }
-
+    public List<Vector3> GetPointList()
+    {
+        return pointList;
+    }
+    public List<Vector4> GetPList()
+    {
+        return pList;
+    }
     #endregion
 
     #region event function

@@ -154,8 +154,8 @@ public class MyDirectionsFactory : MonoBehaviour
         //if(countFinish&& initFinish && visualizerFinish)
         if ( initFinish && visualizerFinish)
         {
-            if (tht) tht.LoactionTheModel();
-            //StartCoroutine(CreatRoute());
+            //if (tht) tht.LoactionTheModel();
+            StartCoroutine(CreatRoute());
         }
     }
     private  IEnumerator  CreatRoute()
@@ -172,7 +172,11 @@ public class MyDirectionsFactory : MonoBehaviour
             if (routeCount <= i) yield return null;
         }
         Debug.Log("CreatRoute is Finished");
-        if (tht) tht.LoactionTheModel();
+        if (tht)
+        {
+            SetMaterialParam();
+            tht.LoactionTheModel();
+        }
     }
     
    
@@ -200,7 +204,7 @@ public class MyDirectionsFactory : MonoBehaviour
         //    Destroy(_directionsGO);
         //}
         GameObject _directionsGO = new GameObject("direction waypoint " + " entity"+routeCount);
-        //_directionsGO.transform.SetParent(this.transform,false);
+        _directionsGO.transform.SetParent(this.transform, false);
         var mesh = _directionsGO.AddComponent<MeshFilter>().mesh;
         mesh.subMeshCount = data.Triangles.Count;
 
@@ -220,6 +224,7 @@ public class MyDirectionsFactory : MonoBehaviour
         }
 
         mesh.RecalculateNormals();
+     
         _directionsGO.AddComponent<MeshRenderer>().material = _material[routeCount];
         _directionsDic[routeCount] = _directionsGO;
         routeCount++;
@@ -363,7 +368,7 @@ public class MyDirectionsFactory : MonoBehaviour
 
         var feat = new VectorFeatureUnity();
         feat.Points.Add(dat);
-        if (movePerfab != null && movePerfab.Length > 0) MoveTheCar(dat);
+        //if (movePerfab != null && movePerfab.Length > 0) MoveTheCar(dat);
 
         foreach (MeshModifier mod in MeshModifiers.Where(x => x.Active))
         {
@@ -374,8 +379,16 @@ public class MyDirectionsFactory : MonoBehaviour
             }
             mod.Run(feat, meshData, _map.WorldRelativeScale);
         }
-
+        Debug.Log("CreateGameObject");
         CreateGameObject(meshData);
+    }
+    private void SetMaterialParam()
+    {
+        foreach(var mt in  _material)
+        {
+            mt.SetInt("_Points_Num", tht.GetPointList().Count);
+            mt.SetVectorArray("_Points", tht.GetPList());
+        }
     }
     #endregion
 }
