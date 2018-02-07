@@ -37,6 +37,8 @@ public class TouchHitTest : MonoBehaviour
     private Touch oldTouch1;  //上次触摸点1(手指1)  
     private Touch oldTouch2;  //上次触摸点2(手指2)  
     private Ray ray;
+    private Vector3 touchOffset = Vector3.zero;
+    private Vector3 touchMoveEnd = Vector3.zero;
     // prioritize reults types
 
     RaycastHit hit;
@@ -221,7 +223,11 @@ public class TouchHitTest : MonoBehaviour
                         }
                     }
                 }
-                    
+                if(touch.phase == TouchPhase.Ended)
+                {
+                    //touchOffset=
+                }
+
                 //Vector2 deltaPos = touch.deltaPosition;
                 ////=============================================
                 //Debug.Log("paralleYlList count=" + paralleYlList.Count);
@@ -251,18 +257,18 @@ public class TouchHitTest : MonoBehaviour
                 //Debug.Log("deltaPos.x=" + deltaPos.x);
                 //if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
                 //if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
-                
-                //=============================================
-                //Debug.Log("deltaPos=" + touch.deltaPosition);
-                //pt = showPerfabs.transform.position + (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.eulerAngles.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.eulerAngles.y))
-                //                            * deltaPos.x * 0.001f;
-                //if (Util.PointInPolygon(pt, pointList))
-                //{
-                //    showPerfabs.transform.Translate(
-                //                          (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
-                //                          * deltaPos.x * 0.001f, Space.World);
-                //}
-                //================
+
+                    //=============================================
+                    //Debug.Log("deltaPos=" + touch.deltaPosition);
+                    //pt = showPerfabs.transform.position + (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.eulerAngles.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.eulerAngles.y))
+                    //                            * deltaPos.x * 0.001f;
+                    //if (Util.PointInPolygon(pt, pointList))
+                    //{
+                    //    showPerfabs.transform.Translate(
+                    //                          (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
+                    //                          * deltaPos.x * 0.001f, Space.World);
+                    //}
+                    //================
             }
 
             //多点触摸, 放大缩小  
@@ -412,7 +418,7 @@ public class TouchHitTest : MonoBehaviour
         {
             foreach (var hitResult in hitResults)
             {
-                Vector3 vposition= UnityARMatrixOps.GetPosition(hitResult.worldTransform);
+                Vector3 vposition= UnityARMatrixOps.GetPosition(hitResult.worldTransform)+ touchOffset;
                 foreach (var v in paralleYlList)
                 {
                     if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
@@ -438,7 +444,10 @@ public class TouchHitTest : MonoBehaviour
                 Vector3 endpostion = showPerfabs.transform.position;
                 if (moveFlagX) endpostion.x = vposition.x;
                 if (moveFlagY) endpostion.z= vposition.z;
+                touchOffset = endpostion - showPerfabs.transform.position;
                 showPerfabs.transform.position = endpostion;
+                //touchOffset=
+                touchMoveEnd = showPerfabs.transform.position;
 
                 //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
                 //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
