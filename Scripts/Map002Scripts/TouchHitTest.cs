@@ -232,7 +232,7 @@ public class TouchHitTest : MonoBehaviour
                 }
                 if(touch.phase == TouchPhase.Ended)
                 {
-                    touchOffset = touchMoveEnd - touchMoveStart;
+                    touchOffset += touchMoveEnd - touchMoveStart;
                     Debug.Log(" TouchPhase.Ended  touchOffset=" + touchMoveEnd);
                 }
 
