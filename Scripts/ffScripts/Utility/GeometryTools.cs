@@ -40,6 +40,32 @@ using ffDevelopmentSpace;
         if (Mathf.Abs(value) >= 0.98 )  return Mathf.Ceil(value);
         return 0;
     }
+    /// <summary>      
+    /// 
+    /// /// 判断目标点是否位于向量的左边     
+    /// /// </summary>      
+    /// /// <param name="startPoint">向量起点</param>     
+    /// /// <param name="endPoint">向量终点</param>      
+    /// /// <param name="point">目标点</param>      
+    /// /// <returns>True is on left, false is on right</returns>      
+    public static bool PointOnLeftSideOfVector( Vector3 vector3, Vector3 originPoint, Vector3 point)
+    {
+        //Vector2 originVec2 = originPoint.IgnoreYAxis();
+        Vector2 originVec2 = new Vector2(originPoint.x, originPoint.z);
+        //Vector2 pointVec2 = (point.IgnoreYAxis() - originVec2).normalized;
+        Vector2 pointVec2 = (new Vector2(point.x, point.z) - originVec2).normalized;
+        //Vector2 vector2 = vector3.IgnoreYAxis();
+        Vector2 vector2 = new Vector2(vector3.x, vector3.z);
+        float verticalX = originVec2.x;
+        float verticalY = (-verticalX * vector2.x) / vector2.y;
+        Vector2 norVertical = (new Vector2(verticalX, verticalY)).normalized;
+        float dotValue = Vector2.Dot(norVertical, pointVec2);
+        return dotValue < 0f;
+    }
+    public static bool PointOnLeftSide(Vector3 dir, Vector3 target)
+    {
+        return Vector3.Cross(dir, target).y < 0;
+    }
     /// <summary>
     /// 点到直线距离
     /// </summary>
@@ -127,4 +153,6 @@ using ffDevelopmentSpace;
     {
         return Vector3.Angle(plane1.normal, plane2.normal);
     }
+
+   
 }

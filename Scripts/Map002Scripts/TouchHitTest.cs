@@ -76,6 +76,11 @@ public class TouchHitTest : MonoBehaviour
     void Start () 
 	{
         if(ifTest) CheckAreaField();
+        //Debug.Log(GeometryTools.PointOnLeftSide(  Vector3.back, Vector3.right));
+        //Debug.Log(GeometryTools.PointOnLeftSide(Vector3.forward, Vector3.right));
+        //Debug.Log(GeometryTools.PointOnLeftSide(Vector3.back, Vector3.left));
+        //Debug.Log(GeometryTools.PointOnLeftSide(Vector3.forward, Vector3.left));
+
     }
     // Update is called once per frame
     void Update()
@@ -135,6 +140,7 @@ public class TouchHitTest : MonoBehaviour
         }
         //if(paralleYlList!=null)
         //{
+      
         foreach (var v in paralleYlList)
         {
             if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
@@ -264,18 +270,33 @@ public class TouchHitTest : MonoBehaviour
                 ////=============================================
                 Vector2 deltaPos = touch.deltaPosition;
                 Debug.Log("paralleYlList count=" + paralleYlList.Count);
+                Debug.Log("showPerfabs.transform.localScale.x * offsetFactor / 2 count=" + showPerfabs.transform.localScale.x * offsetFactor / 2);
+                //for (int i = 0; i < paralleYlList.Count; i++)
+                //{
+                //    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                //    GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[i][0] - paralleXlList[i][1]).normalized * deltaPos.x * 0.01f, paralleXlList[i][0], paralleXlList[i][1])
+                //     )
+                //    {
+                //        if (i == 0) deltaPos.x = deltaPos.x*-1;
+                //        break;
+                //    }
+
+                //}
                 foreach (var v in paralleYlList)
                 {
+                    //if(GeometryTools.PointOnLeftSideOfVector())
                     if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
                      GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
                        )
                     {
                         moveFlagX = false;
-                        break;
+                        //break;
                     }
+                    Debug.Log("distans=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1]));
                 }
-                Debug.Log("moveFlagX=" + moveFlagX);
                 Debug.Log("deltaPos.x=" + deltaPos.x);
+                Debug.Log("moveFlagX=" + moveFlagX);
+              
                 if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
                 //foreach (var v in paralleXlList)
                 //{
@@ -683,7 +704,21 @@ public class TouchHitTest : MonoBehaviour
                 p.Add(p2);
                 p.Add(p1);
             }
-            paralleYlList.Add(p);
+            if(paralleYlList.Count==1)
+            {
+                if (GeometryTools.PointOnLeftSide((paralleYlList[0][0] - paralleYlList[0][1]),p[0]))
+                {
+                    paralleYlList.Insert(0, p);
+                }
+                else
+                {
+                    paralleYlList.Add(p);
+                }
+            }
+            else
+            {
+                paralleYlList.Add(p);
+            }
             return true;
         }
         else
@@ -699,9 +734,36 @@ public class TouchHitTest : MonoBehaviour
                 p.Add(p2);
                 p.Add(p1);
             }
-            paralleXlList.Add(p);
+            if (paralleXlList.Count == 1)
+            {
+                if (GeometryTools.PointOnLeftSide((paralleXlList[0][0] - paralleXlList[0][1]), p[0]))
+                {
+                    paralleXlList.Insert(0, p);
+                }
+                else
+                {
+                    paralleXlList.Add(p);
+                }
+            }
+            else
+            {
+                paralleXlList.Add(p);
+            }
+           
             return false;
         }
+    }
+    private void AdjustList()
+    {
+        //if(paralleYlList!=null && paralleYlList.Count==2)
+        //{
+        //    if(GeometryTools.PointOnLeftSide((paralleYlList[0][0] - paralleYlList[0][1]), paralleYlList[1][0]))
+        //    {
+        //        paralleYlList.Insert(0)
+        //    }
+        //    //float value = Vector3.Dot((paralleYlList[0][0] - paralleYlList[0][1]).normalized, (paralleYlList[1][0] - paralleYlList[1][1]).normalized);
+        //    //if()
+        //}
     }
     private void SetVerticeData()
     {
