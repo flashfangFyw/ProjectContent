@@ -40,6 +40,30 @@ public class TouchHitTest : MonoBehaviour
     private Vector3 touchOffset = Vector3.zero;
     private Vector3 touchMoveEnd = Vector3.zero;
     private Vector3 touchMoveStart = Vector3.zero;
+
+    //获取顶点最大，最小值
+    private float x_Max;
+    private float x_Min;
+    private float z_Max;
+    private float z_Min;
+    //==========================
+    private Vector3 xMaxzMin_Point;
+    private Vector3 xMinzMin_Point;
+    private Vector3 xMinzMax_Point;
+    private Vector3 xMaxzMax_Point;
+    private Vector3 xMax_Point;
+    private Vector3 xMin_Point;
+    private Vector3 zMax_Point;
+    private Vector3 zMin_Point;
+    private List<Vector3> pointList;
+    private List<Vector4> pList;
+    private Vector3 v0;
+    private Vector3 v1;
+    private Vector3 v2;
+    private Vector3 v3;
+    private Vector3 v4;
+    private List<List<Vector3>> paralleYlList;
+    private List<List<Vector3>> paralleXlList;
     // prioritize reults types
 
     RaycastHit hit;
@@ -59,7 +83,7 @@ public class TouchHitTest : MonoBehaviour
         PutHitTest();
         //ControlCheck();
         TouchControl();
-        //KeyControl();
+        if(ifTest) KeyControl();
     }
     void OnDisable()
     {
@@ -88,112 +112,112 @@ public class TouchHitTest : MonoBehaviour
         //    scaleFlag = false;
         //}
     }
-    //private void KeyControl()
-    //{
-    //    Vector3 deltaPos = Vector3.zero;
-    //    bool flag = true;
-    //    if (Input.GetKey(KeyCode.RightArrow))
-    //    {
-    //        deltaPos = Vector3.right;
-    //    }
-    //    if (Input.GetKey(KeyCode.LeftArrow))
-    //    {
-    //        deltaPos = Vector3.left;
-    //    }
-    //    if (Input.GetKey(KeyCode.UpArrow))
-    //    {
-    //        deltaPos = Vector3.forward;
-    //    }
-    //    if (Input.GetKey(KeyCode.DownArrow))
-    //    {
-    //        deltaPos = Vector3.back;
+    private void KeyControl()
+    {
+        Vector3 deltaPos = Vector3.zero;
+        bool flag = true;
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            deltaPos = Vector3.right;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            deltaPos = Vector3.left;
+        }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            deltaPos = Vector3.forward;
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            deltaPos = Vector3.back;
 
-    //    }
-    //    //if(paralleYlList!=null)
-    //    //{
-    //    foreach (var v in paralleYlList)
-    //        {
-    //            if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-    //            GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
-    //               )
-    //            {
-    //                flag = false;
-    //                break;
-    //            }
-    //        }
-    //     if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
-    //    //}
-       
+        }
+        //if(paralleYlList!=null)
+        //{
+        foreach (var v in paralleYlList)
+        {
+            if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+            GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
+               )
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+        //}
 
-        
-    //    foreach (var v in paralleXlList)
-    //    {
-    //        //Debug.Log("(showPerfabs.transform.localScale.z * offsetFactor / 2=" + (showPerfabs.transform.localScale.z * offsetFactor / 2));
-    //        //Debug.Log(" GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.forward * deltaPos.z * 0.01f, v[0], v[1])=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.01f, v[0], v[1]));
-    //        //Debug.Log("============================================");
-    //        if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-    //        GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.01f, v[0], v[1])
-    //           )
-    //        {
-    //            flag = false;
-    //            break;
-    //        }
-    //    }
-    //    //if (flag) showPerfabs.transform.Translate(Vector3.right * deltaPos.x * 0.001f, Space.World);
-    //    //if (flag) showPerfabs.transform.Translate(Vector3.forward * deltaPos.z * 0.001f, Space.World);
-    //    //Debug.Log("============================================"+ (paralleXlList[0][0] - paralleXlList[0][1]).normalized);
-    //    if (flag) showPerfabs.transform.Translate((paralleYlList[0][0]- paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
-    //    //=================================
-    //    if (Input.GetKey(KeyCode.Q))
-    //    {
-    //        // 向量v0沿着Y轴旋转45度得到v1
-    //        Vector3 v0 = Vector3.forward * showPerfabs.transform.position.z;
-    //        Vector3 v1 = Quaternion.AngleAxis(showPerfabs.transform.rotation.eulerAngles.y, Vector3.up) * v0;
-    //        showPerfabs.transform.Rotate(v1);
-          
-    //    }
-    //    if (Input.GetKey(KeyCode.S))
-    //    {
-    //        //两个距离之差，为正表示放大手势， 为负表示缩小手势  
-    //        float offset = -1;
 
-    //        //放大因子， 一个像素按 0.01倍来算(100可调整)  
-    //        float scaleFactor = offset / scaleAD;
-    //        Vector3 localScale = showPerfabs.transform.localScale;
-    //        Vector3 scale = new Vector3(localScale.x + scaleFactor,
-    //            localScale.y + scaleFactor,
-    //            localScale.z + scaleFactor);
 
-    //        foreach (var v in paralleYlList)
-    //        {
-    //            if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-    //            GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
-    //               )
-    //            {
-    //                flag = false;
-    //                break;
-    //            }
-    //        }
-    //        foreach (var v in paralleXlList)
-    //        {
-    //            if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-    //            GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
-    //               )
-    //            {
-    //                flag = false;
-    //                break;
-    //            }
-    //        }
-    //        if (flag) showPerfabs.transform.localScale = scale;
-    //        ////最小缩放到 0.1 倍  
-    //        //if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
-    //        //{
-    //        //    showPerfabs.transform.localScale = scale;
-    //        //}
-    //    }
+        //foreach (var v in paralleXlList)
+        //{
+        //    //Debug.Log("(showPerfabs.transform.localScale.z * offsetFactor / 2=" + (showPerfabs.transform.localScale.z * offsetFactor / 2));
+        //    //Debug.Log(" GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.forward * deltaPos.z * 0.01f, v[0], v[1])=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.01f, v[0], v[1]));
+        //    //Debug.Log("============================================");
+        //    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+        //    GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.01f, v[0], v[1])
+        //       )
+        //    {
+        //        flag = false;
+        //        break;
+        //    }
+        //}
+        ////if (flag) showPerfabs.transform.Translate(Vector3.right * deltaPos.x * 0.001f, Space.World);
+        ////if (flag) showPerfabs.transform.Translate(Vector3.forward * deltaPos.z * 0.001f, Space.World);
+        ////Debug.Log("============================================"+ (paralleXlList[0][0] - paralleXlList[0][1]).normalized);
+        //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
+        //=================================
+        if (Input.GetKey(KeyCode.Q))
+        {
+            // 向量v0沿着Y轴旋转45度得到v1
+            Vector3 v0 = Vector3.forward * showPerfabs.transform.position.z;
+            Vector3 v1 = Quaternion.AngleAxis(showPerfabs.transform.rotation.eulerAngles.y, Vector3.up) * v0;
+            showPerfabs.transform.Rotate(v1);
 
-    //}
-        private void TouchControl()
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            //两个距离之差，为正表示放大手势， 为负表示缩小手势  
+            float offset = -1;
+
+            //放大因子， 一个像素按 0.01倍来算(100可调整)  
+            float scaleFactor = offset / scaleAD;
+            Vector3 localScale = showPerfabs.transform.localScale;
+            Vector3 scale = new Vector3(localScale.x + scaleFactor,
+                localScale.y + scaleFactor,
+                localScale.z + scaleFactor);
+
+            foreach (var v in paralleYlList)
+            {
+                if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
+                   )
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            foreach (var v in paralleXlList)
+            {
+                if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
+                   )
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) showPerfabs.transform.localScale = scale;
+            ////最小缩放到 0.1 倍  
+            //if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
+            //{
+            //    showPerfabs.transform.localScale = scale;
+            //}
+        }
+
+    }
+    private void TouchControl()
     {
         if (putFlag == false) return;
         if (Input.touchCount > 0 )
@@ -201,6 +225,7 @@ public class TouchHitTest : MonoBehaviour
             if (1 == Input.touchCount )
             {
                 Touch touch = Input.GetTouch(0);
+
                 //if (touch.phase == TouchPhase.Began)
                 //{
                 //    touchMoveStart = showPerfabs.transform.position;
@@ -236,7 +261,6 @@ public class TouchHitTest : MonoBehaviour
                 //    Debug.Log(" TouchPhase.Ended  touchOffset=" + touchMoveEnd);
                 //}
                 //===================================
-
                 ////=============================================
                 Vector2 deltaPos = touch.deltaPosition;
                 Debug.Log("paralleYlList count=" + paralleYlList.Count);
@@ -250,22 +274,23 @@ public class TouchHitTest : MonoBehaviour
                         break;
                     }
                 }
-                foreach (var v in paralleXlList)
-                {
-                    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.01f, v[0], v[1])
-                       )
-                    {
-                        moveFlagY = false;
-                        break;
-                    }
-                }
-                //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
-                //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
                 Debug.Log("moveFlagX=" + moveFlagX);
                 Debug.Log("deltaPos.x=" + deltaPos.x);
                 if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
-                if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
+                //foreach (var v in paralleXlList)
+                //{
+                //    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                //     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.01f, v[0], v[1])
+                //       )
+                //    {
+                //        moveFlagY = false;
+                //        break;
+                //    }
+                //}
+                //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+                //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
+
+                //if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
 
                 //=============================================
                 //Debug.Log("deltaPos=" + touch.deltaPosition);
@@ -506,29 +531,7 @@ public class TouchHitTest : MonoBehaviour
         }
         //SingletonMB<ARGeneratePlane>.Instance.GetPlaneEdge();
     }
-    //获取顶点最大，最小值
-    private float x_Max;
-    private float x_Min;
-    private float z_Max;
-    private float z_Min;
-    //==========================
-    private Vector3 xMaxzMin_Point;
-    private Vector3 xMinzMin_Point;
-    private Vector3 xMinzMax_Point;
-    private Vector3 xMaxzMax_Point;
-    private Vector3 xMax_Point ;
-    private Vector3 xMin_Point ;
-    private Vector3 zMax_Point ;
-    private Vector3 zMin_Point ;
-    private List<Vector3> pointList;
-    private List<Vector4> pList;
-    private Vector3 v0;
-    private Vector3 v1;
-    private Vector3 v2;
-    private Vector3 v3;
-    private Vector3 v4;
-    private List<List<Vector3>> paralleYlList;
-    private List<List<Vector3>> paralleXlList;
+    
 
 
     protected void GeetVerticesXZ_MaxMin()
