@@ -22,8 +22,8 @@ using ffDevelopmentSpace;
     public static bool IsParallel(Vector3 lhs, Vector3 rhs)
     {
         float value = Vector3.Dot(lhs.normalized, rhs.normalized);
-        //Debug.Log("!!!!!!!!!!!!!===========" + Mathf.Abs(value));
-        //Debug.Log("===========" + (Mathf.Abs(value)==1.0f));
+        Debug.Log("!!!!!!!!!!!!!===========" + Mathf.Abs(value));
+        Debug.Log("===========" + (Mathf.Abs(value) == 1.0f));
         if (Mathf.Abs(value) == 1) return true;
         return false;
     }
