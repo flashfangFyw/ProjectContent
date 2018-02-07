@@ -534,6 +534,7 @@ public class TouchHitTest : MonoBehaviour
         v4 = pointList[3] - pointList[0];
         v0 = Vector3.forward;// * showPerfabs.transform.position.z;
         v0 = Quaternion.AngleAxis(targetRotation.eulerAngles.y, Vector3.up) * v0;
+        Debug.Log("--targetRotation.eulerAngles.y=" + targetRotation.eulerAngles.y + " showPerfabs.transform.rotation.eulerAngles.y=" + showPerfabs.transform.rotation.eulerAngles.y);
         //paralleYlList = new List<Vector3>();
         Debug.Log("--1=v0="+ v0 + " v1="+ v1);
         //paralleXlList = new List<Vector3>();

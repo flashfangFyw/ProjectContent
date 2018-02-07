@@ -23,7 +23,7 @@ using ffDevelopmentSpace;
     {
         float value = Vector3.Dot(lhs.normalized, rhs.normalized);
         Debug.Log("00000000000000000===========" + lhs.normalized+"       "+ rhs.normalized);
-        Debug.Log("!!!!!!!!!!!!!===========" + Mathf.Abs((int)value));
+        Debug.Log("!!!!!!!!!!!!!===========" + Mathf.Abs(value));
         Debug.Log("===========" + (Mathf.Abs(value) == 1));
         if (Mathf.Abs(value) == 1) return true;
         return false;
