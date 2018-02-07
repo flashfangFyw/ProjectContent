@@ -361,7 +361,7 @@ public class TouchHitTest : MonoBehaviour
                 //}
                 //================
             }
-
+            return;
             //多点触摸, 放大缩小  
             Touch newTouch1 = Input.GetTouch(0);
             Touch newTouch2 = Input.GetTouch(1);
