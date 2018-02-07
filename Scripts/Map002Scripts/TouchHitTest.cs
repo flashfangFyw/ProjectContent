@@ -191,7 +191,6 @@ public class TouchHitTest : MonoBehaviour
         private void TouchControl()
     {
         if (putFlag == false) return;
-        Vector3 pt = showPerfabs.transform.position;
         if (Input.touchCount > 0 )
         {
             if (1 == Input.touchCount )
@@ -199,6 +198,7 @@ public class TouchHitTest : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 Vector2 deltaPos = touch.deltaPosition;
                 //=============================================
+                Debug.Log("paralleYlList count=" + paralleYlList.Count);
                 foreach (var v in paralleYlList)
                 {
                     if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
@@ -221,9 +221,11 @@ public class TouchHitTest : MonoBehaviour
                 }
                 //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
                 //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
-
+                Debug.Log("moveFlagX=" + moveFlagX);
+                Debug.Log("deltaPos.x=" + deltaPos.x);
                 if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
                 if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
+                
                 //=============================================
                 //Debug.Log("deltaPos=" + touch.deltaPosition);
                 //pt = showPerfabs.transform.position + (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.eulerAngles.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.eulerAngles.y))
@@ -265,7 +267,8 @@ public class TouchHitTest : MonoBehaviour
 
             foreach (var v in paralleYlList)
             {
-                if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                //if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                    if (scale.x * offsetFactor / 2 <
                 GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
                    )
                 {
@@ -275,7 +278,8 @@ public class TouchHitTest : MonoBehaviour
             }
             foreach (var v in paralleXlList)
             {
-                if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                if (scale.z * offsetFactor / 2 <
+                     //if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
                 GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
                    )
                 {
