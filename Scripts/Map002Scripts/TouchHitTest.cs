@@ -271,29 +271,38 @@ public class TouchHitTest : MonoBehaviour
                 Vector2 deltaPos = touch.deltaPosition;
                 Debug.Log("paralleYlList count=" + paralleYlList.Count);
                 Debug.Log("showPerfabs.transform.localScale.x * offsetFactor / 2 count=" + showPerfabs.transform.localScale.x * offsetFactor / 2);
-                //for (int i = 0; i < paralleYlList.Count; i++)
-                //{
-                //    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-                //    GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[i][0] - paralleXlList[i][1]).normalized * deltaPos.x * 0.01f, paralleXlList[i][0], paralleXlList[i][1])
-                //     )
-                //    {
-                //        if (i == 0) deltaPos.x = deltaPos.x*-1;
-                //        break;
-                //    }
-
-                //}
-                foreach (var v in paralleYlList)
+                for (int i = 0; i < paralleYlList.Count; i++)
                 {
-                    //if(GeometryTools.PointOnLeftSideOfVector())
+                    if (i == 0)
+                    {
+                        if (deltaPos.x < 0) continue;
+                    }
+                    else
+                    {
+                        if (deltaPos.x > 0) continue;
+                    }
                     if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-                     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
-                       )
+                    GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[i][0] - paralleXlList[i][1]).normalized * deltaPos.x * 0.01f, paralleXlList[i][0], paralleXlList[i][1])
+                     )
                     {
                         moveFlagX = false;
                         //break;
+                        Debug.Log("distans=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, paralleXlList[i][0], paralleXlList[i][1]));
                     }
-                    Debug.Log("distans=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1]));
+
                 }
+                //foreach (var v in paralleYlList)
+                //{
+                //    //if(GeometryTools.PointOnLeftSideOfVector())
+                //    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                //     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
+                //       )
+                //    {
+                //        moveFlagX = false;
+                //        //break;
+                //    }
+                //    Debug.Log("distans=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1]));
+                //}
                 Debug.Log("deltaPos.x=" + deltaPos.x);
                 Debug.Log("moveFlagX=" + moveFlagX);
               
