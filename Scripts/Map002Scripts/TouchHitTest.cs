@@ -202,19 +202,7 @@ public class TouchHitTest : MonoBehaviour
                 //                          (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
                 //                          * deltaPos.x * 0.001f, Space.World);
                 //}
-
-                pt = showPerfabs.transform.position+ showPerfabs.transform.localScale.x/2* Vector3.right + Vector3.right
-                                            * deltaPos.x * 0.001f;
-                if (Util.PointInPolygon(pt, pointList))
-                {
-                    showPerfabs.transform.Translate(Vector3.right * deltaPos.x * 0.001f, Space.World);
-                }
             //================
-
-            //showPerfabs.transform.Translate(
-            //                            (Vector3.forward * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.right * Mathf.Cos(Camera.main.transform.rotation.y))
-            //                            * deltaPos.y * 0.001f, Space.World);
-            //transform.Rotate(Vector3.right * deltaPos.y, Space.World);
         }
 
             if (scaleFlag == false) return;
