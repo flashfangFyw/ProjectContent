@@ -419,12 +419,12 @@ public class TouchHitTest : MonoBehaviour
             //}
             if (scaleFlag)
             {
-                if(scale.x <2.0f)
+                if(scale.x <1.0f)
                 {
                     showPerfabs.transform.localScale = scale;
                 }
             }
-
+            scaleFlag = true;
             ////最小缩放到 0.1 倍  
             //if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
             //{
