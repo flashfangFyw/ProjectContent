@@ -201,82 +201,83 @@ public class TouchHitTest : MonoBehaviour
             if (1 == Input.touchCount )
             {
                 Touch touch = Input.GetTouch(0);
-                if (touch.phase == TouchPhase.Began)
+                //if (touch.phase == TouchPhase.Began)
+                //{
+                //    touchMoveStart = showPerfabs.transform.position;
+                //    Debug.Log("TouchPhase.Began touchOffset=" + touchOffset);
+                //    Debug.Log("touchMoveStart=" + touchMoveStart);
+                //}
+                //if ( touch.phase == TouchPhase.Moved)
+                //{
+                //    Vector3 screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
+                //    ARPoint point = new ARPoint
+                //    {
+                //        x = screenPosition.x,
+                //        y = screenPosition.y
+                //    };
+                //    ARHitTestResultType[] resultTypes = {
+                //        ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
+                //        // if you want to use infinite planes use this:
+                //        //ARHitTestResultType.ARHitTestResultTypeExistingPlane,
+                //        ARHitTestResultType.ARHitTestResultTypeHorizontalPlane,
+                //        ARHitTestResultType.ARHitTestResultTypeFeaturePoint
+                //    };
+                //    foreach (ARHitTestResultType resultType in resultTypes)
+                //    {
+                //        if (hitMoveShowPerfab(point, resultType))
+                //        {
+                //            return;
+                //        }
+                //    }
+                //}
+                //if(touch.phase == TouchPhase.Ended)
+                //{
+                //    touchOffset += touchMoveEnd - touchMoveStart;
+                //    Debug.Log(" TouchPhase.Ended  touchOffset=" + touchMoveEnd);
+                //}
+                //===================================
+
+                ////=============================================
+                Vector2 deltaPos = touch.deltaPosition;
+                Debug.Log("paralleYlList count=" + paralleYlList.Count);
+                foreach (var v in paralleYlList)
                 {
-                    touchMoveStart = showPerfabs.transform.position;
-                    Debug.Log("TouchPhase.Began touchOffset=" + touchOffset);
-                    Debug.Log("touchMoveStart=" + touchMoveStart);
-                }
-                if ( touch.phase == TouchPhase.Moved)
-                {
-                    Vector3 screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
-                    ARPoint point = new ARPoint
+                    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
+                       )
                     {
-                        x = screenPosition.x,
-                        y = screenPosition.y
-                    };
-                    ARHitTestResultType[] resultTypes = {
-                        ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
-                        // if you want to use infinite planes use this:
-                        //ARHitTestResultType.ARHitTestResultTypeExistingPlane,
-                        ARHitTestResultType.ARHitTestResultTypeHorizontalPlane,
-                        ARHitTestResultType.ARHitTestResultTypeFeaturePoint
-                    };
-                    foreach (ARHitTestResultType resultType in resultTypes)
-                    {
-                        if (hitMoveShowPerfab(point, resultType))
-                        {
-                            return;
-                        }
+                        moveFlagX = false;
+                        break;
                     }
                 }
-                if(touch.phase == TouchPhase.Ended)
+                foreach (var v in paralleXlList)
                 {
-                    touchOffset += touchMoveEnd - touchMoveStart;
-                    Debug.Log(" TouchPhase.Ended  touchOffset=" + touchMoveEnd);
+                    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.01f, v[0], v[1])
+                       )
+                    {
+                        moveFlagY = false;
+                        break;
+                    }
                 }
+                //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+                //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
+                Debug.Log("moveFlagX=" + moveFlagX);
+                Debug.Log("deltaPos.x=" + deltaPos.x);
+                if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+                if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
 
-                //Vector2 deltaPos = touch.deltaPosition;
-                ////=============================================
-                //Debug.Log("paralleYlList count=" + paralleYlList.Count);
-                //foreach (var v in paralleYlList)
+                //=============================================
+                //Debug.Log("deltaPos=" + touch.deltaPosition);
+                //pt = showPerfabs.transform.position + (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.eulerAngles.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.eulerAngles.y))
+                //                            * deltaPos.x * 0.001f;
+                //if (Util.PointInPolygon(pt, pointList))
                 //{
-                //    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-                //     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
-                //       )
-                //    {
-                //        moveFlagX = false;
-                //        break;
-                //    }
+                //    showPerfabs.transform.Translate(
+                //                          (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
+                //                          * deltaPos.x * 0.001f, Space.World);
                 //}
-                //foreach (var v in paralleXlList)
-                //{
-                //    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                //     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.01f, v[0], v[1])
-                //       )
-                //    {
-                //        moveFlagY = false;
-                //        break;
-                //    }
-                //}
-                ////if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
-                ////if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
-                //Debug.Log("moveFlagX=" + moveFlagX);
-                //Debug.Log("deltaPos.x=" + deltaPos.x);
-                //if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
-                //if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
-
-                    //=============================================
-                    //Debug.Log("deltaPos=" + touch.deltaPosition);
-                    //pt = showPerfabs.transform.position + (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.eulerAngles.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.eulerAngles.y))
-                    //                            * deltaPos.x * 0.001f;
-                    //if (Util.PointInPolygon(pt, pointList))
-                    //{
-                    //    showPerfabs.transform.Translate(
-                    //                          (Vector3.right * Mathf.Sin(Camera.main.transform.rotation.y) + Vector3.forward * Mathf.Cos(Camera.main.transform.rotation.y))
-                    //                          * deltaPos.x * 0.001f, Space.World);
-                    //}
-                    //================
+                //================
             }
 
             //多点触摸, 放大缩小  
