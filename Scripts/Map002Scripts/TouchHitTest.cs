@@ -385,7 +385,7 @@ public class TouchHitTest : MonoBehaviour
             float scaleFactor = offset / scaleAD;
             Vector3 localScale = showPerfabs.transform.localScale;
             Vector3 scale = new Vector3(localScale.x + scaleFactor,
-                localScale.y + scaleFactor,
+                localScale.y,
                 localScale.z + scaleFactor);
             if(scaleFactor<0)
             {
@@ -417,6 +417,7 @@ public class TouchHitTest : MonoBehaviour
             //{
             //    showPerfabs.transform.localScale = scale;
             //}
+            scaleFlag = false;
             if (scaleFlag)
             {
                 if(scale.x <1.0f)
