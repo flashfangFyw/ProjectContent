@@ -203,7 +203,7 @@ public class TouchHitTest : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
-                    touchMoveStart = showPerfabs.transform.position+ touchOffset;
+                    touchMoveStart = showPerfabs.transform.position;
                     Debug.Log("TouchPhase.Began touchOffset=" + touchOffset);
                     Debug.Log("touchMoveStart=" + touchMoveStart);
                 }
