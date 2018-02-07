@@ -17,6 +17,7 @@ public class TouchHitTest : MonoBehaviour
 
     #region public property
     public bool ifTest = false;
+    public float offsetFactor=1;
     public Transform m_HitTransform;
     public GameObject[] poinPerfabs;
     public Material testMeterial;
@@ -91,7 +92,7 @@ public class TouchHitTest : MonoBehaviour
             deltaPos = Vector3.right;
             foreach(var v in paralleYlList)
             {
-                if (showPerfabs.transform.localScale.x*3 / 2 <
+                if (showPerfabs.transform.localScale.x* offsetFactor / 2 <
                 GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.right * deltaPos.x * 0.01f, v[0], v[1])
                    )
                 {
@@ -106,7 +107,7 @@ public class TouchHitTest : MonoBehaviour
             deltaPos = Vector3.left;
             foreach (var v in paralleYlList)
             {
-                if (showPerfabs.transform.localScale.x*3/ 2 <
+                if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
                 GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.right * deltaPos.x * 0.01f, v[0], v[1])
                    )
                 {
@@ -123,7 +124,7 @@ public class TouchHitTest : MonoBehaviour
             deltaPos = Vector3.forward;
             foreach (var v in paralleXlList)
             {
-                if (showPerfabs.transform.localScale.z*3 / 2 <
+                if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
                 GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.forward * deltaPos.z * 0.01f, v[0], v[1])
                    )
                 {
@@ -137,7 +138,7 @@ public class TouchHitTest : MonoBehaviour
             deltaPos = Vector3.back;
             foreach (var v in paralleXlList)
             {
-                if (showPerfabs.transform.localScale.z*3 / 2 <
+                if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
                 GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.forward * deltaPos.z * 0.01f, v[0], v[1])
                    )
                 {
@@ -146,8 +147,10 @@ public class TouchHitTest : MonoBehaviour
                 }
             }
         }
-        if (flag) showPerfabs.transform.Translate(Vector3.right * deltaPos.x * 0.001f, Space.World);
-        if (flag) showPerfabs.transform.Translate(Vector3.forward * deltaPos.z * 0.001f, Space.World);
+        //if (flag) showPerfabs.transform.Translate(Vector3.right * deltaPos.x * 0.001f, Space.World);
+        //if (flag) showPerfabs.transform.Translate(Vector3.forward * deltaPos.z * 0.001f, Space.World);
+        if(flag) showPerfabs.transform.Translate((paralleXlList[0][0]- paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+        if (flag) showPerfabs.transform.Translate((paralleYlList[0][0]- paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
         //=================================
         if (Input.GetKey(KeyCode.Q))
         {
@@ -157,7 +160,46 @@ public class TouchHitTest : MonoBehaviour
             showPerfabs.transform.Rotate(v1);
           
         }
-   
+        if (Input.GetKey(KeyCode.S))
+        {
+            //两个距离之差，为正表示放大手势， 为负表示缩小手势  
+            float offset = -1;
+
+            //放大因子， 一个像素按 0.01倍来算(100可调整)  
+            float scaleFactor = offset / scaleAD;
+            Vector3 localScale = showPerfabs.transform.localScale;
+            Vector3 scale = new Vector3(localScale.x + scaleFactor,
+                localScale.y + scaleFactor,
+                localScale.z + scaleFactor);
+
+            foreach (var v in paralleYlList)
+            {
+                if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
+                   )
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            foreach (var v in paralleXlList)
+            {
+                if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
+                   )
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) showPerfabs.transform.localScale = scale;
+            ////最小缩放到 0.1 倍  
+            //if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
+            //{
+            //    showPerfabs.transform.localScale = scale;
+            //}
+        }
+
     }
         private void TouchControl()
     {
@@ -205,7 +247,6 @@ public class TouchHitTest : MonoBehaviour
             //================
         }
 
-            if (scaleFlag == false) return;
             //多点触摸, 放大缩小  
             Touch newTouch1 = Input.GetTouch(0);
             Touch newTouch2 = Input.GetTouch(1);
@@ -232,11 +273,33 @@ public class TouchHitTest : MonoBehaviour
                 localScale.y + scaleFactor,
                 localScale.z + scaleFactor);
 
-            //最小缩放到 0.1 倍  
-            if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
+            foreach (var v in paralleYlList)
             {
-                showPerfabs.transform.localScale = scale;
+                if (showPerfabs.transform.localScale.x*3 / 2 <
+                GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
+                   )
+                {
+                    scaleFlag = false;
+                    break;
+                }
             }
+            foreach (var v in paralleXlList)
+            {
+                if (showPerfabs.transform.localScale.z *3/ 2 <
+                GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
+                   )
+                {
+                    scaleFlag = false;
+                    break;
+                }
+            }
+            if (scaleFlag) showPerfabs.transform.localScale = scale;
+
+            ////最小缩放到 0.1 倍  
+            //if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
+            //{
+            //    showPerfabs.transform.localScale = scale;
+            //}
 
             //记住最新的触摸点，下次使用  
             oldTouch1 = newTouch1;
@@ -376,7 +439,7 @@ public class TouchHitTest : MonoBehaviour
     private Vector3 zMin_Point ;
     private List<Vector3> pointList;
     private List<Vector4> pList;
-
+    private Vector3 v0;
     private Vector3 v1;
     private Vector3 v2;
     private Vector3 v3;
@@ -475,8 +538,8 @@ public class TouchHitTest : MonoBehaviour
         v2 = pointList[1] - pointList[2];
         v3 = pointList[2] - pointList[3];
         v4 = pointList[3] - pointList[0];
-        Vector3 v0 = Vector3.forward;// * showPerfabs.transform.position.z;
-        Vector3 v01 = Quaternion.AngleAxis(showPerfabs.transform.rotation.eulerAngles.y, Vector3.up) * v0;
+        v0 = Vector3.forward;// * showPerfabs.transform.position.z;
+        v0 = Quaternion.AngleAxis(showPerfabs.transform.rotation.eulerAngles.y, Vector3.up) * v0;
         //paralleYlList = new List<Vector3>();
         //paralleXlList = new List<Vector3>();
         ParalleCheck(v1, v0, new List<Vector3> { pointList[0], pointList[1]});
