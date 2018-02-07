@@ -387,30 +387,43 @@ public class TouchHitTest : MonoBehaviour
             Vector3 scale = new Vector3(localScale.x + scaleFactor,
                 localScale.y + scaleFactor,
                 localScale.z + scaleFactor);
-
-            foreach (var v in paralleYlList)
+            if(scaleFactor<0)
             {
-                //if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                foreach (var v in paralleYlList)
+                {
+                    //if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
                     if (scale.x * offsetFactor / 2 <
                 GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
                    )
+                    {
+                        scaleFlag = false;
+                        break;
+                    }
+                }
+                foreach (var v in paralleXlList)
                 {
-                    scaleFlag = false;
-                    break;
+                    if (scale.z * offsetFactor / 2 <
+                    //if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                    GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
+                       )
+                    {
+                        scaleFlag = false;
+                        break;
+                    }
                 }
             }
-            foreach (var v in paralleXlList)
+            ////最小缩放到 0.1 倍  
+            //if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
+            //{
+            //    showPerfabs.transform.localScale = scale;
+            //}
+            if (scaleFlag)
             {
-                if (scale.z * offsetFactor / 2 <
-                     //if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                GeometryTools.DisPoint2Line(showPerfabs.transform.position, v[0], v[1])
-                   )
+                if(scale.x <2.0f)
                 {
-                    scaleFlag = false;
-                    break;
+                    showPerfabs.transform.localScale = scale;
                 }
             }
-            if (scaleFlag) showPerfabs.transform.localScale = scale;
 
             ////最小缩放到 0.1 倍  
             //if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
