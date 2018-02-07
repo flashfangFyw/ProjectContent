@@ -37,6 +37,14 @@ public class TouchHitTest : MonoBehaviour
     private Touch oldTouch1;  //上次触摸点1(手指1)  
     private Touch oldTouch2;  //上次触摸点2(手指2)  
     private Ray ray;
+    // prioritize reults types
+    private ARHitTestResultType[] resultTypes = {
+                        ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
+                        // if you want to use infinite planes use this:
+                        //ARHitTestResultType.ARHitTestResultTypeExistingPlane,
+                        ARHitTestResultType.ARHitTestResultTypeHorizontalPlane,
+                        ARHitTestResultType.ARHitTestResultTypeFeaturePoint
+                    };
     RaycastHit hit;
     #endregion
 
@@ -196,35 +204,52 @@ public class TouchHitTest : MonoBehaviour
             if (1 == Input.touchCount )
             {
                 Touch touch = Input.GetTouch(0);
-                Vector2 deltaPos = touch.deltaPosition;
-                //=============================================
-                Debug.Log("paralleYlList count=" + paralleYlList.Count);
-                foreach (var v in paralleYlList)
+                if ( touch.phase == TouchPhase.Moved)
                 {
-                    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-                     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
-                       )
+                    Vector3 screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
+                    ARPoint point = new ARPoint
                     {
-                        moveFlagX = false;
-                        break;
+                        x = screenPosition.x,
+                        y = screenPosition.y
+                    };
+                    foreach (ARHitTestResultType resultType in resultTypes)
+                    {
+                        if (hitMoveShowPerfab(point, resultType))
+                        {
+                            return;
+                        }
                     }
                 }
-                foreach (var v in paralleXlList)
-                {
-                    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.01f, v[0], v[1])
-                       )
-                    {
-                        moveFlagY = false;
-                        break;
-                    }
-                }
-                //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
-                //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
-                Debug.Log("moveFlagX=" + moveFlagX);
-                Debug.Log("deltaPos.x=" + deltaPos.x);
-                if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
-                if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
+                    
+                //Vector2 deltaPos = touch.deltaPosition;
+                ////=============================================
+                //Debug.Log("paralleYlList count=" + paralleYlList.Count);
+                //foreach (var v in paralleYlList)
+                //{
+                //    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                //     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
+                //       )
+                //    {
+                //        moveFlagX = false;
+                //        break;
+                //    }
+                //}
+                //foreach (var v in paralleXlList)
+                //{
+                //    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                //     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.01f, v[0], v[1])
+                //       )
+                //    {
+                //        moveFlagY = false;
+                //        break;
+                //    }
+                //}
+                ////if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+                ////if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
+                //Debug.Log("moveFlagX=" + moveFlagX);
+                //Debug.Log("deltaPos.x=" + deltaPos.x);
+                //if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+                //if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
                 
                 //=============================================
                 //Debug.Log("deltaPos=" + touch.deltaPosition);
@@ -315,16 +340,6 @@ public class TouchHitTest : MonoBehaviour
                     x = screenPosition.x,
                     y = screenPosition.y
                 };
-
-                // prioritize reults types
-                ARHitTestResultType[] resultTypes = {
-                        ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
-                        // if you want to use infinite planes use this:
-                        //ARHitTestResultType.ARHitTestResultTypeExistingPlane,
-                        ARHitTestResultType.ARHitTestResultTypeHorizontalPlane,
-                        ARHitTestResultType.ARHitTestResultTypeFeaturePoint
-                    };
-
                 foreach (ARHitTestResultType resultType in resultTypes)
                 {
                     if (HitTestWithResultType(point, resultType))
@@ -377,6 +392,50 @@ public class TouchHitTest : MonoBehaviour
                 //FramePerfabs.transform.position = targetPosition;
                 // FramePerfabs.transform.rotation = targetRotation;
                 Debug.Log(string.Format("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitTransform.position.x, m_HitTransform.position.y, m_HitTransform.position.z));
+                return true;
+            }
+        }
+        return false;
+    }
+    private bool hitMoveShowPerfab(ARPoint point, ARHitTestResultType resultTypes)
+    {
+        List<ARHitTestResult> hitResults = UnityARSessionNativeInterface.GetARSessionNativeInterface().HitTest(point, resultTypes);
+        if (hitResults.Count > 0)
+        {
+            foreach (var hitResult in hitResults)
+            {
+                Vector3 vposition= UnityARMatrixOps.GetPosition(hitResult.worldTransform);
+                foreach (var v in paralleYlList)
+                {
+                    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
+                       )
+                    {
+                        moveFlagX = false;
+                        break;
+                    }
+                }
+                foreach (var v in paralleXlList)
+                {
+                    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
+                       )
+                    {
+                        moveFlagY = false;
+                        break;
+                    }
+                }
+                Debug.Log("moveFlagX=" + moveFlagX);
+                //Debug.Log("deltaPos.x=" + deltaPos.x); vposition.x
+                Vector3 endpostion = showPerfabs.transform.position;
+                if (moveFlagX) endpostion.x = vposition.x;
+                if (moveFlagY) endpostion.z= vposition.z;
+                showPerfabs.transform.position = endpostion;
+
+                //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+                //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
+
+
                 return true;
             }
         }

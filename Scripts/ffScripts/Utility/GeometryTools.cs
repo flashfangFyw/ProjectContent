@@ -37,7 +37,7 @@ using ffDevelopmentSpace;
     public static float IsParallelAndFace(Vector3 lhs, Vector3 rhs)
     {
         float value = Vector3.Dot(lhs.normalized, rhs.normalized);
-        if (Mathf.Abs(value) == 1)  return value;
+        if (Mathf.Abs(value) >= 0.98 )  return Mathf.Ceil(value);
         return 0;
     }
     /// <summary>
