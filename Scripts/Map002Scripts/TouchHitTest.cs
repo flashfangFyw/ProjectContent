@@ -39,6 +39,7 @@ public class TouchHitTest : MonoBehaviour
     private Ray ray;
     private Vector3 touchOffset = Vector3.zero;
     private Vector3 touchMoveEnd = Vector3.zero;
+    private Vector3 touchMoveStart = Vector3.zero;
     // prioritize reults types
 
     RaycastHit hit;
@@ -200,6 +201,10 @@ public class TouchHitTest : MonoBehaviour
             if (1 == Input.touchCount )
             {
                 Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    touchMoveStart = showPerfabs.transform.position;
+                }
                 if ( touch.phase == TouchPhase.Moved)
                 {
                     Vector3 screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
@@ -225,7 +230,7 @@ public class TouchHitTest : MonoBehaviour
                 }
                 if(touch.phase == TouchPhase.Ended)
                 {
-                    //touchOffset=
+                    touchOffset = touchMoveEnd - touchMoveStart;
                 }
 
                 //Vector2 deltaPos = touch.deltaPosition;
@@ -441,10 +446,9 @@ public class TouchHitTest : MonoBehaviour
                 }
                 Debug.Log("moveFlagX=" + moveFlagX);
                 //Debug.Log("deltaPos.x=" + deltaPos.x); vposition.x
-                Vector3 endpostion = showPerfabs.transform.position;
+                Vector3 endpostion = touchMoveStart;
                 if (moveFlagX) endpostion.x = vposition.x;
                 if (moveFlagY) endpostion.z= vposition.z;
-                touchOffset = endpostion - showPerfabs.transform.position;
                 showPerfabs.transform.position = endpostion;
                 //touchOffset=
                 touchMoveEnd = showPerfabs.transform.position;
