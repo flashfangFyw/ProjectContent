@@ -54,7 +54,7 @@ public class TouchHitTest : MonoBehaviour
         PutHitTest();
         //ControlCheck();
         TouchControl();
-        KeyControl();
+        //KeyControl();
     }
     void OnDisable()
     {
