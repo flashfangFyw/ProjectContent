@@ -568,6 +568,7 @@ public class TouchHitTest : MonoBehaviour
                 showPerfabs.transform.position = endpostion;
                 //showPerfabs.transform.position = vposition;
                 touchMoveEnd = showPerfabs.transform.position;
+                moveFlagX = true;
                 //Debug.Log("touchMoveEnd=" + touchMoveEnd);
 
 
