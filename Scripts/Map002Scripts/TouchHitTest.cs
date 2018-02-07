@@ -533,7 +533,7 @@ public class TouchHitTest : MonoBehaviour
         v3 = pointList[2] - pointList[3];
         v4 = pointList[3] - pointList[0];
         v0 = Vector3.forward;// * showPerfabs.transform.position.z;
-        v0 = Quaternion.AngleAxis(showPerfabs.transform.rotation.eulerAngles.y, Vector3.up) * v0;
+        v0 = Quaternion.AngleAxis(targetRotation.eulerAngles.y, Vector3.up) * v0;
         //paralleYlList = new List<Vector3>();
         Debug.Log("--1=v0="+ v0 + " v1="+ v1);
         //paralleXlList = new List<Vector3>();
@@ -596,7 +596,7 @@ public class TouchHitTest : MonoBehaviour
         else
         {
             List<Vector3> p = new List<Vector3>();// { pointList[0], pointList[1] }
-            if (GeometryTools.IsParallelAndFace(v1, Quaternion.AngleAxis(showPerfabs.transform.rotation.eulerAngles.y, Vector3.up) * Vector3.right) == 1)
+            if (GeometryTools.IsParallelAndFace(v1, Quaternion.AngleAxis(targetRotation.eulerAngles.y, Vector3.up) * Vector3.right) == 1)
             {
                 p.Add(p1);
                 p.Add(p2);

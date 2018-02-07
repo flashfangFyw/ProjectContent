@@ -660,13 +660,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 253939655}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.096, y: 0, z: 0.074}
   m_LocalScale: {x: 1.5, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &312106011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,8 +1646,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 804544024}
-  m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: -0.00051341, y: 0, z: 0.0010351}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.10134, y: 0.05, z: 0.15351}
   m_Children:
   - {fileID: 1217400325}
@@ -1657,7 +1657,7 @@ Transform:
   - {fileID: 1548224841}
   m_Father: {fileID: 0}
   m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &831534878
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,7 +3063,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4662981216655036, guid: 00538dbc53988e34d9f2aaf6d4ab47ff, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0.2588191
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4662981216655036, guid: 00538dbc53988e34d9f2aaf6d4ab47ff, type: 2}
       propertyPath: m_LocalRotation.z
@@ -3071,7 +3071,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4662981216655036, guid: 00538dbc53988e34d9f2aaf6d4ab47ff, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.9659258
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4662981216655036, guid: 00538dbc53988e34d9f2aaf6d4ab47ff, type: 2}
       propertyPath: m_RootOrder
@@ -3112,7 +3112,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4662981216655036, guid: 00538dbc53988e34d9f2aaf6d4ab47ff, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 30
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00538dbc53988e34d9f2aaf6d4ab47ff, type: 2}
