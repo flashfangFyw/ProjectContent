@@ -90,66 +90,52 @@ public class TouchHitTest : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             deltaPos = Vector3.right;
-            foreach(var v in paralleYlList)
-            {
-                if (showPerfabs.transform.localScale.x* offsetFactor / 2 <
-                GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.right * deltaPos.x * 0.01f, v[0], v[1])
-                   )
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            //if(flag) showPerfabs.transform.Translate(Vector3.right * 0.01f, Space.World);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             deltaPos = Vector3.left;
+        }
+        //if(paralleYlList!=null)
+        //{
             foreach (var v in paralleYlList)
             {
                 if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-                GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.right * deltaPos.x * 0.01f, v[0], v[1])
+                GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
                    )
                 {
                     flag = false;
                     break;
                 }
             }
-        }
+            if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+        //}
        
-
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
             deltaPos = Vector3.forward;
-            foreach (var v in paralleXlList)
-            {
-                if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.forward * deltaPos.z * 0.01f, v[0], v[1])
-                   )
-                {
-                    flag = false;
-                    break;
-                }
-            }
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
             deltaPos = Vector3.back;
-            foreach (var v in paralleXlList)
+
+        }
+        foreach (var v in paralleXlList)
+        {
+            //Debug.Log("(showPerfabs.transform.localScale.z * offsetFactor / 2=" + (showPerfabs.transform.localScale.z * offsetFactor / 2));
+            //Debug.Log(" GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.forward * deltaPos.z * 0.01f, v[0], v[1])=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.01f, v[0], v[1]));
+            //Debug.Log("============================================");
+            if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+            GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.01f, v[0], v[1])
+               )
             {
-                if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.forward * deltaPos.z * 0.01f, v[0], v[1])
-                   )
-                {
-                    flag = false;
-                    break;
-                }
+                flag = false;
+                break;
             }
         }
         //if (flag) showPerfabs.transform.Translate(Vector3.right * deltaPos.x * 0.001f, Space.World);
         //if (flag) showPerfabs.transform.Translate(Vector3.forward * deltaPos.z * 0.001f, Space.World);
-        if(flag) showPerfabs.transform.Translate((paralleXlList[0][0]- paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+        //Debug.Log("============================================"+ (paralleXlList[0][0] - paralleXlList[0][1]).normalized);
         if (flag) showPerfabs.transform.Translate((paralleYlList[0][0]- paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
         //=================================
         if (Input.GetKey(KeyCode.Q))
@@ -215,7 +201,7 @@ public class TouchHitTest : MonoBehaviour
                 foreach (var v in paralleYlList)
                 {
                     if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-                    GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.right * deltaPos.x * 0.01f, v[0], v[1])
+                    GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
                        )
                     {
                         moveFlagX = false;
@@ -225,7 +211,7 @@ public class TouchHitTest : MonoBehaviour
                 foreach (var v in paralleXlList)
                 {
                     if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                    GeometryTools.DisPoint2Line(showPerfabs.transform.position + Vector3.forward * deltaPos.y * 0.01f, v[0], v[1])
+                    GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.01f, v[0], v[1])
                        )
                     {
                         moveFlagY = false;
@@ -519,7 +505,7 @@ public class TouchHitTest : MonoBehaviour
 
 
         //if(Mathf.Abs(Mathf.))
-        if (FramePerfabs.transform.rotation.y % 90 == 0)
+        if (FramePerfabs.transform.rotation.eulerAngles.y % 90 == 0)
         {
             xMaxzMin_Point = new Vector3(x_Max, transform.position.y, z_Min);
             xMinzMin_Point = new Vector3(x_Min, transform.position.y, z_Min);
@@ -545,10 +531,10 @@ public class TouchHitTest : MonoBehaviour
         v0 = Quaternion.AngleAxis(showPerfabs.transform.rotation.eulerAngles.y, Vector3.up) * v0;
         //paralleYlList = new List<Vector3>();
         //paralleXlList = new List<Vector3>();
-        ParalleCheck(v1, v0, new List<Vector3> { pointList[0], pointList[1]});
-        ParalleCheck(v2, v0, new List<Vector3> { pointList[1], pointList[2]});
-        ParalleCheck(v3, v0, new List<Vector3> { pointList[2], pointList[3]});
-        ParalleCheck(v4, v0, new List<Vector3> { pointList[3], pointList[0]});
+        ParalleCheck(v1, v0,  pointList[0], pointList[1]);
+        ParalleCheck(v2, v0,  pointList[1], pointList[2]);
+        ParalleCheck(v3, v0,  pointList[2], pointList[3]);
+        ParalleCheck(v4, v0,  pointList[3], pointList[0]);
 
         //pp.SetPointList( pointList);
         pList = new List<Vector4>();
@@ -577,17 +563,40 @@ public class TouchHitTest : MonoBehaviour
         //textureMaterial.SetFloat("BottomValue", minValue);
         //Debug.Log("====================maxValue==" + maxValue + "     minValue==" + minValue + "     modelHeighth==" + modelHeighth);
     }
-    private bool ParalleCheck(Vector3 v1,Vector3 v01, List<Vector3> p)
+    private bool ParalleCheck(Vector3 v1,Vector3 v01, Vector3 p1,Vector3 p2)
     {
-        if(GeometryTools.IsParallel(v1, v01))
+        if (paralleYlList == null) paralleYlList = new List<List<Vector3>>();
+        if (paralleXlList == null) paralleXlList = new List<List<Vector3>>();
+        if (GeometryTools.IsParallel(v1, v01))
         {
-            if (paralleYlList == null) paralleYlList = new List<List<Vector3>>();
+           
+            List<Vector3> p = new List<Vector3>();// { pointList[0], pointList[1] }
+            if (GeometryTools.IsParallelAndFace(v1, v01)==1)
+            {
+                p.Add(p1);
+                p.Add(p2);
+            }
+            else
+            {
+                p.Add(p2);
+                p.Add(p1);
+            }
             paralleYlList.Add(p);
             return true;
         }
         else
         {
-            if(paralleXlList==null ) paralleXlList = new List<List<Vector3>>();
+            List<Vector3> p = new List<Vector3>();// { pointList[0], pointList[1] }
+            if (GeometryTools.IsParallelAndFace(v1, Quaternion.AngleAxis(showPerfabs.transform.rotation.eulerAngles.y, Vector3.up) * Vector3.right) == 1)
+            {
+                p.Add(p1);
+                p.Add(p2);
+            }
+            else
+            {
+                p.Add(p2);
+                p.Add(p1);
+            }
             paralleXlList.Add(p);
             return false;
         }

@@ -22,9 +22,22 @@ using ffDevelopmentSpace;
     public static bool IsParallel(Vector3 lhs, Vector3 rhs)
     {
         float value = Vector3.Dot(lhs.normalized, rhs.normalized);
-        if (Mathf.Abs(value) == 1)
-            return true;
+        //Debug.Log("!!!!!!!!!!!!!===========" + Mathf.Abs(value));
+        //Debug.Log("===========" + (Mathf.Abs(value)==1.0f));
+        if (Mathf.Abs(value) == 1) return true;
         return false;
+    }
+    /// 
+    /// 判断两个向量是否通向
+    /// Lhs. 
+    /// Rhs. 
+    /// 1:通向 -1:反向 0 不平行；
+    /// 
+    public static float IsParallelAndFace(Vector3 lhs, Vector3 rhs)
+    {
+        float value = Vector3.Dot(lhs.normalized, rhs.normalized);
+        if (Mathf.Abs(value) == 1)  return value;
+        return 0;
     }
     /// <summary>
     /// 点到直线距离
