@@ -204,6 +204,8 @@ public class TouchHitTest : MonoBehaviour
                 if (touch.phase == TouchPhase.Began)
                 {
                     touchMoveStart = showPerfabs.transform.position+ touchOffset;
+                    Debug.Log("TouchPhase.Began touchOffset=" + touchOffset);
+                    Debug.Log("touchMoveStart=" + touchMoveStart);
                 }
                 if ( touch.phase == TouchPhase.Moved)
                 {
@@ -231,6 +233,7 @@ public class TouchHitTest : MonoBehaviour
                 if(touch.phase == TouchPhase.Ended)
                 {
                     touchOffset = touchMoveEnd - touchMoveStart;
+                    Debug.Log(" TouchPhase.Ended  touchOffset=" + touchMoveEnd);
                 }
 
                 //Vector2 deltaPos = touch.deltaPosition;
@@ -421,37 +424,42 @@ public class TouchHitTest : MonoBehaviour
         List<ARHitTestResult> hitResults = UnityARSessionNativeInterface.GetARSessionNativeInterface().HitTest(point, resultTypes);
         if (hitResults.Count > 0)
         {
+            Debug.Log("hitResults.Count=" + hitResults.Count);
             foreach (var hitResult in hitResults)
             {
                 Vector3 vposition= UnityARMatrixOps.GetPosition(hitResult.worldTransform)+ touchOffset;
-                foreach (var v in paralleYlList)
-                {
-                    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-                     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
-                       )
-                    {
-                        moveFlagX = false;
-                        break;
-                    }
-                }
-                foreach (var v in paralleXlList)
-                {
-                    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
-                       )
-                    {
-                        moveFlagY = false;
-                        break;
-                    }
-                }
-                Debug.Log("moveFlagX=" + moveFlagX);
-                //Debug.Log("deltaPos.x=" + deltaPos.x); vposition.x
-                Vector3 endpostion = touchMoveStart;
-                if (moveFlagX) endpostion.x = vposition.x;
-                if (moveFlagY) endpostion.z= vposition.z;
-                showPerfabs.transform.position = endpostion;
-                //touchOffset=
+                Debug.Log("TouchPhase.Moved touchOffset=" + touchOffset);
+                Debug.Log("vposition=" + vposition);
+                //foreach (var v in paralleYlList)
+                //{
+                //    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                //     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
+                //       )
+                //    {
+                //        moveFlagX = false;
+                //        break;
+                //    }
+                //}
+                //foreach (var v in paralleXlList)
+                //{
+                //    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                //     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
+                //       )
+                //    {
+                //        moveFlagY = false;
+                //        break;
+                //    }
+                //}
+                //Debug.Log("moveFlagX=" + moveFlagX);
+                ////Debug.Log("deltaPos.x=" + deltaPos.x); vposition.x
+                //Vector3 endpostion = touchMoveStart;
+                //if (moveFlagX) endpostion.x = vposition.x;
+                //if (moveFlagY) endpostion.z= vposition.z;
+                //showPerfabs.transform.position = endpostion;
+                showPerfabs.transform.position = vposition;
                 touchMoveEnd = showPerfabs.transform.position;
+                Debug.Log("touchMoveEnd=" + touchMoveEnd);
+
 
                 //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
                 //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
