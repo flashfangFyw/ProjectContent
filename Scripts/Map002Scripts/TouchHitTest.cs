@@ -230,6 +230,8 @@ public class TouchHitTest : MonoBehaviour
         {
             if (1 == Input.touchCount )
             {
+                moveFlagX = true;
+                moveFlagY = true;
                 Touch touch = Input.GetTouch(0);
                 Vector3 screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
                 ARPoint point = new ARPoint
@@ -361,7 +363,8 @@ public class TouchHitTest : MonoBehaviour
                 //}
                 //================
             }
-            return;
+            //return;
+            scaleFlag = true;
             //多点触摸, 放大缩小  
             Touch newTouch1 = Input.GetTouch(0);
             Touch newTouch2 = Input.GetTouch(1);
@@ -385,7 +388,7 @@ public class TouchHitTest : MonoBehaviour
             float scaleFactor = offset / scaleAD;
             Vector3 localScale = showPerfabs.transform.localScale;
             Vector3 scale = new Vector3(localScale.x + scaleFactor,
-                localScale.y,
+                localScale.y + scaleFactor,
                 localScale.z + scaleFactor);
             if(scaleFactor<0)
             {
@@ -417,7 +420,6 @@ public class TouchHitTest : MonoBehaviour
             //{
             //    showPerfabs.transform.localScale = scale;
             //}
-            scaleFlag = false;
             if (scaleFlag)
             {
                 if(scale.x <1.0f)
@@ -425,7 +427,7 @@ public class TouchHitTest : MonoBehaviour
                     showPerfabs.transform.localScale = scale;
                 }
             }
-            scaleFlag = true;
+          
             ////最小缩放到 0.1 倍  
             //if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
             //{
@@ -569,8 +571,7 @@ public class TouchHitTest : MonoBehaviour
                 showPerfabs.transform.position = endpostion;
                 //showPerfabs.transform.position = vposition;
                 touchMoveEnd = showPerfabs.transform.position;
-                moveFlagX = true;
-                moveFlagY = true;
+               
                 //Debug.Log("touchMoveEnd=" + touchMoveEnd);
 
 
