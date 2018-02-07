@@ -527,33 +527,33 @@ public class TouchHitTest : MonoBehaviour
                 Vector3 vposition= UnityARMatrixOps.GetPosition(hitResult.worldTransform)- touchOffset;
                 Debug.Log("TouchPhase.Moved touchOffset=" + touchOffset);
                 Debug.Log("vposition=" + vposition);
-                //foreach (var v in paralleYlList)
-                //{
-                //    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-                //     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
-                //       )
-                //    {
-                //        moveFlagX = false;
-                //        break;
-                //    }
-                //}
-                //foreach (var v in paralleXlList)
-                //{
-                //    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                //     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
-                //       )
-                //    {
-                //        moveFlagY = false;
-                //        break;
-                //    }
-                //}
+                foreach (var v in paralleYlList)
+                {
+                    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
+                       )
+                    {
+                        moveFlagX = false;
+                        break;
+                    }
+                }
+                foreach (var v in paralleXlList)
+                {
+                    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                     GeometryTools.DisPoint2Line(vposition, v[0], v[1])
+                       )
+                    {
+                        moveFlagY = false;
+                        break;
+                    }
+                }
                 //Debug.Log("moveFlagX=" + moveFlagX);
                 ////Debug.Log("deltaPos.x=" + deltaPos.x); vposition.x
-                //Vector3 endpostion = touchMoveStart;
-                //if (moveFlagX) endpostion.x = vposition.x;
-                //if (moveFlagY) endpostion.z= vposition.z;
-                //showPerfabs.transform.position = endpostion;
-                showPerfabs.transform.position = vposition;
+                Vector3 endpostion = vposition;
+                if (moveFlagX) endpostion.x = vposition.x;
+                if (moveFlagY) endpostion.z = vposition.z;
+                showPerfabs.transform.position = endpostion;
+                //showPerfabs.transform.position = vposition;
                 //touchMoveEnd = showPerfabs.transform.position;
                 //Debug.Log("touchMoveEnd=" + touchMoveEnd);
 
