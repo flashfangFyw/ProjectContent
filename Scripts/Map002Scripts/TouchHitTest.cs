@@ -38,13 +38,7 @@ public class TouchHitTest : MonoBehaviour
     private Touch oldTouch2;  //上次触摸点2(手指2)  
     private Ray ray;
     // prioritize reults types
-    private ARHitTestResultType[] resultTypes = {
-                        ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
-                        // if you want to use infinite planes use this:
-                        //ARHitTestResultType.ARHitTestResultTypeExistingPlane,
-                        ARHitTestResultType.ARHitTestResultTypeHorizontalPlane,
-                        ARHitTestResultType.ARHitTestResultTypeFeaturePoint
-                    };
+
     RaycastHit hit;
     #endregion
 
@@ -212,6 +206,13 @@ public class TouchHitTest : MonoBehaviour
                         x = screenPosition.x,
                         y = screenPosition.y
                     };
+                    ARHitTestResultType[] resultTypes = {
+                        ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
+                        // if you want to use infinite planes use this:
+                        //ARHitTestResultType.ARHitTestResultTypeExistingPlane,
+                        ARHitTestResultType.ARHitTestResultTypeHorizontalPlane,
+                        ARHitTestResultType.ARHitTestResultTypeFeaturePoint
+                    };
                     foreach (ARHitTestResultType resultType in resultTypes)
                     {
                         if (hitMoveShowPerfab(point, resultType))
@@ -340,6 +341,13 @@ public class TouchHitTest : MonoBehaviour
                     x = screenPosition.x,
                     y = screenPosition.y
                 };
+                ARHitTestResultType[] resultTypes = {
+                        ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
+                        // if you want to use infinite planes use this:
+                        //ARHitTestResultType.ARHitTestResultTypeExistingPlane,
+                        ARHitTestResultType.ARHitTestResultTypeHorizontalPlane,
+                        ARHitTestResultType.ARHitTestResultTypeFeaturePoint
+                    };
                 foreach (ARHitTestResultType resultType in resultTypes)
                 {
                     if (HitTestWithResultType(point, resultType))
