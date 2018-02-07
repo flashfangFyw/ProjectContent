@@ -38,7 +38,7 @@ public class TouchHitTest : MonoBehaviour
     private Touch oldTouch2;  //上次触摸点2(手指2)  
     private Ray ray;
     private Vector3 touchOffset = Vector3.zero;
-    //private Vector3 touchMoveEnd = Vector3.zero;
+    private Vector3 touchMoveEnd = Vector3.zero;
     //private Vector3 touchMoveStart = Vector3.zero;
 
     //获取顶点最大，最小值
@@ -550,11 +550,11 @@ public class TouchHitTest : MonoBehaviour
                 //Debug.Log("moveFlagX=" + moveFlagX);
                 ////Debug.Log("deltaPos.x=" + deltaPos.x); vposition.x
                 Vector3 endpostion = vposition;
-                if (moveFlagX) endpostion.x = vposition.x;
-                if (moveFlagY) endpostion.z = vposition.z;
+                if (!moveFlagX) endpostion.x = touchMoveEnd.x;
+                if (!moveFlagY) endpostion.z = touchMoveEnd.z;
                 showPerfabs.transform.position = endpostion;
                 //showPerfabs.transform.position = vposition;
-                //touchMoveEnd = showPerfabs.transform.position;
+                touchMoveEnd = showPerfabs.transform.position;
                 //Debug.Log("touchMoveEnd=" + touchMoveEnd);
 
 
