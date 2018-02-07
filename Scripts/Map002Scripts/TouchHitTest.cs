@@ -38,8 +38,8 @@ public class TouchHitTest : MonoBehaviour
     private Touch oldTouch2;  //上次触摸点2(手指2)  
     private Ray ray;
     private Vector3 touchOffset = Vector3.zero;
-    private Vector3 touchMoveEnd = Vector3.zero;
-    private Vector3 touchMoveStart = Vector3.zero;
+    //private Vector3 touchMoveEnd = Vector3.zero;
+    //private Vector3 touchMoveStart = Vector3.zero;
 
     //获取顶点最大，最小值
     private float x_Max;
@@ -246,12 +246,12 @@ public class TouchHitTest : MonoBehaviour
                  };
                 if (touch.phase == TouchPhase.Began)
                 {
-                    touchMoveStart = showPerfabs.transform.position;
+                    //touchMoveStart = showPerfabs.transform.position;
                     Debug.Log("TouchPhase.Began touchOffset=" + touchOffset);
-                    Debug.Log("touchMoveStart=" + touchMoveStart);
+                    //Debug.Log("touchMoveStart=" + touchMoveStart);
                     foreach (ARHitTestResultType resultType in resultTypes)
                     {
-                        if (hitMoveShowPerfab(point, resultType))
+                        if (hitStartShowPerfab(point, resultType))
                         {
                             return;
                         }
@@ -270,8 +270,8 @@ public class TouchHitTest : MonoBehaviour
                 }
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    touchOffset += touchMoveEnd - touchMoveStart;
-                    Debug.Log(" TouchPhase.Ended  touchOffset=" + touchMoveEnd);
+                    //touchOffset += touchMoveEnd - touchMoveStart;
+                    //Debug.Log(" TouchPhase.Ended  touchOffset=" + touchMoveEnd);
                 }
                 //===================================
                 ////=============================================
@@ -554,8 +554,8 @@ public class TouchHitTest : MonoBehaviour
                 //if (moveFlagY) endpostion.z= vposition.z;
                 //showPerfabs.transform.position = endpostion;
                 showPerfabs.transform.position = vposition;
-                touchMoveEnd = showPerfabs.transform.position;
-                Debug.Log("touchMoveEnd=" + touchMoveEnd);
+                //touchMoveEnd = showPerfabs.transform.position;
+                //Debug.Log("touchMoveEnd=" + touchMoveEnd);
 
 
                 //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
