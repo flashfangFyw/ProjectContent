@@ -154,9 +154,14 @@ public class MyDirectionsFactory : MonoBehaviour
         //if(countFinish&& initFinish && visualizerFinish)
         if ( initFinish && visualizerFinish)
         {
-            if (tht) tht.LoactionTheModel();
+            CallLocation();
             //StartCoroutine(CreatRoute());
         }
+    }
+    private void CallLocation()
+    {
+        if (tht) tht.LoactionTheModel();
+        SingletonMB<OperationController>.Instance.PutTheModel();
     }
     private  IEnumerator  CreatRoute()
     {
@@ -172,11 +177,8 @@ public class MyDirectionsFactory : MonoBehaviour
             if (routeCount <= i) yield return null;
         }
         Debug.Log("CreatRoute is Finished");
-        if (tht)
-        {
-            SetMaterialParam();
-            tht.LoactionTheModel();
-        }
+        CallLocation();
+       
     }
     
    
@@ -386,16 +388,6 @@ public class MyDirectionsFactory : MonoBehaviour
         }
         Debug.Log("CreateGameObject");
         CreateGameObject(meshData);
-    }
-    private void SetMaterialParam()
-    {
-        return;
-        foreach(var mt in  _material)
-        {
-            mt.SetInt("_Points_Num", tht.GetPointList().Count);
-            mt.SetVectorArray("_Points", tht.GetPList());
-            mt.SetFloat("_Points_Bottom", tht.GetOffsetPosition().y - 0.01f);
-        }
     }
     #endregion
 }

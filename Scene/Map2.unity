@@ -2648,6 +2648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1286139108}
   - component: {fileID: 1286139109}
+  - component: {fileID: 1286139110}
   m_Layer: 0
   m_Name: HitCubeParent
   m_TagString: Untagged
@@ -2698,6 +2699,26 @@ MonoBehaviour:
   map: {fileID: 0}
   upHeight: 1
   scaleAD: 1000
+--- !u!114 &1286139110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1286139107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b0a376b490221240bb041ea893367b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ifTest: 0
+  ifMove: 1
+  ifScale: 0
+  offsetFactor: 3
+  m_HitTransform: {fileID: 1286139108}
+  showPerfabs: {fileID: 1557999961}
+  framePerfabs: {fileID: 804544024}
+  showPerfabForward: {x: 0, y: 0, z: 0}
+  showPerfabRight: {x: 0, y: 0, z: 0}
 --- !u!1 &1308259102
 GameObject:
   m_ObjectHideFlags: 0

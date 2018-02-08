@@ -2,8 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
+    Author:     fyw 
+    CreateDate: 2018-02-08 11:04:21 
+    Desc:       Mesh顶点工具集
+*/
 public class MeshUtility
 {
+    /// <summary>
+    /// 获取 目标对象 各个坐标 最大值组成的向量 和 最小值组成的向量
+    /// </summary>
+    /// <param name="target"></param>目标对象
+    /// <param name="max"></param> 各个坐标 最大值组成的向量
+    /// <param name="min"></param>各个坐标 最小值组成的向量
     public static void GetMeshMinMaxWorldPoints(GameObject target, out Vector3 max, out Vector3 min)
     {
         max = Vector3.one*float.MinValue;

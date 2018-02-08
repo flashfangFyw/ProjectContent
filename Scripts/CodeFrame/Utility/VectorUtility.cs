@@ -5,26 +5,22 @@ using ffDevelopmentSpace;
 
 /* 
     Author:     fyw 
-    CreateDate: 2018-02-07 10:27:50 
-    Desc:       注释 
+    CreateDate: 2018-02-08 11:04:21 
+    Desc:       Vector向量工具集 
 */  
 
 
-    public class GeometryTools : MonoBehaviour 
+public class VectorUtility : MonoBehaviour 
 {
-
     /// 
     /// 判断两个向量是否平行 
     /// Lhs. 
     /// Rhs. 
     /// true:平行 false:不平行 
-    /// 
+    /// 数学上 Mathf.Abs(value）==1才为平行，不过经测试有时数值会有偏差故用0.98近似的等于
     public static bool IsParallel(Vector3 lhs, Vector3 rhs)
     {
         float value = Vector3.Dot(lhs.normalized, rhs.normalized);
-        Debug.Log("00000000000000000===========" + lhs.normalized+"       "+ rhs.normalized);
-        Debug.Log("!!!!!!!!!!!!!===========" + Mathf.Abs(value));
-        Debug.Log("===========" + (Mathf.Abs(value) >= 0.98));
         if (Mathf.Abs(value) >= 0.98) return true;
         return false;
     }
@@ -34,38 +30,33 @@ using ffDevelopmentSpace;
     /// Rhs. 
     /// 1:通向 -1:反向 0 不平行；
     /// 
-    public static float IsParallelAndFace(Vector3 lhs, Vector3 rhs)
+    public static float IsParallelAndDirection(Vector3 lhs, Vector3 rhs)
     {
         float value = Vector3.Dot(lhs.normalized, rhs.normalized);
-        if (Mathf.Abs(value) >= 0.98 )  return Mathf.Ceil(value);
+        if (Mathf.Abs(value) >= 0.98) return value>0?1:-1;
         return 0;
     }
-    /// <summary>      
-    /// 
-    /// /// 判断目标点是否位于向量的左边     
-    /// /// </summary>      
-    /// /// <param name="startPoint">向量起点</param>     
-    /// /// <param name="endPoint">向量终点</param>      
-    /// /// <param name="point">目标点</param>      
-    /// /// <returns>True is on left, false is on right</returns>      
-    public static bool PointOnLeftSideOfVector( Vector3 vector3, Vector3 originPoint, Vector3 point)
-    {
-        //Vector2 originVec2 = originPoint.IgnoreYAxis();
-        Vector2 originVec2 = new Vector2(originPoint.x, originPoint.z);
-        //Vector2 pointVec2 = (point.IgnoreYAxis() - originVec2).normalized;
-        Vector2 pointVec2 = (new Vector2(point.x, point.z) - originVec2).normalized;
-        //Vector2 vector2 = vector3.IgnoreYAxis();
-        Vector2 vector2 = new Vector2(vector3.x, vector3.z);
-        float verticalX = originVec2.x;
-        float verticalY = (-verticalX * vector2.x) / vector2.y;
-        Vector2 norVertical = (new Vector2(verticalX, verticalY)).normalized;
-        float dotValue = Vector2.Dot(norVertical, pointVec2);
-        return dotValue < 0f;
-    }
+    /// <summary>
+    /// 判断目标点是否位于向量的左边   
+    /// </summary>
+    /// <param name="dir"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
     public static bool PointOnLeftSide(Vector3 dir, Vector3 target)
     {
         return Vector3.Cross(dir, target).y < 0;
     }
+    /// <summary>
+    /// 判断目标是否在自己的前方:
+    /// </summary>
+    /// <param name="orignio"></param>自己
+    /// <param name="target"></param>目标
+    /// <returns></returns>
+    public static bool PointOnForwardSide(GameObject orignio, Vector3 target)
+    {
+        return Vector3.Dot(orignio.transform.forward, target)> 0;
+    }
+
     /// <summary>
     /// 点到直线距离
     /// </summary>
@@ -81,7 +72,6 @@ using ffDevelopmentSpace;
         float dis = Mathf.Sqrt(Mathf.Pow(Vector3.Magnitude(vec1), 2) - Mathf.Pow(Vector3.Magnitude(vecProj), 2));
         return dis;
     }
-
     /// <summary>
     /// 点到平面的距离 自行推演函数
     /// </summary>
@@ -111,7 +101,6 @@ using ffDevelopmentSpace;
         float dis = numerator / denominator;
         return dis;
     }
-
     /// <summary>
     /// 点到平面距离 调用U3D Plane类处理
     /// </summary>
@@ -153,6 +142,4 @@ using ffDevelopmentSpace;
     {
         return Vector3.Angle(plane1.normal, plane2.normal);
     }
-
-   
 }
