@@ -86,7 +86,6 @@ public class TouchHitTest : MonoBehaviour
     void Update()
     {
         PutHitTest();
-        //ControlCheck();
         TouchControl();
         if(ifTest) KeyControl();
     }
@@ -101,22 +100,6 @@ public class TouchHitTest : MonoBehaviour
     #region public function
     #endregion
     #region private function
-    private void ControlCheck()
-    {
-        //Debug.Log("================================Camera.main.transform.rotation=============" + Camera.main.transform.rotation.eulerAngles);
-       
-        //Vector3 pt = showPerfabs.transform.position;
-        //if (Util.PointInPolygon(pt, pointList))
-        //{
-        //    moveFlag = true;
-        //    scaleFlag = true;
-        //}
-        //else
-        //{
-        //    moveFlag = false;
-        //    scaleFlag = false;
-        //}
-    }
     private void KeyControl()
     {
         Vector3 deltaPos = Vector3.zero;
@@ -226,9 +209,18 @@ public class TouchHitTest : MonoBehaviour
     private void TouchControl()
     {
         if (putFlag == false) return;
-        if (Input.touchCount > 0 )
+        //TouchMoveType1();
+        TouchMoveType2();
+        TouchScaleType();
+    }
+    /// <summary>
+    /// 基于Arkit的触碰移动类型
+    /// </summary>
+    private void TouchMoveType1()
+    {
+        if (Input.touchCount > 0)
         {
-            if (1 == Input.touchCount )
+            if (1 == Input.touchCount)
             {
                 moveFlagX = true;
                 moveFlagY = true;
@@ -261,7 +253,7 @@ public class TouchHitTest : MonoBehaviour
                 }
                 if (touch.phase == TouchPhase.Moved)
                 {
-                  
+
                     foreach (ARHitTestResultType resultType in resultTypes)
                     {
                         if (hitMoveShowPerfab(point, resultType))
@@ -275,11 +267,25 @@ public class TouchHitTest : MonoBehaviour
                     //touchOffset += touchMoveEnd - touchMoveStart;
                     //Debug.Log(" TouchPhase.Ended  touchOffset=" + touchMoveEnd);
                 }
-                //===================================
-                ////=============================================
-                //Vector2 deltaPos = touch.deltaPosition;
-                //Debug.Log("paralleYlList count=" + paralleYlList.Count);
-                //Debug.Log("showPerfabs.transform.localScale.x * offsetFactor / 2 count=" + showPerfabs.transform.localScale.x * offsetFactor / 2);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 基于屏幕控制物体移动
+    /// </summary>
+    private void TouchMoveType2()
+    {
+        if (Input.touchCount > 0)
+        {
+            if (1 == Input.touchCount)
+            {
+                moveFlagX = true;
+                moveFlagY = true;
+                Touch touch = Input.GetTouch(0);
+                Vector2 deltaPos = touch.deltaPosition;
+                Debug.Log("paralleYlList count=" + paralleYlList.Count);
+                Debug.Log("showPerfabs.transform.localScale.x * offsetFactor / 2 count=" + showPerfabs.transform.localScale.x * offsetFactor / 2);
                 //for (int i = 0; i < paralleYlList.Count; i++)
                 //{
                 //    if (i == 0)
@@ -298,36 +304,36 @@ public class TouchHitTest : MonoBehaviour
                 //        //break;
                 //        Debug.Log("distans=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, paralleXlList[i][0], paralleXlList[i][1]));
                 //    }
-
                 //}
-                ////foreach (var v in paralleYlList)
-                ////{
-                ////    //if(GeometryTools.PointOnLeftSideOfVector())
-                ////    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
-                ////     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
-                ////       )
-                ////    {
-                ////        moveFlagX = false;
-                ////        //break;
-                ////    }
-                ////    Debug.Log("distans=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1]));
-                ////}
-                //Debug.Log("deltaPos.x=" + deltaPos.x);
-                //Debug.Log("moveFlagX=" + moveFlagX);
-              
-                //if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
-                ////foreach (var v in paralleXlList)
-                ////{
-                ////    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
-                ////     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.01f, v[0], v[1])
-                ////       )
-                ////    {
-                ////        moveFlagY = false;
-                ////        break;
-                ////    }
-                ////}
-                ////if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
-                ////if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
+                foreach (var v in paralleYlList)
+                {
+                    if (showPerfabs.transform.localScale.x * offsetFactor / 2 <
+                     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1])
+                       )
+                    {
+                        moveFlagX = false;
+                        //break;
+                    }
+                    Debug.Log("distans=" + GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.01f, v[0], v[1]));
+                }
+                Debug.Log("deltaPos.x=" + deltaPos.x);
+                Debug.Log("moveFlagX=" + moveFlagX);
+
+                if (moveFlagX) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+                foreach (var v in paralleXlList)
+                {
+                    if (showPerfabs.transform.localScale.z * offsetFactor / 2 <
+                     GeometryTools.DisPoint2Line(showPerfabs.transform.position + (paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.01f, v[0], v[1])
+                       )
+                    {
+                        moveFlagY = false;
+                        break;
+                    }
+                }
+                if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
+
+                //if (flag) showPerfabs.transform.Translate((paralleXlList[0][0] - paralleXlList[0][1]).normalized * deltaPos.x * 0.001f, Space.World);
+                //if (flag) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.z * 0.001f, Space.World);
 
                 //for (int i = 0; i < paralleXlList.Count; i++)
                 //{
@@ -349,7 +355,6 @@ public class TouchHitTest : MonoBehaviour
                 //    }
 
                 //}
-                //if (moveFlagY) showPerfabs.transform.Translate((paralleYlList[0][0] - paralleYlList[0][1]).normalized * deltaPos.y * 0.001f, Space.World);
 
                 //=============================================
                 //Debug.Log("deltaPos=" + touch.deltaPosition);
@@ -363,12 +368,17 @@ public class TouchHitTest : MonoBehaviour
                 //}
                 //================
             }
-            //return;
+
+        }
+    }
+    private void TouchScaleType()
+    {
+        if (Input.touchCount > 0)
+        {
             scaleFlag = true;
             //多点触摸, 放大缩小  
             Touch newTouch1 = Input.GetTouch(0);
             Touch newTouch2 = Input.GetTouch(1);
-
             //第2点刚开始接触屏幕, 只记录，不做处理  
             if (newTouch2.phase == TouchPhase.Began)
             {
@@ -376,21 +386,18 @@ public class TouchHitTest : MonoBehaviour
                 oldTouch1 = newTouch1;
                 return;
             }
-
             //计算老的两点距离和新的两点间距离，变大要放大模型，变小要缩放模型  
             float oldDistance = Vector2.Distance(oldTouch1.position, oldTouch2.position);
             float newDistance = Vector2.Distance(newTouch1.position, newTouch2.position);
-
             //两个距离之差，为正表示放大手势， 为负表示缩小手势  
             float offset = newDistance - oldDistance;
-
             //放大因子， 一个像素按 0.01倍来算(100可调整)  
             float scaleFactor = offset / scaleAD;
             Vector3 localScale = showPerfabs.transform.localScale;
             Vector3 scale = new Vector3(localScale.x + scaleFactor,
                 localScale.y + scaleFactor,
                 localScale.z + scaleFactor);
-            if(scaleFactor<0)
+            if (scaleFactor < 0)
             {
                 foreach (var v in paralleYlList)
                 {
@@ -422,22 +429,19 @@ public class TouchHitTest : MonoBehaviour
             //}
             if (scaleFlag)
             {
-                if(scale.x <1.0f)
+                if (scale.x < 1.0f)
                 {
                     showPerfabs.transform.localScale = scale;
                 }
             }
-          
             ////最小缩放到 0.1 倍  
             //if (scale.x > 0.1f && scale.y > 0.1f && scale.z > 0.1f)
             //{
             //    showPerfabs.transform.localScale = scale;
             //}
-
             //记住最新的触摸点，下次使用  
             oldTouch1 = newTouch1;
             oldTouch2 = newTouch2;
-
         }
     }
     private void PutHitTest()
