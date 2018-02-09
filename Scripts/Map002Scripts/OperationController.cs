@@ -48,19 +48,7 @@ public class OperationController : SingletonMB<OperationController>
         _touchPut.InitData(showPerfabs, framePerfabs, offsetHeight);
         
         _touchPut.enabled = true;
-        if (ifMove)
-        {
-            _touchMove = gameObject.AddComponent<pTouchMove>();
-            _touchMove.SetTargetGameObject(showPerfabs);
-            _touchMove.enabled = false;
-            //_touchMove.SetOffsetFactor(offsetFactor);
-        }
-        if (ifScale)
-        {
-            _touchScale = gameObject.AddComponent<pTouchScale>();
-            _touchScale.SetTargetGameObject(showPerfabs);
-            _touchScale.enabled = false;
-        }
+       
     }   
 	void Update () 
 	{
@@ -79,8 +67,17 @@ public class OperationController : SingletonMB<OperationController>
         if(flag==false)
         {
             if (_touchPut) _touchPut.ToggleHitTest(false);
-            if (_touchMove) _touchMove.enabled = true;
-            if (_touchScale) _touchScale.enabled = true;
+            if (ifMove)
+            {
+                _touchMove = gameObject.AddComponent<pTouchMove>();
+                _touchMove.SetTargetGameObject(showPerfabs);
+                //_touchMove.SetOffsetFactor(offsetFactor);
+            }
+            if (ifScale)
+            {
+                _touchScale = gameObject.AddComponent<pTouchScale>();
+                _touchScale.SetTargetGameObject(showPerfabs);
+            }
         }
         else
         {

@@ -118,7 +118,7 @@ public class pTouchPut : ArKitHitTest
         {
             mr.materials[0].SetInt("_Points_Num", pointList.Count);
             mr.materials[0].SetVectorArray("_Points", pList);
-            mr.materials[0].SetFloat("_Points_Bottom", targetPosition.y - 0.01f);
+            mr.materials[0].SetFloat("_Points_Bottom", targetPosition.y - 0.1f);
         }
     }
     private void SetPointInPolygon()
@@ -126,7 +126,7 @@ public class pTouchPut : ArKitHitTest
         PointInPolygon[] pIps = showPerfabs.GetComponentsInChildren<PointInPolygon>();
         foreach (PointInPolygon p in pIps)
         {
-            p.SetBottom(targetPosition.y - 0.01f);
+            p.SetBottom(targetPosition.y - 0.1f);
             p.SetPointList(pointList);
         }
     }
