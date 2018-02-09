@@ -33,6 +33,7 @@ public class pTouchPut : ArKitHitTest
     private GameObject showPerfabs;
     private GameObject framePerfabs;
     private float heightOffset;
+    private float verticesHeight = 0.01f;
     private Ray ray;
     private RaycastHit hit;
     private List<Vector3> pointList;
@@ -99,7 +100,8 @@ public class pTouchPut : ArKitHitTest
                 framePerfabs.transform.rotation = targetRotation;
             }
         }
-        oC.CheckAreaField();
+        //oC.CheckAreaField();
+        GetVerticesXZ_MaxMin();
         if (showPerfabs)
         {
             showPerfabs.SetActive(true);
@@ -120,7 +122,7 @@ public class pTouchPut : ArKitHitTest
         {
             mr.materials[0].SetInt("_Points_Num", pointList.Count);
             mr.materials[0].SetVectorArray("_Points", pList);
-            mr.materials[0].SetFloat("_Points_Bottom", targetPosition.y - 0.1f);
+            mr.materials[0].SetFloat("_Points_Bottom", targetPosition.y - verticesHeight);
         }
     }
     private void SetPointInPolygon()
@@ -128,7 +130,7 @@ public class pTouchPut : ArKitHitTest
         PointInPolygon[] pIps = showPerfabs.GetComponentsInChildren<PointInPolygon>();
         foreach (PointInPolygon p in pIps)
         {
-            p.SetBottom(targetPosition.y - 0.1f);
+            p.SetBottom(targetPosition.y - verticesHeight);
             p.SetPointList(pointList);
         }
     }

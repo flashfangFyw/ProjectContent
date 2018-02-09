@@ -132,6 +132,4 @@ public class PointInPolygon : MonoBehaviour
     }
     #endregion
 
-    #region event function
-    #endregion
 }

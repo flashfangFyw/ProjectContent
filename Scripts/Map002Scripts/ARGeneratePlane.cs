@@ -59,6 +59,7 @@ public class ARGeneratePlane : SingletonMB<ARGeneratePlane>
             //plane.gameObject.GetComponent<MeshRenderer>().enabled = false;
             plane.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
         }
+        unityARAnchorManager.Destroy();
     }
     public void GetFocusPlane()
     {

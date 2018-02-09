@@ -55,6 +55,7 @@ public class ArKitHitTest : MonoBehaviour
             var touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began) // || touch.phase == TouchPhase.Moved)
             {
+                Debug.Log("ArkitHitTest");
                 Vector3 screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
                 ARPoint point = new ARPoint
                 {
