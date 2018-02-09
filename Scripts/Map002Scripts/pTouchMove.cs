@@ -141,10 +141,14 @@ public class pTouchMove : TouchMove
                 moveFlagX = oC.CheckListDistanceParalle_Z(vposition);
                 moveFlagY = oC.CheckListDistanceParalle_X(vposition);
                 Vector3 endpostion = vposition;
-                if (!moveFlagX) endpostion.x = _targetGameObject.transform.position.x;
-                if (!moveFlagY) endpostion.z = _targetGameObject.transform.position.z;
-                Debug.Log("moveFlagX=" + moveFlagX+ "    moveFlagY="+ moveFlagY);
-                _targetGameObject.transform.position = endpostion;
+                //if (!moveFlagX) endpostion.x = _targetGameObject.transform.position.x;
+                //if (!moveFlagY) endpostion.z = _targetGameObject.transform.position.z;
+                //Debug.Log("moveFlagX=" + moveFlagX+ "    moveFlagY="+ moveFlagY);
+                //_targetGameObject.transform.position = endpostion;
+                if(moveFlagX&& moveFlagY)
+                {
+                    _targetGameObject.transform.position = endpostion;
+                }
                 return true;
             }
         }
