@@ -39,7 +39,7 @@ public class PointInPolygon : MonoBehaviour
             if (pnpoly()&& CheckBottom())
             {
                 this.transform.GetChild(0).gameObject.SetActive(true);
-                Debug.Log("(pnpoly()");
+                //Debug.Log("(pnpoly()");
                 //if (mt) mt.SetColor("_Color", Color.white);
             }
             else

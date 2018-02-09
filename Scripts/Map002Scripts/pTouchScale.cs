@@ -38,9 +38,9 @@ using ffDevelopmentSpace;
     void Start () 
 	{
     }   
-	void Update () 
-	{
-	}
+	//void Update () 
+	//{
+	//}
     void OnDisable()
     {
     }
@@ -55,7 +55,7 @@ using ffDevelopmentSpace;
     protected override void HandleTouchScale()
     {
         TouchScaleType1();
-        TouchScaleType2();
+        //TouchScaleType2();
     }
     #endregion
     private void TouchScaleType1()
@@ -82,11 +82,11 @@ using ffDevelopmentSpace;
                 Vector3 scale = new Vector3(localScale.x + scaleFactor,
                     localScale.y + scaleFactor,
                     localScale.z + scaleFactor);
-                if (scaleFactor < 0)
-                {
+                //if (scaleFactor < 0)
+                //{
                     scaleFlag = oC.CheckListDistanceParalle_Z(scale.x,_targetGameObject.transform.position);
                     if (scaleFlag) scaleFlag = oC.CheckListDistanceParalle_X(scale.z, _targetGameObject.transform.position);
-                }
+                //}
                 if (scaleFlag)
                 {
                     if (scale.x < 2.0f)
