@@ -143,6 +143,7 @@ public class pTouchMove : TouchMove
                 endpostion.y = _targetGameObject.transform.position.y;
                 if (!moveFlagX) endpostion.x = _targetGameObject.transform.position.x;
                 if (!moveFlagY) endpostion.z = _targetGameObject.transform.position.z;
+                Debug.Log("moveFlagX=" + moveFlagX+ "    moveFlagY="+ moveFlagY);
                 _targetGameObject.transform.position = endpostion;
                 return true;
             }
