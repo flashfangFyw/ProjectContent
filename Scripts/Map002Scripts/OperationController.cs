@@ -48,7 +48,7 @@ public class OperationController : SingletonMB<OperationController>
         _touchPut.InitData(showPerfabs, framePerfabs, offsetHeight);
         
         _touchPut.enabled = true;
-       
+        if (ifTest) CheckAreaField();
     }   
     void OnDisable()
     {

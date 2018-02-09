@@ -3135,12 +3135,12 @@ Prefab:
     - target: {fileID: 114284605212438902, guid: 00538dbc53988e34d9f2aaf6d4ab47ff,
         type: 2}
       propertyPath: _latitudeLongitudeString
-      value: 40.779449, -73.963367
+      value: 31.24,121.5
       objectReference: {fileID: 0}
     - target: {fileID: 114284605212438902, guid: 00538dbc53988e34d9f2aaf6d4ab47ff,
         type: 2}
       propertyPath: _zoom
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00538dbc53988e34d9f2aaf6d4ab47ff, type: 2}

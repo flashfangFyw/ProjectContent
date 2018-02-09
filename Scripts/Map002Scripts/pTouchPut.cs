@@ -66,8 +66,8 @@ public class pTouchPut : ArKitHitTest
     public void LocationTheModel()
     {
         SetVerticeData();
-        showPerfabs.transform.position = targetPosition + Vector3.down * heightOffset;
-        showPerfabs.transform.rotation = targetRotation;
+        //showPerfabs.transform.position = targetPosition + Vector3.down * heightOffset;
+        //showPerfabs.transform.rotation = targetRotation;
 
         Hashtable hash = new Hashtable();
         hash.Add("position", targetPosition);
@@ -104,6 +104,8 @@ public class pTouchPut : ArKitHitTest
         GetVerticesXZ_MaxMin();
         if (showPerfabs)
         {
+            showPerfabs.transform.position = targetPosition + Vector3.down * heightOffset;
+            showPerfabs.transform.rotation = targetRotation;
             showPerfabs.SetActive(true);
             showPerfabs.BroadcastMessage("InitMap", SendMessageOptions.DontRequireReceiver);
         }
