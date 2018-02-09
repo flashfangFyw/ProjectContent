@@ -50,9 +50,6 @@ public class OperationController : SingletonMB<OperationController>
         _touchPut.enabled = true;
        
     }   
-	void Update () 
-	{
-	}
     void OnDisable()
     {
     }

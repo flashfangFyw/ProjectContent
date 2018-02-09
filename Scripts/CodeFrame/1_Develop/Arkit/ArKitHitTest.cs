@@ -49,6 +49,7 @@ public class ArKitHitTest : MonoBehaviour
     #region private function
     protected virtual  void ArkitHitTest()
     {
+        //Debug.Log("ArkitHitTest");
         if (Input.touchCount > 0 )
         {
             var touch = Input.GetTouch(0);
