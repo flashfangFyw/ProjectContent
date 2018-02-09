@@ -105,6 +105,7 @@ public class pTouchPut : ArKitHitTest
             showPerfabs.SetActive(true);
             showPerfabs.BroadcastMessage("InitMap", SendMessageOptions.DontRequireReceiver);
         }
+        hitTest = false;
         oC.ToggleHitTestFlag(false);
     }
     private void SetVerticeData()

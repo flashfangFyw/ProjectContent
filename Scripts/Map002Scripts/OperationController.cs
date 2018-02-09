@@ -63,7 +63,6 @@ public class OperationController : SingletonMB<OperationController>
     {
         if(flag==false)
         {
-            if (_touchPut) _touchPut.ToggleHitTest(false);
             if (ifMove)
             {
                 _touchMove = gameObject.AddComponent<pTouchMove>();

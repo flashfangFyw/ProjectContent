@@ -58,8 +58,8 @@ public class pTouchMove : TouchMove
     #region private function
     protected override void HandleTouchMove()
     {
-        //TouchMoveType1();
-        TouchMoveType2();
+        TouchMoveType1();
+        //TouchMoveType2();
     }
 
     #endregion
