@@ -39,12 +39,13 @@ public class PointInPolygon : MonoBehaviour
             if (pnpoly()&& CheckBottom())
             {
                 this.transform.GetChild(0).gameObject.SetActive(true);
+                Debug.Log("(pnpoly()");
                 //if (mt) mt.SetColor("_Color", Color.white);
             }
             else
             {
                 this.transform.GetChild(0).gameObject.SetActive(false);
-                if (mt) mt.SetColor("_Color", Color.black);
+                //if (mt) mt.SetColor("_Color", Color.black);
             }
         }
 	}

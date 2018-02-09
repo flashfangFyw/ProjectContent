@@ -74,6 +74,7 @@ public class ArKitHitTest : MonoBehaviour
                     if (HitTestWithResultType(point, resultType))
                     {
                         HitTestTrueFunction(touch);
+                        return;
                     }
                 }
             }
@@ -84,6 +85,7 @@ public class ArKitHitTest : MonoBehaviour
         List<ARHitTestResult> hitResults = UnityARSessionNativeInterface.GetARSessionNativeInterface().HitTest(point, resultTypes);
         if (hitResults.Count > 0)
         {
+            Debug.Log("hitResults.Count="+ hitResults.Count);
             foreach (var hitResult in hitResults)
             {
                 Debug.Log("Got hit!");
