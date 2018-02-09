@@ -160,7 +160,7 @@ public class MyDirectionsFactory : MonoBehaviour
     }
     private void CallLocation()
     {
-        if (tht) tht.LoactionTheModel();
+        //if (tht) tht.LoactionTheModel();
         SingletonMB<OperationController>.Instance.PutTheModel();
     }
     private  IEnumerator  CreatRoute()
