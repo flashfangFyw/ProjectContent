@@ -30,6 +30,7 @@ namespace ffDevelopmentSpace
         }
         void Update()
         {
+            UpdateTouchInput();
         }
         void OnDisable()
         {
@@ -45,8 +46,9 @@ namespace ffDevelopmentSpace
             _targetGameObject = obj;
         }
         #endregion
-        #region private function
-        #endregion
+        protected virtual void UpdateTouchInput()
+        {
+        }
 
         #region event function
         #endregion

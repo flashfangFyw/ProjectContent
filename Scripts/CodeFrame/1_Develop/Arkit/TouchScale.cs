@@ -13,34 +13,8 @@ namespace ffDevelopmentSpace
 
     public class TouchScale : TouchActoinBase
     {
-
-	#region public property
-    #endregion
-	#region private property
-    #endregion
-
-    #region unity function
-    void OnEnable()
-    {
-    }
-    void Start () 
-	{
-    }   
-	void Update () 
-	{
-	}
-    void OnDisable()
-    {
-    }
-    void OnDestroy()
-    {
-    }
-        #endregion
-
-        #region public function
-        #endregion
         #region private function
-        protected virtual void UpdateTouchInput()
+        protected override void UpdateTouchInput()
         {
             if (Input.touchCount <= 0) return;
             HandleTouchScale();
@@ -48,7 +22,6 @@ namespace ffDevelopmentSpace
         protected virtual void HandleTouchScale() { }
         #endregion
 
-        #region event function
-        #endregion
+      
     }
 }
