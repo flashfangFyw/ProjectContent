@@ -2757,7 +2757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ifTest: 0
   ifMove: 1
-  ifScale: 0
+  ifScale: 1
   offsetFactor: 3
   offsetHeight: 1
   showPerfabs: {fileID: 1557999961}

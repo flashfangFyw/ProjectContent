@@ -96,7 +96,7 @@ public class OperationController : SingletonMB<OperationController>
         foreach (var v in paralleZList)
         {
             float distance = VectorUtility.DisPoint2Line(point, v[0], v[1]);
-            if (showPerfabs.transform.localScale.x * offsetFactor / 2 < distance)
+            if (showPerfabs.transform.localScale.x * offsetFactor / 2 <=distance)
             {
                 return false;
             }
@@ -108,7 +108,7 @@ public class OperationController : SingletonMB<OperationController>
         foreach (var v in paralleZList)
         {
             float distance = VectorUtility.DisPoint2Line(point, v[0], v[1]);
-            if (scale * offsetFactor / 2 < distance)
+            if (scale * offsetFactor / 2 <= distance)
             {
                 return false;
             }
@@ -120,7 +120,7 @@ public class OperationController : SingletonMB<OperationController>
         foreach (var v in paralleXList)
         {
             float distance = VectorUtility.DisPoint2Line(point, v[0], v[1]);
-            if (showPerfabs.transform.localScale.z * offsetFactor / 2 < distance)
+            if (showPerfabs.transform.localScale.z * offsetFactor / 2 <= distance)
             {
                 return false;
             }
@@ -132,7 +132,7 @@ public class OperationController : SingletonMB<OperationController>
         foreach (var v in paralleXList)
         {
             float distance = VectorUtility.DisPoint2Line(point, v[0], v[1]);
-            if (scale * offsetFactor / 2 < distance)
+            if (scale * offsetFactor / 2 <= distance)
             {
                 return false;
             }

@@ -135,12 +135,12 @@ public class pTouchMove : TouchMove
                 bool moveFlagX = true;
                 bool moveFlagY = true;
                 Vector3 vposition = UnityARMatrixOps.GetPosition(hitResult.worldTransform) - touchOffset;
+                vposition.y = _targetGameObject.transform.position.y;
                 Debug.Log("TouchPhase.Moved touchOffset=" + touchOffset);
                 Debug.Log("vposition=" + vposition);
                 moveFlagX = oC.CheckListDistanceParalle_Z(vposition);
                 moveFlagY = oC.CheckListDistanceParalle_X(vposition);
                 Vector3 endpostion = vposition;
-                endpostion.y = _targetGameObject.transform.position.y;
                 if (!moveFlagX) endpostion.x = _targetGameObject.transform.position.x;
                 if (!moveFlagY) endpostion.z = _targetGameObject.transform.position.z;
                 Debug.Log("moveFlagX=" + moveFlagX+ "    moveFlagY="+ moveFlagY);
