@@ -179,10 +179,47 @@ public class MeshUtility
         //v0 = Quaternion.AngleAxis(targetRotation.eulerAngles.y, Vector3.up) * v0;
         //showPerfabForward = v0.normalized;
         //showPerfabRight = (Quaternion.AngleAxis(targetRotation.eulerAngles.y, Vector3.up) * Vector3.right).normalized;
-        ParalleCheck(target, pointList[0], pointList[1], out paralleZList, out paralleXList);
-        ParalleCheck(target, pointList[1], pointList[2], out paralleZList, out paralleXList);
-        ParalleCheck(target, pointList[2], pointList[3], out paralleZList, out paralleXList);
-        ParalleCheck(target, pointList[3], pointList[0], out paralleZList, out paralleXList);
+        paralleXList = new List<List<Vector3>>();
+        paralleZList = new List<List<Vector3>>();
+        List<List<Vector3>> list = new List<List<Vector3>>();
+        if (ParalleCheck(target, pointList[0], pointList[1],  paralleZList,  paralleXList ,out list))
+        {
+            paralleZList = list;
+        }
+        else
+        {
+            paralleXList = list;
+        }
+        //============================
+        if (ParalleCheck(target, pointList[1], pointList[2], paralleZList, paralleXList, out list))
+        {
+            paralleZList = list;
+        }
+        else
+        {
+            paralleXList = list;
+        }
+        //============================
+        if (ParalleCheck(target, pointList[2], pointList[3], paralleZList, paralleXList, out list))
+        {
+            paralleZList = list;
+        }
+        else
+        {
+            paralleXList = list;
+        }
+        //============================
+        if (ParalleCheck(target, pointList[3], pointList[0], paralleZList, paralleXList, out list))
+        {
+            paralleZList = list;
+        }
+        else
+        {
+            paralleXList = list;
+        }
+        //ParalleCheck(target, pointList[1], pointList[2], out paralleZList, out paralleXList);
+        //ParalleCheck(target, pointList[2], pointList[3], out paralleZList, out paralleXList);
+        //ParalleCheck(target, pointList[3], pointList[0], out paralleZList, out paralleXList);
 
 
         //pList = new List<Vector4>();
@@ -192,11 +229,20 @@ public class MeshUtility
         //pList.Add(new Vector4(pointList[3].x, pointList[3].y, pointList[3].z, 0));
         Debug.Log("====================VerticesXZ_MaxMin init Finished");
     }
-    private static bool ParalleCheck(GameObject target, Vector3 p1, Vector3 p2, out List<List<Vector3>> paralleZList, out List<List<Vector3>> paralleXList)
+    private static void pointListParalleCheck(GameObject target, List<Vector3> pList, out List<List<Vector3>> paralleZList, out List<List<Vector3>> paralleXList)
     {
-        paralleZList = new List<List<Vector3>>();
-        paralleXList = new List<List<Vector3>>();
-        Vector3 p3 = p1 - p2;
+         paralleXList = new List<List<Vector3>>();
+         paralleZList = new List<List<Vector3>>();
+        for (int i=0;i<pList.Count;i++)
+       {
+
+       }
+    }
+    private static bool ParalleCheck(GameObject target, Vector3 p1, Vector3 p2, List<List<Vector3>> paralleZList,  List<List<Vector3>> paralleXList ,out List<List<Vector3>> list)
+    {
+        // paralleZList = new List<List<Vector3>>();
+        //paralleXList = new List<List<Vector3>>();
+         Vector3 p3 = p1 - p2;
         if (VectorUtility.IsParallel(p3, target.transform.forward))
         {
 
@@ -226,6 +272,7 @@ public class MeshUtility
             {
                 paralleZList.Add(p);
             }
+            list = paralleZList;
             return true;
         }
         else
@@ -256,6 +303,7 @@ public class MeshUtility
             {
                 paralleXList.Add(p);
             }
+            list = paralleXList;
             return false;
         }
     }

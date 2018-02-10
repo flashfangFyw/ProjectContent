@@ -20,8 +20,11 @@ public class FieldModel : ModelBase
     public float bottomOffset;
     public void CheckAreaField(GameObject target,Transform transform)
     {
+     
+
         MeshUtility.GetVerticesXZ_MaxMin(target, transform, out pointList,out paralleZList,out paralleXList);
         pList = VectorUtility.List_Vec3To4Add0(pointList);
-        //Debug.
+        Debug.Log("paralleZList=" + Singleton<FieldModel>.GetInstance().paralleZList + "   count =" + Singleton<FieldModel>.GetInstance().paralleZList.Count);
+        Debug.Log("paralleZList=" + Singleton<FieldModel>.GetInstance().paralleXList + "   count =" + Singleton<FieldModel>.GetInstance().paralleXList.Count);
     }
 }

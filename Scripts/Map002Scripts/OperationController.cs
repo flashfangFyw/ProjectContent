@@ -40,6 +40,7 @@ public class OperationController : SingletonMB<OperationController>
     {
         get
         {
+            Debug.Log("paralleZList="+ Singleton<FieldModel>.GetInstance().paralleZList+"   count ="+ Singleton<FieldModel>.GetInstance().paralleZList.Count);
             return Singleton<FieldModel>.GetInstance().paralleZList;
         }
     }
@@ -48,6 +49,7 @@ public class OperationController : SingletonMB<OperationController>
     {
         get
         {
+            Debug.Log("paralleZList=" + Singleton<FieldModel>.GetInstance().paralleXList + "   count =" + Singleton<FieldModel>.GetInstance().paralleXList.Count);
             return Singleton<FieldModel>.GetInstance().paralleXList;
         }
     }
