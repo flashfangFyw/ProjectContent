@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4662981216655036}
-  - component: {fileID: 114284605212438902}
   - component: {fileID: 114894604756754480}
+  - component: {fileID: 114766040167052840}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -82,21 +82,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfe50d567c6a584da27f636046191b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _map: {fileID: 114284605212438902}
+  tht: {fileID: 0}
+  _map: {fileID: 114766040167052840}
   MeshModifiers:
   - {fileID: 11400000, guid: d31b2cb2a75a54d5bb6402fe0bd8c6cf, type: 2}
   - {fileID: 11400000, guid: cd4bcff551c0d418997f52b78da87a0e, type: 2}
-  _waypoints: []
   _material:
   - {fileID: 2100000, guid: 665993b524f0b9946ae00f87e3a1134d, type: 2}
   - {fileID: 2100000, guid: d9f9efd5c2266884a88b5c0ea76a9c97, type: 2}
   - {fileID: 2100000, guid: 8cac0d687ea3c254cb702ac284e6e4f9, type: 2}
-  _directionsLineWidth: 1
+  _directionsLineWidth: 0.01
   movePerfab:
   - {fileID: 1349760659410446, guid: 54fc5ed34b2ccef4882b558b2d5e96ec, type: 2}
   - {fileID: 1446524482340636, guid: 2b610c3d8bd4c784e8fc37c94ba1b333, type: 2}
   - {fileID: 1449000457135756, guid: 5a20aed60d7cae34bb178cc68cbdd5ed, type: 2}
---- !u!114 &114284605212438902
+--- !u!114 &114766040167052840
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -104,16 +104,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1644993692610268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58cb9a85be6f84591938618fa232ce85, type: 3}
+  m_Script: {fileID: 11500000, guid: fd5265791bd8f6c44ba38dc593dbdf06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _zoom: 15
+  _zoom: 14
   _initializeOnStart: 0
-  _latitudeLongitudeString: 40.7825, -73.966111111111
-  _root: {fileID: 0}
+  _latitudeLongitudeString: 40.779449, -73.963367
+  _root: {fileID: 4662981216655036}
   _tileProvider: {fileID: 114894604756754480}
   _mapVisualizer: {fileID: 11400000, guid: e9925e041f0d0b740b1faec11031532c, type: 2}
-  _unityTileSize: 100
+  _unityTileSize: 1
   _snapMapHeightToZero: 1
 --- !u!114 &114894604756754480
 MonoBehaviour:

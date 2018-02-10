@@ -1,17 +1,37 @@
 using UnityEngine;
 using System.Collections;
 using ffDevelopmentSpace;
+using System.Collections.Generic;
 
 
 /* 
     Author:     fyw 
     CreateDate: 2018-02-08 11:04:21 
     Desc:       Vector向量工具集 
-*/  
+*/
 
 
 public class VectorUtility : MonoBehaviour 
 {
+    /// <summary>
+    /// 将 vector3转化为vector4 w轴末尾添0
+    /// </summary>
+    /// <param name="lhs"></param>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
+    public static Vector4 Vec3To4Add0(Vector3 v3)
+    {
+        return new Vector4(v3.x, v3.y, v3.z, 0);
+    }
+    public static List<Vector4> List_Vec3To4Add0(List<Vector3> lv3 )
+    {
+        List<Vector4> lv4 = new List<Vector4>();
+        for(int i=0;i<lv3.Count;i++)
+        {
+            lv4.Add(Vec3To4Add0(lv3[i]));
+        }
+        return lv4;
+    }
     /// 
     /// 判断两个向量是否平行 
     /// Lhs. 

@@ -154,8 +154,14 @@ public class MyDirectionsFactory : MonoBehaviour
         //if(countFinish&& initFinish && visualizerFinish)
         if ( initFinish && visualizerFinish)
         {
-            CallLocation();
-            //StartCoroutine(CreatRoute());
+            if(SingletonMB<OperationController>.Instance.ifDirections)
+            {
+                StartCoroutine(CreatRoute());
+            }
+            else
+            {
+                CallLocation();
+            }
         }
     }
     private void CallLocation()
@@ -226,7 +232,12 @@ public class MyDirectionsFactory : MonoBehaviour
         }
 
         mesh.RecalculateNormals();
-     
+        if (_material[routeCount].shader.name == "OcclutoinMaterial")
+        {
+            _material[routeCount].SetInt("_Points_Num", ffDevelopmentSpace.Singleton<FieldModel>.GetInstance().pList.Count);
+            _material[routeCount].SetVectorArray("_Points", ffDevelopmentSpace.Singleton<FieldModel>.GetInstance().pList);
+            _material[routeCount].SetFloat("_Points_Bottom", ffDevelopmentSpace.Singleton<FieldModel>.GetInstance().bottomOffset);
+        }
         _directionsGO.AddComponent<MeshRenderer>().material = _material[routeCount];
         _directionsDic[routeCount] = _directionsGO;
         routeCount++;
@@ -356,20 +367,8 @@ public class MyDirectionsFactory : MonoBehaviour
         foreach (var point in response.Routes[0].Geometry)
         {
             Vector3 p = Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz();
-            //Debug.Log(p);
-            //p = Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz()
-            //      + Vector3.right * ct.getOffsetPosition().x
-            //      + Vector3.up * ct.getOffsetPosition().y
-            //      + Vector3.forward * ct.getOffsetPosition().z;
-            //Debug.Log("=============================="+p);
-            //p = Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz()
-            //   + ct.getOffsetPosition() + _map.transform.position;
             p = Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz()
                   + tht.GetOffsetPosition();
-            //Debug.Log(ct.getOffsetPosition());
-            //Debug.Log(_map.transform.position);
-            //Debug.Log("==============================" + p);
-            //dat.Add(Conversions.GeoToWorldPosition(point.x, point.y, _map.CenterMercator, _map.WorldRelativeScale).ToVector3xz());
             dat.Add(p);
         }
 

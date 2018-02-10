@@ -2755,7 +2755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b0a376b490221240bb041ea893367b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ifTest: 1
+  ifTest: 0
   ifMove: 1
   ifScale: 1
   offsetFactor: 3
@@ -3102,7 +3102,7 @@ Prefab:
     - target: {fileID: 114284605212438902, guid: 00538dbc53988e34d9f2aaf6d4ab47ff,
         type: 2}
       propertyPath: _initializeOnStart
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114284605212438902, guid: 00538dbc53988e34d9f2aaf6d4ab47ff,
         type: 2}
