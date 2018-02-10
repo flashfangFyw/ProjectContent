@@ -35,10 +35,22 @@ public class OperationController : SingletonMB<OperationController>
     private MyMap _myMap;
     private MyDirectionsFactory _myDF;
     //private bool putFlag=false;
-    [HideInInspector]
-    public  List<List<Vector3>> paralleZList;
-    [HideInInspector]
-    public List<List<Vector3>> paralleXList;
+    //[HideInInspector]
+    private List<List<Vector3>> paralleZList
+    {
+        get
+        {
+            return Singleton<FieldModel>.GetInstance().paralleZList;
+        }
+    }
+    //[HideInInspector]
+    private List<List<Vector3>> paralleXList
+    {
+        get
+        {
+            return Singleton<FieldModel>.GetInstance().paralleXList;
+        }
+    }
     #endregion
 
     #region unity function
