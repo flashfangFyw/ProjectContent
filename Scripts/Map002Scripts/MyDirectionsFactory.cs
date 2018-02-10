@@ -232,12 +232,9 @@ public class MyDirectionsFactory : MonoBehaviour
         }
 
         mesh.RecalculateNormals();
-        if (_material[routeCount].shader.name == "OcclutoinMaterial")
-        {
             _material[routeCount].SetInt("_Points_Num", ffDevelopmentSpace.Singleton<FieldModel>.GetInstance().pList.Count);
             _material[routeCount].SetVectorArray("_Points", ffDevelopmentSpace.Singleton<FieldModel>.GetInstance().pList);
             _material[routeCount].SetFloat("_Points_Bottom", ffDevelopmentSpace.Singleton<FieldModel>.GetInstance().bottomOffset);
-        }
         _directionsGO.AddComponent<MeshRenderer>().material = _material[routeCount];
         _directionsDic[routeCount] = _directionsGO;
         routeCount++;
