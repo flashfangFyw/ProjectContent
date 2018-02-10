@@ -1352,10 +1352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b0a376b490221240bb041ea893367b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ifTest: 1
+  ifTest: 0
   ifMove: 1
   ifScale: 1
-  ifDirections: 1
+  ifDirections: 0
   offsetFactor: 3
   offsetHeight: 1
   showPerfabs: {fileID: 1557999961}
