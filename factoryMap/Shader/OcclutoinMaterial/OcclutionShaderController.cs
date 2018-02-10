@@ -27,12 +27,11 @@ public class OcclutionShaderController : MonoBehaviour
         {
             if(mr.materials[0].shader.name == "OcclutoinMaterial")
             {
-                Color c = Color.black;
+                Debug.Log("_Points count="+ pList.Count);
                 mr.materials[0].SetInt("_Points_Num", pList.Count);
                 mr.materials[0].SetVectorArray("_Points", pList);
                 mr.materials[0].SetFloat("_Points_Bottom", h);
             }
-          
         }
     }
 

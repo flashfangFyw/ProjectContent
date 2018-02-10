@@ -20,5 +20,6 @@ public class FieldModel : ModelBase
     {
         MeshUtility.GetVerticesXZ_MaxMin(target, transform, out pointList);
         pList = VectorUtility.List_Vec3To4Add0(pointList);
+        //Debug.
     }
 }
