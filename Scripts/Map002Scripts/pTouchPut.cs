@@ -65,6 +65,7 @@ public class pTouchPut : ArKitHitTest
     }
     public void LocationTheModel()
     {
+        Debug.Log("LocationTheModel");
         SetVerticeData();
         //showPerfabs.transform.position = targetPosition + Vector3.down * heightOffset;
         //showPerfabs.transform.rotation = targetRotation;
