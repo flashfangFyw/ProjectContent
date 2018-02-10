@@ -25,7 +25,8 @@ public class OcclutionShaderController : MonoBehaviour
         MeshRenderer[] mrs = target.GetComponentsInChildren<MeshRenderer>();
         foreach (MeshRenderer mr in mrs)
         {
-            if(mr.materials[0].shader.name == "OcclutoinMaterial")
+            Debug.Log("shader.name =="+ mr.materials[0].shader.name);
+            if (mr.materials[0].shader.name == "OcclutoinMaterial")
             {
                 Debug.Log("_Points count="+ pList.Count);
                 mr.materials[0].SetInt("_Points_Num", pList.Count);

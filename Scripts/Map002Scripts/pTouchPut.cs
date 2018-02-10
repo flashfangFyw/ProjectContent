@@ -116,6 +116,7 @@ public class pTouchPut : ArKitHitTest
     }
     private void SetVerticeData()
     {
+        Debug.Log("SetVerticeData");
         Singleton<FieldModel>.GetInstance().bottomOffset = targetPosition.y - verticesHeight;
         OcclutionShaderController.SetMaterialParamsToTarget(showPerfabs, Singleton<FieldModel>.GetInstance().pList, targetPosition.y - verticesHeight);
         //SetMaterial();
